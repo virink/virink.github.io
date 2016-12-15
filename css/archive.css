@@ -1,0 +1,36 @@
+.archive-meta h3 {
+    line-height: 2.0;
+}
+
+.archive-meta sup {
+    font-size: 10px;
+    -moz-border-radius: 5px; 
+    -webkit-border-radius: 5px; 
+    border-radius: 5px;
+    background: #ddd none repeat scroll 0 0;
+    vertical-align: top;
+}
+
+.archive-meta span {
+    margin-right: 20px;
+}
+
+.archive-meta .archive-list-count::before {
+    content: " (";
+}
+
+.archive-meta .archive-list-count::after {
+    content: ")";
+}
+
+.copyright {
+  width: 85%;
+  max-width: 45em;
+  margin: 1.2em auto 0;
+  padding: 0.5em 1.8em;
+  border: 1px solid #d3d3d3;
+  font-size: 0.93em;
+  line-height: 1.6em;
+  word-break: break-all;
+  background: rgba(255,255,255,0.4);
+}
