@@ -5,41 +5,50 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
   <title>
-    Centos6.8 with Oracle UEK R3 for DTrace and PHP | Virink&#39;s Blog 
+    Make and install php 5.6.28 for mac | Virink&#39;s Blog 
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <meta name="author" content="Virink">
 
 
-<meta name="description" content="Install the UEKR3 repo
-cd /etc/yum.repos.d
-wget http://public-yum.oracle.com/public-yum-ol6.repo
+<meta name="description" content="Install Brewhome
+/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
 
-Disable all OL7 yum channels and enable UEK3 only
-yum-config-manager --disable ol6*
-yum-config-manager">
+Install Mysql
+brew install mysql
+
+Install Nginx
+brew install nginx
+
+Downl">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Centos6.8 with Oracle UEK R3 for DTrace and PHP | Virink's Blog">
-<meta property="og:url" content="https://www.virzz.com/2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html">
+<meta property="og:title" content="Make and install php 5.6.28 for mac | Virink's Blog">
+<meta property="og:url" content="https://www.virzz.com/2016/11/27/Make and install php 5.6.28 for mac.html">
 <meta property="og:site_name" content="Virink's Blog">
-<meta property="og:description" content="Install the UEKR3 repo
-cd /etc/yum.repos.d
-wget http://public-yum.oracle.com/public-yum-ol6.repo
+<meta property="og:description" content="Install Brewhome
+/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
 
-Disable all OL7 yum channels and enable UEK3 only
-yum-config-manager --disable ol6*
-yum-config-manager">
-<meta property="og:updated_time" content="2016-12-12T06:11:36.000Z">
+Install Mysql
+brew install mysql
+
+Install Nginx
+brew install nginx
+
+Downl">
+<meta property="og:updated_time" content="2016-12-15T13:52:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Centos6.8 with Oracle UEK R3 for DTrace and PHP | Virink's Blog">
-<meta name="twitter:description" content="Install the UEKR3 repo
-cd /etc/yum.repos.d
-wget http://public-yum.oracle.com/public-yum-ol6.repo
+<meta name="twitter:title" content="Make and install php 5.6.28 for mac | Virink's Blog">
+<meta name="twitter:description" content="Install Brewhome
+/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;quot;
 
-Disable all OL7 yum channels and enable UEK3 only
-yum-config-manager --disable ol6*
-yum-config-manager">
+Install Mysql
+brew install mysql
+
+Install Nginx
+brew install nginx
+
+Downl">
 
   <!-- favicon icon files -->
 
@@ -148,16 +157,16 @@ yum-config-manager">
       
 <article class="post-container post-container--single">
   <header class="post-header">
-    <h1 class="post-title">Centos6.8 with Oracle UEK R3 for DTrace and PHP</h1>
+    <h1 class="post-title">Make and install php 5.6.28 for mac</h1>
     
     <div class="post-meta">
-      <time datetime="2016-10-29 12:31:06" class="post-meta__date date">2016-10-29 12:31:06</time> 
+      <time datetime="2016-11-27 22:12:46" class="post-meta__date date">2016-11-27 22:12:46</time> 
       <span class="post-meta__tags tags">
       
       
         &#8226; 标签:
         <font class="tags">
-        <a class="tags-link" href="/tags/linux/">linux</a>, <a class="tags-link" href="/tags/php/">php</a>, <a class="tags-link" href="/tags/thinking/">thinking</a>
+        <a class="tags-link" href="/tags/install/">install</a>, <a class="tags-link" href="/tags/mac/">mac</a>, <a class="tags-link" href="/tags/php/">php</a>
         </font>
       
       </span>
@@ -165,128 +174,112 @@ yum-config-manager">
     
   </header>
   <section id="post-content" class="article-content post">
-  <h2>Install the UEKR3 repo</h2>
-<pre><code>cd /etc/yum.repos.d
-wget http://public-yum.oracle.com/public-yum-ol6.repo
+  <h2>Install Brewhome</h2>
+<pre><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
 </code></pre>
-<h2>Disable all OL7 yum channels and enable UEK3 only</h2>
-<pre><code>yum-config-manager --disable ol6*
-yum-config-manager --enable ol6_UEKR3
+<h2>Install Mysql</h2>
+<pre><code>brew install mysql
 </code></pre>
-<h2>Make kernel-uek the new default</h2>
-<pre><code>sed -i 's/DEFAULTKERNEL=kernel/DEFAULTKERNEL=kernel=uek/' /etc/sysconfig/kernel
+<h2>Install Nginx</h2>
+<pre><code>brew install nginx
 </code></pre>
-<p>OR</p>
-<pre><code>grub2-set-default 0
+<h2>Download php-src</h2>
+<p>You can do it by git or http</p>
+<h3>git</h3>
+<pre><code>git clone https://github.com/php/php-src.git
 </code></pre>
-<h2>Import the OL7 RPM GPG key</h2>
-<pre><code>rpm --import http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6
+<h3>http</h3>
+<pre><code>http://php.net/downloads.php
 </code></pre>
-<h2>Install kernel-uek</h2>
-<pre><code>yum install kernel-uek kernel-uek-devel -y
-</code></pre>
-<h2>Confirm kernel-uek is default and reboot</h2>
-<pre><code>grub2-editenv list
-init 6
-</code></pre>
-<h2>Install dtrace-utils</h2>
-<p><strong>The dtrace-utils need to csi for download, Ijust save dtrace-utils-0.5.1-3.el6.x86_64.rpm</strong></p>
-<pre><code>git clone 
+<h2>Install PHP</h2>
+<pre><code>brew install autoconf openssl libpng libjpeg libxml gettext libmcrypt libiconv libmhash 
 
-rpm -Uvh dtrace-utils-0.5.1-3.el6.x86_64.rpm
+cd path/php-src(what you save)
+buildconf --force
 </code></pre>
-<h2>Download PHP Source</h2>
-<pre><code>wget http://cn2.php.net/distributions/php-5.6.27.tar.xz
-xz -d php-5.6.27.tar.xz
-tar xf php-5.6.27.tar -C /usr/local/src/
-</code></pre>
-<h2>Add epel repo</h2>
-<pre><code>rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
-</code></pre>
-<h2>Install 依赖</h2>
-<pre><code>yum install gcc bison bison-devel zlib-devel libmcrypt-devel mcrypt mhash-devel openssl-devel libxml2-devel libcurl-devel bzip2-devel readline-devel libedit-devel sqlite-devel -y
-</code></pre>
-<h2>Add user www</h2>
-<pre><code>groupadd www
-useradd -g www -s /sbin/nologin -M www
-</code></pre>
-<h2>Install</h2>
-<pre><code>cd /usr/local/src/php-5.6.27/
-
-./configure \--prefix=/usr/local/php56 \
---with-config-file-path=/usr/local/php56/etc \
---enable-inline-optimization \
---disable-debug \
---disable-rpath \
---enable-shared \
---enable-opcache \
---enable-fpm \
---with-fpm-user=www \
---with-fpm-group=www \
---with-mysql=mysqlnd \
+<h2>Configure</h2>
+<pre><code>./configure \
+--prefix=/usr/local/php56 \
+--mandir=/usr/share/man \
+--infodir=/usr/share/info \
+--without-apache \
+--with-openssl=/usr/local/Cellar/openssl/1.0.2j \
+--with-config-file-path=/etc \
+--with-curl \
+--with-bz2 \
+--with-zlib \
+--with-zlib-dir \
+--with-mcrypt \
+--with-mysql \
 --with-mysqli=mysqlnd \
 --with-pdo-mysql=mysqlnd \
+--with-imap-ssl \
 --with-gettext \
---enable-mbstring \
---with-iconv \
---with-mcrypt \
---with-mhash \
---with-openssl \
---enable-bcmath \
---enable-soap \
---with-libxml-dir \
---enable-pcntl \
---enable-shmop \
---enable-sysvmsg \
---enable-sysvsem \
---enable-sysvshm \
---enable-sockets \
---with-curl \
---with-zlib \
+--with-pear \
+--with-gettext \
+--with-pear \
+--with-freetype-dir \
+--with-gd \
+--with-jpeg-dir \
+--with-png-dir \
+--with-xmlrpc \
+--with-xsl \
+--with-pcre-regex \
+--with-sqlite3 \
+--enable-exif \
 --enable-zip \
---with-bz2 \
---with-readline \
---enable-dtrace
-
-make -j8 &amp;&amp; make install
+--enable-ftp \
+--enable-soap \
+--enable-sockets \
+--enable-pdo \
+--enable-cli \
+--enable-calendar \
+--enable-mbstring \
+--enable-bcmath \
+--enable-mbregex \
+--enable-fpm \
+--enable-gd-native-ttf \
+--enable-xml \
+--enable-libxml \
+--enable-sysvsem \
+--enable-debug
 </code></pre>
-<p>If you want to reinstall:</p>
-<pre><code>make clean
-make clean all
-./configure ...
-make -j8 &amp;&amp; make install
+<h3>make and install</h3>
+<pre><code>sudo make &amp;&amp; make install
 </code></pre>
-<h2>Configure PHP</h2>
-<h3>ini：</h3>
-<pre><code>cp php.ini-development /usr/local/php56/etc/php.ini
+<h2>Setting</h2>
+<p>Write it in <strong>.zshrc</strong> (I used zsh)</p>
+<pre><code>export PATH=&quot;/usr/local/php56/bin:/usr/local/php56/sbin:$PATH&quot;
 </code></pre>
-<h3>php-fpm service</h3>
-<pre><code>cp /usr/local/php56/etc/php-fpm.conf.default /usr/local/php56/etc/php-fpm.conf
-cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm56
-chmod +x /etc/init.d/php-fpm56
-</code></pre>
-<h3>Start php-fpm</h3>
-<pre><code>service php-fpm56 start
-</code></pre>
-<h3>Add PHP Command to PATH</h3>
-<pre><code>vim ~/.bash_profile
-export PATH=$PATH:/usr/local/php56/bin
-
-source ~/.bash_profile
-</code></pre>
+<p>Rewrite your configure:</p>
+<ul>
+<li>/etc/php.ini</li>
+<li>/etp/php-fmp.conf</li>
+<li>/usr/local/etc/nginx/nginx.conf
+<ul>
+<li>add <code>include vhost/*.conf</code> in http{}</li>
+<li>mkdir /usr/local/etc/nginx/vhost</li>
+<li>vim your site setting in vhost/yourname.conf</li>
+</ul>
+</li>
+</ul>
+<h2>Start Services</h2>
+<pre><code>php-fpm -y /etp/php-fmp.conf -D
+brew services start mysql
+brew services start nginx</code></pre>
 
   </section>
   <div class="copyright">
-    <span>文本標題:</span><a href="/2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html" target="_blank">Centos6.8 with Oracle UEK R3 for DTrace and PHP</a><br />
+    <span>文本標題:</span><a href="/2016/11/27/Make and install php 5.6.28 for mac.html" target="_blank">Make and install php 5.6.28 for mac</a><br />
     <span>文章作者:</span><a href="/" title="回到主页" target="_blank">Virink</a><br />
-    <span>發佈時間:</span>2016-10-29 12:31:06<br />
-    <span>最後更新:</span>2016-12-12 14:11:36<br />
-    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html" title="Centos6.8 with Oracle UEK R3 for DTrace and PHP" target="_blank">https://www.virzz.com/2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html</a><br />
+    <span>發佈時間:</span>2016-11-27 22:12:46<br />
+    <span>最後更新:</span>2016-12-15 21:52:10<br />
+    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/11/27/Make and install php 5.6.28 for mac.html" title="Make and install php 5.6.28 for mac" target="_blank">https://www.virzz.com/2016/11/27/Make and install php 5.6.28 for mac.html</a><br />
     <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
   </div>
   
 <section class="post-comments">
-    <div class="ds-thread" data-thread-key="2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html" data-title="Centos6.8 with Oracle UEK R3 for DTrace and PHP" data-url="https://www.virzz.com/2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html"></div>
+    <div class="ds-thread" data-thread-key="2016/11/27/Make and install php 5.6.28 for mac.html" data-title="Make and install php 5.6.28 for mac" data-url="https://www.virzz.com/2016/11/27/Make and install php 5.6.28 for mac.html"></div>
     <script type="text/javascript">
     var duoshuoQuery = {short_name:"virink"};
       (function() {

@@ -66,6 +66,29 @@ ssh-keygen -t
   </entry>
   
   <entry>
+    <title>Make and install php 5.6.28 for mac</title>
+    <link href="https://www.virzz.com/2016/11/27/Make%20and%20install%20php%205.6.28%20for%20mac.html"/>
+    <id>https://www.virzz.com/2016/11/27/Make and install php 5.6.28 for mac.html</id>
+    <published>2016-11-27T14:12:46.000Z</published>
+    <updated>2016-12-15T13:52:10.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;Install Brewhome&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;/usr/bin/ruby -e &amp;quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&amp;
+    
+    </summary>
+    
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+      <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    
+      <category term="install" scheme="https://www.virzz.com/tags/install/"/>
+    
+  </entry>
+  
+  <entry>
     <title>如何折腾我的Flask博客VirzzBlog</title>
     <link href="https://www.virzz.com/2016/11/15/%E5%A6%82%E4%BD%95%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84Flask%E5%8D%9A%E5%AE%A2VirzzBlog.html"/>
     <id>https://www.virzz.com/2016/11/15/如何折腾我的Flask博客VirzzBlog.html</id>
