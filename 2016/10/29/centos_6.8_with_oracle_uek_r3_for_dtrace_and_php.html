@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Centos6.8 with Oracle UEK R3 for DTrace and PHP - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,thinking,php,linux">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html">Centos6.8 with Oracle UEK R3 for DTrace and PHP</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/thinking/"><i class="fa fa-tag"></i>thinking</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/linux/"><i class="fa fa-tag"></i>linux</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-10-29 12:31:06">2016-10-29 12:31:06</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>Install the UEKR3 repo</h2>
+<pre><code>cd /etc/yum.repos.d
+wget http://public-yum.oracle.com/public-yum-ol6.repo
+</code></pre>
+<h2>Disable all OL7 yum channels and enable UEK3 only</h2>
+<pre><code>yum-config-manager --disable ol6*
+yum-config-manager --enable ol6_UEKR3
+</code></pre>
+<h2>Make kernel-uek the new default</h2>
+<pre><code>sed -i 's/DEFAULTKERNEL=kernel/DEFAULTKERNEL=kernel=uek/' /etc/sysconfig/kernel
+</code></pre>
+<p>OR</p>
+<pre><code>grub2-set-default 0
+</code></pre>
+<h2>Import the OL7 RPM GPG key</h2>
+<pre><code>rpm --import http://public-yum.oracle.com/RPM-GPG-KEY-oracle-ol6
+</code></pre>
+<h2>Install kernel-uek</h2>
+<pre><code>yum install kernel-uek kernel-uek-devel -y
+</code></pre>
+<h2>Confirm kernel-uek is default and reboot</h2>
+<pre><code>grub2-editenv list
+init 6
+</code></pre>
+<h2>Install dtrace-utils</h2>
+<p><strong>The dtrace-utils need to csi for download, Ijust save dtrace-utils-0.5.1-3.el6.x86_64.rpm</strong></p>
+<pre><code>git clone
+
+rpm -Uvh dtrace-utils-0.5.1-3.el6.x86_64.rpm
+</code></pre>
+<h2>Download PHP Source</h2>
+<pre><code>wget http://cn2.php.net/distributions/php-5.6.27.tar.xz
+xz -d php-5.6.27.tar.xz
+tar xf php-5.6.27.tar -C /usr/local/src/
+</code></pre>
+<h2>Add epel repo</h2>
+<pre><code>rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+</code></pre>
+<h2>Install 依赖</h2>
+<pre><code>yum install gcc bison bison-devel zlib-devel libmcrypt-devel mcrypt mhash-devel openssl-devel libxml2-devel libcurl-devel bzip2-devel readline-devel libedit-devel sqlite-devel -y
+</code></pre>
+<h2>Add user www</h2>
+<pre><code>groupadd www
+useradd -g www -s /sbin/nologin -M www
+</code></pre>
+<h2>Install</h2>
+<pre><code>cd /usr/local/src/php-5.6.27/
+
+./configure \--prefix=/usr/local/php56 \
+--with-config-file-path=/usr/local/php56/etc \
+--enable-inline-optimization \
+--disable-debug \
+--disable-rpath \
+--enable-shared \
+--enable-opcache \
+--enable-fpm \
+--with-fpm-user=www \
+--with-fpm-group=www \
+--with-mysql=mysqlnd \
+--with-mysqli=mysqlnd \
+--with-pdo-mysql=mysqlnd \
+--with-gettext \
+--enable-mbstring \
+--with-iconv \
+--with-mcrypt \
+--with-mhash \
+--with-openssl \
+--enable-bcmath \
+--enable-soap \
+--with-libxml-dir \
+--enable-pcntl \
+--enable-shmop \
+--enable-sysvmsg \
+--enable-sysvsem \
+--enable-sysvshm \
+--enable-sockets \
+--with-curl \
+--with-zlib \
+--enable-zip \
+--with-bz2 \
+--with-readline \
+--enable-dtrace
+
+make -j8 &amp;&amp; make install
+</code></pre>
+<p>If you want to reinstall:</p>
+<pre><code>make clean
+make clean all
+./configure ...
+make -j8 &amp;&amp; make install
+</code></pre>
+<h2>Configure PHP</h2>
+<h3>ini：</h3>
+<pre><code>cp php.ini-development /usr/local/php56/etc/php.ini
+</code></pre>
+<h3>php-fpm service</h3>
+<pre><code>cp /usr/local/php56/etc/php-fpm.conf.default /usr/local/php56/etc/php-fpm.conf
+cp sapi/fpm/init.d.php-fpm /etc/init.d/php-fpm56
+chmod +x /etc/init.d/php-fpm56
+</code></pre>
+<h3>Start php-fpm</h3>
+<pre><code>service php-fpm56 start
+</code></pre>
+<h3>Add PHP Command to PATH</h3>
+<pre><code>vim ~/.bash_profile
+export PATH=$PATH:/usr/local/php56/bin
+
+source ~/.bash_profile
+</code></pre>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html" target="_blank">Centos6.8 with Oracle UEK R3 for DTrace and PHP</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-10-29 12:31:06">2016-10-29 12:31:06</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:28:23">2017-06-01 23:28:23</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html" title="Centos6.8 with Oracle UEK R3 for DTrace and PHP" target="_blank">https://www.virzz.com/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

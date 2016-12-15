@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>PHP安全编码 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,php,web">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2016/11/12/php_coding_safely.html">PHP安全编码</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/web/"><i class="fa fa-tag"></i>web</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-11-12 23:40:46">2016-11-12 23:40:46</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>验证过滤用户的输入</h2>
+<p>即使是最普通的字母数字输入也可能是危险的，列举几个容易引起安全问题的字符：</p>
+<pre><code>! $ ^ &amp; * ( ) ~ [ ] \ | { } ' " ; &lt; &gt; ? - `
+</code></pre>
+<p>在数据库中可能有特殊意义的字符：</p>
+<pre><code>' " ; \
+</code></pre>
+<p>还有一些非打印字符：</p>
+<p>字符\x00或者说ASCII 0，NULL或FALSE</p>
+<p>字符\x10和\x13，或者说ASCII 10和13，\n \r</p>
+<p>字符\x1a或者说ASCII 26，表示文件的结束</p>
+<p>输入错误的参数类型，也可能导致程序出现意想不到的错误。</p>
+<p>输入过多的参数值，可能导致溢出等错误。</p>
+<h2>PHP中验证用户的输入</h2>
+<p>这里特别要注意php.ini中的register_globals的设定，在早期的php版本中是默认开启的，这会导致很严重的安全问题：</p>
+<pre><code>&lt;?php
+// set admin flag
+if ($auth-&gt;isAdmin()) {
+$admin = TRUE;
+}
+// ...
+if ($admin) {
+// do administrative tasks
+}
+?&gt;
+</code></pre>
+<p>上面这段代码看起来是安全的，但是如果register_globals开启了的话，在访问的url中加入?admin=1即可绕过前半部分的逻辑判断。</p>
+<p>更安全的代码应该给$admin赋默认FALSE值：</p>
+<pre><code>&lt;?php
+// create then set admin flag
+$admin = FALSE;
+if ($auth-&gt;isAdmin()) {
+    $admin = TRUE;
+}
+// ...
+if ($admin) {
+    // do administrative tasks
+}
+?&gt;
+</code></pre>
+<p>早期人们开发调试的时候发现使用register_globals有极大的便利，所以早期的php版本中默认开启。</p>
+<p>但是随着越来越多的安全问题，从php 4.2.0开始，register_globals变为了默认关闭。</p>
+<p>当你发现register_globals是on的时候，你可能会在脚本当中加入如下代码使其关闭：</p>
+<pre><code>ini_set('register_globals', 0);
+</code></pre>
+<p>但实际上，当所有的全局变量已经创建了之后，以上代码并不会起到作用。</p>
+<p>但是你可以在文档的根目录下的.htaccess的文件中加上下面这一行：</p>
+<pre><code>php_flag register_globals 0
+</code></pre>
+<p>变量声明：强烈建议总是事先声明变量。</p>
+<p>检查输入的类型，长度和格式：</p>
+<p>字符串检查：在PHP中，字符串几乎可以是任何事情，但有些值并不是严格的字符串类型，可以用is_string()函数来确定。</p>
+<p>有些时候你不介意数字作为字符串，可以用empty()函数。</p>
+<p>数字类型检查：使用is_int()函数或者is_integer()或is_long()，例如：</p>
+<pre><code>$year = $_POST['year'];
+if (!is_int($year))
+exit("$year is an invalid value for year!");
+</code></pre>
+<p>也可以使用gettype()函数判断类型后做处理：</p>
+<pre><code>if (gettype($year) != 'integer') {
+exit("$year is an invalid value for year!");
+}
+</code></pre>
+<p>至少还有三种方式可以吧$year变量转变为整数：</p>
+<pre><code>$year = intval($_POST['year']);
+$year = ( int ) $_POST['year'];
+if (!settype($year, 'integer')) {exit("$year is an invalid value for year!");}
+</code></pre>
+<p>如果允许浮点型与零的值，可以使用<code>is_numeric()</code>函数来做判断。 判断一个值是否为布尔型的时候使用is_bool()函数。</p>
+<p>下表是对各种类型变量使用各函数判断的结果：</p>
+<p><img alt="" src="https://www.virzz.com/assets/582b88b23c9b991407b93b55.png" /></p>
+<p>检查字符串的长度使用strlen()变量：</p>
+<pre><code>if (strlen($year) != 4)
+    exit("$year is an invalid value for year!");
+</code></pre>
+<p>概括总结一下PHP中类型，长度，格式等验证：</p>
+<pre><code>&lt;?php
+// set up array of expected values and types
+$expected = array(
+    'carModel' =&gt; 'string',
+    'year' =&gt; 'int',
+    'imageLocation' =&gt; 'filename'
+);
+// check each input value for type and length
+foreach ($expected AS $key =&gt; $type) {
+    if (empty($_GET[$key])) {
+        ${$key} = NULL;
+        continue;
+    }
+    switch ($type) {
+        case 'string':
+            if (is_string($_GET[$key]) &amp;&amp; strlen($_GET[$key]) &lt; 256) {
+                ${$key} = $_GET[$key];
+            }
+            break;
+        case 'int':
+            if (is_int($_GET[$key])) {
+                ${$key} = $_GET[$key];
+            }
+            break;
+        case 'filename':
+            // limit filenames to 64 characters
+            if (is_string($_GET[$key]) &amp;&amp; strlen($_GET[$key]) &lt; 64) {
+                // escape any non-ASCII
+                ${$key} = str_replace('%', '_', rawurlencode($_GET[$key]));
+                // disallow double dots
+                if (strpos(${$key}, '..') === TRUE) {
+                    ${$key} = NULL;
+                }
+            }
+            break;
+    }
+    if (!isset(${$key})) {
+        ${$key} = NULL;
+    }
+}
+// use the now-validated input in your application
+</code></pre>
+<p>对于一些可能有害的字符，可以用如下的几种方式进行保护：</p>
+<ul>
+<li>使用 \ 对其进行转义。</li>
+<li>使用引号把他引起来。</li>
+<li>使用%nn的方式编码，如urlencode()函数。</li>
+</ul>
+<p>可以尝试在php.ini中开启magic_quotes_gpc，这样对于所有由用户GET、POST、COOKIE中传入的特殊字符都会转义。</p>
+<p>也可是使用addslashes()函数，但是开启magic_quotes_gpc所造成的影响可能远超过益处。</p>
+<p>addslashes()也只对最常见的四个字符做了转义：单引号、双引号、反斜线、空字符。</p>
+<p>同时为了使数据还原，需要使用stripslashes()函数，也可能破坏一些多字节的转义。</p>
+<p>推荐使用mysql_real_escape_string()函数，虽然只是用来设计转义插入数据库的数据，但是他能转义更多的字符。</p>
+<p>如：NULL、\x00、\n、\r、\、&rsquo;、&rdquo;和\x1a。使用用例：</p>
+<pre><code>&lt;?php
+$expected = array(
+    'carModel',
+    'year',
+    'bodyStyle'
+);
+foreach ($expected AS $key) {
+    if (!empty($_GET[$key])) {
+        ${$key} = mysql_real_escape_string($_GET[$key]);
+    }
+}
+?&gt;
+</code></pre>
+<p>使用mysql_real_escape_string()函数也不是万能的，转义一些并非是要写入mysql的数据库的数据可能不会产生作用或者出现错误。</p>
+<p>可以根据自己的实际需要，自己使用str_replace()函数写一个针对特殊字符的转义。<br />
+对于文件的路径与名称的过滤</p>
+<p>文件名中不能包含二进制数据，否则可能引起问题。</p>
+<p>一些系统允许Unicode多字节编码的文件名，但是尽量避免，应当使用ASCII的字符。</p>
+<p>虽然Unix系统几乎可以在文件名设定中使用任何符号，但是应当尽量使用 - 和 _ 避免使用其他字符。</p>
+<p>同时需要限定文件名的长度。</p>
+<p>php中的文件操作通常使用fopen()函数与file_get_contents()函数。</p>
+<pre><code>&lt;?php
+$applicationPath = '/home/www/myphp/code/';
+$scriptname      = $_POST['scriptname'];
+highlight_file($applicationPath . $scriptname);
+?&gt;
+</code></pre>
+<p>上面代码的问题在于用户POST输入的scriptname没有做任何过滤，如果用户输入../../../../etc/passwd，则有可能读取到系统的passwd文件。</p>
+<pre><code>&lt;?php
+$uri = $_POST['uri'];
+if (strpos($uri, '..'))
+    exit('That is not a valid URI.');
+$importedData = file_get_contents($uri);
+</code></pre>
+<p>如果发现 .. 字符串就不执行会不会出现问题呢？如果前面并没有路径限制的话，仍然会出现问题：</p>
+<p>使用file协议，当用户输入file:///etc/passwd的时候，会把passwd的内容带入$importedData变量中。<br />
+防止SQL注入<br />
+SQL注入是如何产生的：</p>
+<p>1、接收一个由用户提交的变量，假设变量为$variety：</p>
+<pre><code>$variety = $_POST['variety'];
+</code></pre>
+<p>2、接收的变量带入构造一个数据库查询语句：</p>
+<pre><code>$query = "SELECT * FROM wines WHERE variety='$variety'";
+</code></pre>
+<p>3、把构造好的语句提交给MySQL服务器查询，MySQL返回查询结果。</p>
+<p>当由用户输入lagrein&rsquo; or 1=1#时，产生的结果将会完全不同。<br />
+防止SQL注入的几种方式：</p>
+<p>检查用户输入的类型，当用户输入的为数字时可以使用如下方式：</p>
+<ul>
+<li>使用is_int()函数（或is_integer()或is_long()函数）</li>
+<li>使用gettype()函数</li>
+<li>使用intval()函数</li>
+<li>使用settype()函数</li>
+</ul>
+<p>检查用户输入字符串的长度使用strlen()函数。</p>
+<p>检查日期或时间是否是有效的，可以使用strtotime()函数</p>
+<p>对于一个已经存在的程序来说，可以写一个通用函数来过滤：</p>
+<pre><code>function safe($string)
+{
+    return "'" . mysql_real_escape_string($string) . "'";
+}
+</code></pre>
+<p>调用方式：</p>
+<pre><code>$variety = safe($_POST['variety']);
+$query   = "SELECT * FROM wines WHERE variety=" . $variety;
+</code></pre>
+<p>对于一个刚开始写的程序，应当设计的更安全一些，PHP5中，增加了MySQL支持，提供了mysqli扩展：</p>
+<p>PHP手册地址：http://php.net/mysqli</p>
+<pre><code>&lt;?php
+// retrieve the user's input
+$animalName = $_POST['animalName'];
+// connect to the database
+$connect    = mysqli_connect('localhost', 'username', 'password', 'database');
+if (!$connect)
+    exit('connection failed:  ' . mysqli_connect_error());
+// create a query statement resource
+$stmt = mysqli_prepare($connect, "SELECT intelligence FROM animals WHERE name = ?");
+if ($stmt) {
+    // bind the substitution to the statement
+    mysqli_stmt_bind_param($stmt, "s", $animalName);
+    // execute the statement
+    mysqli_stmt_execute($stmt);
+    // retrieve the result...
+    mysqli_stmt_bind_result($stmt, $intelligence);
+    // ...and display it
+    if (mysqli_stmt_fetch($stmt)) {
+        print "A $animalName has $intelligence intelligence.\n";
+    } else {
+        print 'Sorry, no records found.';
+    }
+    // clean up statement resource
+    mysqli_stmt_close($stmt);
+}
+mysqli_close($connect);
+?&gt;
+</code></pre>
+<p>mysqli扩展提供了所有的查询功能。</p>
+<p>mysqli扩展也提供了面向对象的版本：</p>
+<pre><code>&lt;?php
+$animalName = $_POST['animalName'];
+$mysqli     = new mysqli('localhost', 'username', 'password', 'database');
+if (!$mysqli)
+    exit('connection failed:  ' . mysqli_connect_error());
+$stmt = $mysqli-&gt;prepare("SELECT intelligence FROM animals WHERE name = ?");
+if ($stmt) {
+    $stmt-&gt;bind_param("s", $animalName);
+    $stmt-&gt;execute();
+    $stmt-&gt;bind_result($intelligence);
+    if ($stmt-&gt;fetch()) {
+        print "A $animalName has $intelligence intelligence.\n";
+    } else {
+        print 'Sorry, no records found.';
+    }
+    $stmt-&gt;close();
+}
+$mysqli-&gt;close();
+?&gt;
+</code></pre>
+<p>防止XSS攻击</p>
+<p>xss攻击一个常用的方法就是注入HTML元素执行js脚本，php中已经内置了一些防御的函数（如htmlentities或者htmlspecialchars）：</p>
+<pre><code>&lt;?php
+function safe($value)
+{
+    htmlentities($value, ENT_QUOTES, 'utf-8');
+    // other processing
+    return $value;
+}
+// retrieve $title and $message from user input
+$title   = $_POST['title'];
+$message = $_POST['message'];
+// and display them safely
+print '&lt;h1&gt;' . safe($title) . '&lt;/h1&gt;
+       &lt;p&gt;' . safe($message) . '&lt;/p&gt;';
+?&gt;
+</code></pre>
+<p>过滤用户提交的URL</p>
+<p>如果允许用户输入一个URL用来调用一个图片或者链接，你需要保证他不传入javascript:或者vbscript:或data:等非http协议。</p>
+<p>可以使用php的内置函数parse_url()函数来分割URL，然后做判断。</p>
+<p>设置允许信任的域：</p>
+<pre><code>&lt;?php
+$trustedHosts      = array(
+    'example.com',
+    'another.example.com'
+);
+$trustedHostsCount = count($trustedHosts);
+function safeURI($value)
+{
+    $uriParts = parse_url($value);
+    for ($i = 0; $i &lt; $trustedHostsCount; $i++) {
+        if ($uriParts['host'] === $trustedHosts[$i]) {
+            return $value;
+        }
+    }
+    $value .= ' [' . $uriParts['host'] . ']';
+    return $value;
+}
+// retrieve $uri from user input
+$uri = $_POST['uri'];
+// and display it safely
+echo safeURI($uri);
+?&gt;
+</code></pre>
+<p>防止远程执行</p>
+<p>远程执行通常是使用了php代码执行如eval()函数，或者是调用了命令执行如exec()，passthru()，proc_open()，shell_exec()，system()或popen()。</p>
+<p>注入php代码：</p>
+<p>php为开发者提供了非常多的方法可以来调用允许php脚本，我们就需要注意对用户可控的数据进行过滤。<br />
+调用的几种方式：</p>
+<p>include()和require()函数，eval()函数，preg_replace()采用e模式调用，编写脚本模板。</p>
+<pre><code>&lt;?php
+print Hello . world;
+?&gt;
+</code></pre>
+<p>上面代码将会输出Helloworld，php在解析的时候会检查是否存在一个名为Hello的函数。</p>
+<p>如果没有找到的话，他会自己创建一个并把它的名字作为它的值，world也是一样。</p>
+<p>上传文件中嵌入php代码：</p>
+<p>攻击者可以上传一个看似很普通的图片，PDF等，但是实际上呢？</p>
+<p>linux下可以使用如下命令插入php代码进入图片中：</p>
+<pre><code>$ echo '&lt;?php phpinfo();?&gt;' &gt;&gt; locked.gif
+</code></pre>
+<p>把代码插入到了locked.gif图片中。</p>
+<p>并且此时用file命令查看文件格式仍为图片：</p>
+<pre><code>$ file -i locked.giflocked.gif: image/gif
+</code></pre>
+<p>任何的图像编辑或图像处理的程序包括PHP的getimagesize()函数，都会认为它是一个GIF图像。</p>
+<p>但是当你使用cat命令查看图片时，可以看到图片末尾的</p>
+<p>当把图片的后缀改为php或者已php的方式解析时，插入的phpinfo()函数便会执行。<br />
+Shell命令执行</p>
+<p>PHP提供了一些可以直接执行系统命令的函数，如exec()函数或者 `（反引号）。</p>
+<p>PHP的安全模式会提供一些保护，但是也有一些方式可以绕过安全模式：</p>
+<p>1、上传一个Perl脚本，或者Python或Ruby等，服务器支持的环境，来执行其他语言的脚本可绕过PHP的安全模式。</p>
+<p>2、利用系统的缓冲溢出漏洞，绕过安全模式。</p>
+<p>下表列出了跟Shell相关的一些字符：<br />
+名称  字符  ASCII   16进制    URL编码   HTML编码<br />
+换行      10  \x0a    %0a     &amp;#10<br />
+感叹号     !   33  \x21    %21     &amp;#33<br />
+双引号     &rdquo;   34  \x22    %22     &amp;#34或&amp;quot<br />
+美元符号    $   36  \x24    %24     &amp;#36<br />
+连接符     &amp;   38  \x26    %26     &amp;#38或&amp;#amp<br />
+单引号     &lsquo;   39  \x27    %27     &amp;#39<br />
+左括号     (   40  \x28    %28     &amp;#40<br />
+右括号     )   41  \x29    %29     &amp;#41<br />
+星号  *   42  \x2a    %2a     &amp;#42<br />
+连字符号    -   45  \x2d    %2d     &amp;#45<br />
+分号  ;   59  \x3b    %3b     &amp;#59<br />
+左尖括号    &lt;   60  \x3c    %3c     &amp;#60<br />
+右尖括号    &gt;   62  \x3e    %3e     &amp;#62<br />
+问号  ?   63  \x3f    %3f     &amp;#63<br />
+左方括号    [   91  \x5b    %5b     &amp;#91<br />
+反斜线     \   92  \x5c    %5c     &amp;#92<br />
+右方括号    ]   93  \x5d    %5d     &amp;#93<br />
+插入符     ^   94  \x5e    %5e     &amp;#94<br />
+反引号     `   96  \x60    %60     &amp;#96<br />
+左花括号    {   123     \x7b    %7b     &amp;#123<br />
+管道符     |   124     \x7c    %7c     &amp;#124<br />
+右花括号    }   125     \x7d    %7d     &amp;#125<br />
+波浪号     ~   126     \x7e    %7e     &amp;#126</p>
+<p>如下PHP脚本：</p>
+<pre><code>&lt;?php
+// get the word count of the requested file
+$filename = $_GET['filename'];
+$command  = "/usr/bin/wc $filename";
+$words    = shell_exec($command);
+print "$filename contains $words words.";
+?&gt;
+</code></pre>
+<p>用户可以输入如下的URL来攻击读取passwd文件：</p>
+<pre><code>wordcount.php?filename=%2Fdev%2Fnull%20%7C%20cat%20-%20%2Fetc%2Fpasswd
+</code></pre>
+<p>字符串拼接之后，将会执行 /usr/bin/wc /dev/null | cat - /etc/passwd这条命令</p>
+<p>如果能够不适用命令执行函数与eval()函数，可以在php.ini中禁止：disable_functions = &ldquo;eval,phpinfo&rdquo;</p>
+<p>PHP中还有一个preg_replace()函数，可能引起代码执行漏洞。</p>
+<p>mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject [, int $limit ] )</p>
+<p>在 subject 中搜索 pattern 模式的匹配项并替换为 replacement 。如果指定了 limit ，则仅替换 limit 个匹配。</p>
+<p>如果省略 limit 或者其值为 -1，则所有的匹配项都会被替换。</p>
+<p>特别注意：</p>
+<p>/e 修正符使 preg_replace() 将 replacement 参数当作 PHP 代码（在适当的逆向引用替换完之后）。</p>
+<p>提示：要确保 replacement 构成一个合法的 PHP 代码字符串，否则 PHP 会在报告在包含 preg_replace() 的行中出现语法解析错误。</p>
+<pre><code>&lt;?php
+function test($str)
+{
+    //......
+    return $str;
+}
+echo preg_replace("/\s*\[p hp language=""](.+?)\[\/php\]\s*/ies", 'test("\1")', $_GET["h"]);
+?&gt;
+</code></pre>
+<p>当用户输入</p>
+<pre><code>?h=[p hp]phpinfo()[/php]
+</code></pre>
+<p>经过正则匹配后， replacement 参数变为&rsquo;test(&ldquo;phpinfo()&rdquo;)&rsquo;，</p>
+<p>此时phpinfo仅是被当做一个字符串参数了。</p>
+<p>但是当我们提交</p>
+<pre><code>?h=[p hp]{${phpinfo()}}[/php]
+</code></pre>
+<p>时，phpinfo()就会被执行。</p>
+<p>在php中，双引号里面如果包含有变量，php解释器会将其替换为变量解释后的结果；单引号中的变量不会被处理。</p>
+<p>注意：双引号中的函数不会被执行和替换。</p>
+<p>在这里我们需要通过<code>{${}}</code>构造出了一个特殊的变量，<code>'test("{${phpinfo()}}")'</code>，达到让函数被执行的效果 <code>${phpinfo()}</code> 会被解释执行。</p>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/11/12/php_coding_safely.html" target="_blank">PHP安全编码</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-11-12 23:40:46">2016-11-12 23:40:46</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:37:01">2017-06-01 23:37:01</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/11/12/php_coding_safely.html" title="PHP安全编码" target="_blank">https://www.virzz.com/2016/11/12/php_coding_safely.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>CTF老赛棍退休简述 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,ctf,thinking,default">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2018/04/20/the_retire_sketch_by_old_ctfer.html">CTF老赛棍退休简述</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/thinking/"><i class="fa fa-tag"></i>thinking</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/default/"><i class="fa fa-tag"></i>default</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-04-20 21:12:31">2018-04-20 21:12:31</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>前言</h2>
+<p>CTF，全称 Capture The Flag，即夺旗赛，起源于 1996 年 DEFCON 全球黑客大会，是网络安全技术人员进行技术竞技的一种比赛。</p>
+<p>balabala~</p>
+<h2>赛棍入门</h2>
+<p>自2015年起，一次偶然，我参加了“第三届-360信息安全大赛”，还取得了不小的成绩。自那个时候起，我就一发不可收拾，彻底爱上了她。</p>
+<p>CTF，这是一个新世界，每次参加比赛，都热血沸腾，很多时候为了解出一个题目而通宵达旦的战斗，疯狂的测试，寻找突破口，各种百度、谷歌搜索题目相关的信息。</p>
+<p>那个时候的CTF远不如现在的多，等待比赛开启的时候如同心里有无数只蚂蚁在爬。</p>
+<p>后来，国内打CTF比赛的潮流逐渐风靡，各大赛事如雨后春笋般竞相出现。</p>
+<h2>赛棍进阶</h2>
+<p>参加了大大小小的数个线上CTF解题赛，技术经验都有了一个长足的进步。</p>
+<p>又一次偶然的机会，参加了“第六届全国网络安全攻防大赛总决赛”。</p>
+<p>以一个萌新的身份，参加一次全新赛制的比赛，毫无准备，懵懵懂懂的看着比赛规则，一脸懵逼。</p>
+<p>在挨打中站起来，逐渐了解了AWD的竞赛模式。</p>
+<p>不懂得第一时间修改默认密码，被其他选手删库跑路，不得不向主办方申请重置。</p>
+<p>手忙脚乱之中，凭借还算可以的代码基础，通过审计和抓取别人的流量发现漏洞，勉强修补了Web题目的漏洞，做到不在Web题目中失分。</p>
+<p>快速写完自动化攻击脚本后，也开始了坐享得分的成果。</p>
+<p>当然，由于缺乏Pwn选手，二进制方面还是不断失分的。</p>
+<p>下午，主办方开启独立新题，我在比赛结束前成果拿下，得到了一定的分数，最后取得三等奖的成绩。</p>
+<h2>赛棍养成</h2>
+<p>不论是线上Jeopardy解题还是线下AWD攻防，她的魅力都让人无法自拔，深深的沉迷进去。</p>
+<p>作为一名纯Web的CTF选手，其实还是很苦逼的。即使AK了所有的Web也不可能拿到进入决赛的名次，更别提都没有AK了。</p>
+<p>所有，线下比赛的机会少得可怜，同时，受限于专业问题，参赛时间也有限。</p>
+<p>虽然如此，2016-2017年间，大大小小的赛事还是参加了不少的。</p>
+<p>逐渐完成了赛棍的自我修养！</p>
+<p>做题的胃口也养刁了不少，太次的脑洞题目一般跳过不做，做题只是为了学习最新的，我不会的技术。</p>
+<h2>赛棍战友</h2>
+<p>CTF的征途，我并不是孤身一人，Blue，乐清小俊杰，l3m0n，ByStudent，凉茶，hazzel，风伤，xcanwin，AK等，有老友，有新人。</p>
+<p>既是对手，亦是战友。</p>
+<p>当年一起征战各大比赛，如今他们的身影已经不多见了，事了俯身去，深藏功与名。大佬们也一个个都退出赛事，静静围观。</p>
+<p>毕业了，或实习，或工作，各自为生活而奔波忙碌，少有机会再现身CTF了。</p>
+<p>走了，走了，都将离去。</p>
+<h2>赛棍退休</h2>
+<p>CTF是入门学习的兴趣所在，通过解题提高技术，通过解题的过程学会如何学习，参加CTF比赛能够锻炼自己，并提高对安全技术的学习兴趣。</p>
+<p>名次荣誉，奖金都是动力。</p>
+<p>其实吧，还是我老了，脑子不够用了，发际线上升，发色渐变。做不动题目了，也丢失了当年的热血。</p>
+<p>当然，也有一部分原因是题目基本上都做的差不多了，来来回回都是那些套路在不断重复。题目的重心也从Web转移到了Bin。作为一个Web狗，实在是无能为力。</p>
+<p>毕竟不是每个人都是全栈大佬复旦刘大爷，一个人硬肛两千多队伍，又不眠不休32小时硬肛23支队伍，怼到强网杯亚军！我反正只是菜鸡一枚。</p>
+<p>现在偶尔也是做题的，好的比赛也都有关注，发现有意思的题目也会做一做的，学一学新技术，大多数只是看看一笑而过。</p>
+<h2>赛棍总结</h2>
+<p>CTF赛棍生涯基本上到这里了，其实吧，我觉得现在的线下赛更有意思。当然也不否认还是有一些好的线上题目，比如Orange大佬出的综合渗透环境。</p>
+<p>虽然套路简单，安全运维-&gt;查找并修复漏洞-&gt;针对漏洞写自动化攻击脚本。但是更能让人学习更多的技术。</p>
+<p>打了一次CTF比赛，除了名次，更重要的是学到新东西新技术。而不是如何猜测一个无脑的脑洞题纯属浪费时间浪费精力。</p>
+<p>好的CFT题目应该有好的技术点：</p>
+<ul>
+<li>学会某个函数的特殊利用方式</li>
+<li>学会快速挖掘漏洞</li>
+<li>知道某个漏洞的原理和利用方式</li>
+<li>知道某个程序，某个框架存在一个怎样的漏洞或缺陷</li>
+<li>学习如何编写一些脚本</li>
+<li>学会如何安全运维</li>
+<li>团队如何配合、分工</li>
+<li>中间件的黑科技</li>
+<li>做题的思路和渗透经验</li>
+</ul>
+<p>当然还有其他的知识。</p>
+<p>另外，希望以后的线下赛名额不要被线上赛阻挡吧。一堆乱七八糟的Misc，Crypto等题目线下是没有的。线上打不好不代表线上不牛逼。</p>
+<p>线上线下应该分离并独立起来。</p>
+<h2>搅屎棍</h2>
+<p>不搅屎的赛棍不是好赛棍</p>
+<p>Web怼多了，也总结出了一些经验。比如，不死马、通防Waf、流量记录。虽然我贡献的只是PHP的，但是其他语言也是可以有相类似的技巧。</p>
+<p>有一点听自豪的，某次有人问我是不是参加XXX比赛了，因为上次的Shell都变成了“Virink”。</p>
+<p>其实我并没有参赛，而是有选手用了我的Waf。</p>
+<p><img alt="" src="https://virzz-img.dongzt.cn/15242347989937.jpg" /></p>
+<p>我在某个最大CTF同性交流群问他们，为啥不改了。他们的回答是尊重原创。</p>
+<p>开心，装个逼就跑。（不要打脸！！！不要打脸！！！不要打脸！！！）</p>
+<p>自己写的东西能够被认可，还是蛮开心的。</p>
+<p>通防成为过去式了，Checker有了新的姿势检测通防，希望更牛逼的搅屎棍玩出更厉害的花样。</p>
+<p>我觉得，CTF并不只是解题，出题人与解题人的博弈也是关键点。怼出非预期的也是大佬！！！</p>
+<p>另外，技术性（非DDOS）日穿平台也是技术牛B啊，为啥要限制。平台做的不好还不准人日？</p>
+<p>反正即将与我无关了~~</p>
+<h2>结束语</h2>
+<p>其实吧，我是个假的赛棍。以上都是假的，我瞎编的。</p>
+<p>希望大家CTF快乐！</p>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/04/20/the_retire_sketch_by_old_ctfer.html" target="_blank">CTF老赛棍退休简述</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-04-20 21:12:31">2018-04-20 21:12:31</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-04-25 11:27:49">2018-04-25 11:27:49</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html" title="CTF老赛棍退休简述" target="_blank">https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

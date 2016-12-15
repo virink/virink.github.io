@@ -1,0 +1,1405 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Virink's Blog</title>
+  <subtitle>Let life be beautiful like summer flowers, and death like autume leaves.</subtitle>
+  <description>Virink的小站,记录杂文与分享一些技术文章</description>  
+  <link href="/feed.xml" rel="self"/>
+  <link href="https://www.virzz.com/" />
+  <updated>2019-10-30T14:07:48+08:00</updated>
+  <language>zh-CN</language> 
+  <id>https://www.virzz.com/</id>
+
+  <author>
+    <name>Virink</name>
+    <email>virink@outlook.com</email>
+  </author>
+  
+  <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
+
+  <entry>
+    <title>Configure GDB on OSX 10.14 (Mojave) </title>
+    <link href="https://www.virzz.com/2019/05/20/configure_gdb_on_osx_mojave.html"/>
+    <id>https://www.virzz.com/2019/05/20/configure_gdb_on_osx_mojave.html</id>
+    <updated>2019-05-21 10:16:45</updated>
+    <content type="html"><![CDATA[## GBD
+## Install
+## Create a Certificate
+## Sign and entitle the gdb binary
+## Refresh the system&#x27;s certificates and code-signing data
+## Troubleshooting / further diagnosis
+## Finish]]></content>
+    <summary type="html">
+## GBD
+## Install
+## Create a Certificate
+## Sign and entitle the gdb binary
+## Refresh the system&#x27;s certificates and code-signing data
+## Troubleshooting / further diagnosis
+## Finish
+    </summary>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+    <category term="osx" scheme="https://www.virzz.com/tags/osx/"/>
+    <category term="gdb" scheme="https://www.virzz.com/tags/gdb/"/>
+  </entry>
+  <entry>
+    <title>PHP是如何解析JSON的</title>
+    <link href="https://www.virzz.com/2019/04/06/how_does_php_parse_json.html"/>
+    <id>https://www.virzz.com/2019/04/06/how_does_php_parse_json.html</id>
+    <updated>2019-04-11 11:33:47</updated>
+    <content type="html"><![CDATA[## Info 
+## 变化
+## PHP 版本说明
+## PHP 5 : Call Stack of json_decode (zif_json_decode)
+## PHP 7 : Call Stack of json_decode (zif_json_decode)
+### zif_json_decode
+### php_json_decode_ex
+### php_json_yyparse (yyparse)
+### yylex (php_json_yylex)
+### php_json_scan
+### Flowchart
+## Example Parser Unicode(\u003e)
+### Source Code json.php
+### Call Stack
+#### 进入解析
+#### JSON字符 匹配 value &quot;\\u003e&quot;
+#### Unicode匹配并解析（\u003e）
+#### 转换 Unicode 为 Char
+## 从静态到动态
+### 静态分析
+### 动态分析
+## 转载声明]]></content>
+    <summary type="html">
+## Info 
+## 变化
+## PHP 版本说明
+## PHP 5 : Call Stack of json_decode (zif_json_decode)
+## PHP 7 : Call Stack of json_decode (zif_json_decode)
+### zif_json_decode
+### php_json_decode_ex
+### php_json_yyparse (yyparse)
+### yylex (php_json_yylex)
+### php_json_scan
+### Flowchart
+## Example Parser Unicode(\u003e)
+### Source Code json.php
+### Call Stack
+#### 进入解析
+#### JSON字符 匹配 value &quot;\\u003e&quot;
+#### Unicode匹配并解析（\u003e）
+#### 转换 Unicode 为 Char
+## 从静态到动态
+### 静态分析
+### 动态分析
+## 转载声明
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="json" scheme="https://www.virzz.com/tags/json/"/>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+  </entry>
+  <entry>
+    <title>论 OSX 环境下如何调戏 PHP 7.3.4</title>
+    <link href="https://www.virzz.com/2019/04/08/how_to_debug_php_by_lldb_of_vscode_on_osx.html"/>
+    <id>https://www.virzz.com/2019/04/08/how_to_debug_php_by_lldb_of_vscode_on_osx.html</id>
+    <updated>2019-04-08 02:02:56</updated>
+    <content type="html"><![CDATA[## 环境
+### 编译 PHP 7.3.4 (DEBUG)
+### 配置 VSCODE + LLDB
+## 愉快的玩耍]]></content>
+    <summary type="html">
+## 环境
+### 编译 PHP 7.3.4 (DEBUG)
+### 配置 VSCODE + LLDB
+## 愉快的玩耍
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+    <category term="lldb" scheme="https://www.virzz.com/tags/lldb/"/>
+    <category term="vscode" scheme="https://www.virzz.com/tags/vscode/"/>
+  </entry>
+  <entry>
+    <title>PWNHUB / Pink friend</title>
+    <link href="https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html"/>
+    <id>https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html</id>
+    <updated>2019-01-30 20:18:38</updated>
+    <content type="html"><![CDATA[## Challenge
+## Analysis
+### Step 1 What&#x27;s the point?
+### Step 2 Read something
+### Step 3 Request 172.20.0.3:8080
+### Step 4 Analyze Request and Response message
+### Step 5 Analyze Frame
+### Step 6 Learn about HTTP2
+### Step 7 Request by Gopher
+### Step 8 Get Flag
+## Exp.py]]></content>
+    <summary type="html">
+## Challenge
+## Analysis
+### Step 1 What&#x27;s the point?
+### Step 2 Read something
+### Step 3 Request 172.20.0.3:8080
+### Step 4 Analyze Request and Response message
+### Step 5 Analyze Frame
+### Step 6 Learn about HTTP2
+### Step 7 Request by Gopher
+### Step 8 Get Flag
+## Exp.py
+    </summary>
+    <category term="pwnhub" scheme="https://www.virzz.com/tags/pwnhub/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>浅谈国产神器AntSword</title>
+    <link href="https://www.virzz.com/2018/11/06/how_to_use_antsword.html"/>
+    <id>https://www.virzz.com/2018/11/06/how_to_use_antsword.html</id>
+    <updated>2018-11-06 03:45:52</updated>
+    <content type="html"><![CDATA[## 关于 Electron
+## 加载器的由来
+## 加载器的原理
+## 网的问题导致经常 GG 怎么破？
+## 别再问为啥了]]></content>
+    <summary type="html">
+## 关于 Electron
+## 加载器的由来
+## 加载器的原理
+## 网的问题导致经常 GG 怎么破？
+## 别再问为啥了
+    </summary>
+    <category term="tools" scheme="https://www.virzz.com/tags/tools/"/>
+  </entry>
+  <entry>
+    <title>Python中从服务端模板注入到沙盒逃逸的源码探索 (一)</title>
+    <link href="https://www.virzz.com/2018/10/15/python_from_ssti_to_sandbox_1.html"/>
+    <id>https://www.virzz.com/2018/10/15/python_from_ssti_to_sandbox_1.html</id>
+    <updated>2018-10-17 15:10:16</updated>
+    <content type="html"><![CDATA[## 原理
+## Python Web 模板引擎
+### SSTI in Tornado
+### SSTI in Flask
+## 结束语
+## 转载声明]]></content>
+    <summary type="html">
+## 原理
+## Python Web 模板引擎
+### SSTI in Tornado
+### SSTI in Flask
+## 结束语
+## 转载声明
+    </summary>
+    <category term="python" scheme="https://www.virzz.com/tags/python/"/>
+    <category term="ssti" scheme="https://www.virzz.com/tags/ssti/"/>
+    <category term="sandbox" scheme="https://www.virzz.com/tags/sandbox/"/>
+  </entry>
+  <entry>
+    <title>推荐一个PHP框架</title>
+    <link href="https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html"/>
+    <id>https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html</id>
+    <updated>2018-08-28 17:24:05</updated>
+    <content type="html"><![CDATA[## Slim 3
+## 重点是什么？
+## Biubiubiu~
+## Links]]></content>
+    <summary type="html">
+## Slim 3
+## 重点是什么？
+## Biubiubiu~
+## Links
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+  </entry>
+  <entry>
+    <title>BookHub Writeup - Real World CTF 2018</title>
+    <link href="https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html"/>
+    <id>https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html</id>
+    <updated>2018-07-31 23:57:54</updated>
+    <content type="html"><![CDATA[## Detail
+## Writeup
+### 0x01 Bypass IP
+#### X-Forwarded-For(XFF)伪造
+### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
+### 0x03 Redis &amp; Lua Injection
+### 0x04 flask_session Pickle &amp; Rebound Shell
+## exp.py
+## 感想
+## 转载声明]]></content>
+    <summary type="html">
+## Detail
+## Writeup
+### 0x01 Bypass IP
+#### X-Forwarded-For(XFF)伪造
+### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
+### 0x03 Redis &amp; Lua Injection
+### 0x04 flask_session Pickle &amp; Rebound Shell
+## exp.py
+## 感想
+## 转载声明
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>(新)搭建PHPStorm＋XDebug代碼審計環境</title>
+    <link href="https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html"/>
+    <id>https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html</id>
+    <updated>2018-07-31 12:20:00</updated>
+    <content type="html"><![CDATA[## 前言
+## Nginx
+## Mysql
+## PHP
+## XDebug
+### 單IP模式
+### 多IP模式
+## PHPStorm
+## 配置
+### 配置項目運行PHP環境
+### PHP Debug 配置
+## 瀏覽器(Chrome)配置
+## 測試
+## 結束語]]></content>
+    <summary type="html">
+## 前言
+## Nginx
+## Mysql
+## PHP
+## XDebug
+### 單IP模式
+### 多IP模式
+## PHPStorm
+## 配置
+### 配置項目運行PHP環境
+### PHP Debug 配置
+## 瀏覽器(Chrome)配置
+## 測試
+## 結束語
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+    <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
+  </entry>
+  <entry>
+    <title>三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup</title>
+    <link href="https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html"/>
+    <id>https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html</id>
+    <updated>2018-07-31 12:08:43</updated>
+    <content type="html"><![CDATA[## 挑战介绍
+## 第一個坑 密码怎么会告诉你
+## 第二個坑 SQL注入
+## 第三個坑 putenv LD_PRELOAD
+### flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}]]></content>
+    <summary type="html">
+## 挑战介绍
+## 第一個坑 密码怎么会告诉你
+## 第二個坑 SQL注入
+## 第三個坑 putenv LD_PRELOAD
+### flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>三个白帽-寻找来自星星的你-第一期</title>
+    <link href="https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html"/>
+    <id>https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html</id>
+    <updated>2018-07-31 12:06:50</updated>
+    <content type="html"><![CDATA[## 挑战介绍
+## 挑战目标
+## 0x01 信息收集
+## 利用漏洞
+## 命令執行
+## 反彈shell
+## GETFLAG]]></content>
+    <summary type="html">
+## 挑战介绍
+## 挑战目标
+## 0x01 信息收集
+## 利用漏洞
+## 命令執行
+## 反彈shell
+## GETFLAG
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>NJCTF 2017 some web writeups</title>
+    <link href="https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html"/>
+    <id>https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html</id>
+    <updated>2018-07-31 12:03:26</updated>
+    <content type="html"><![CDATA[## Sqlite SQL Injection
+### Source Code
+### First
+### Next
+#### 從數據庫找到所有表
+#### 發現flag表，查詢flag表的字段
+#### 發現id類型為varchar(255),flag很有藏在其中
+### Finally
+## Ruby on Rails
+## The end]]></content>
+    <summary type="html">
+## Sqlite SQL Injection
+### Source Code
+### First
+### Next
+#### 從數據庫找到所有表
+#### 發現flag表，查詢flag表的字段
+#### 發現id類型為varchar(255),flag很有藏在其中
+### Finally
+## Ruby on Rails
+## The end
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>Real World CTF (RWCTF) 2018 部分 Writeup</title>
+    <link href="https://www.virzz.com/2018/07/31/real_world_ctf_2018_some_writeup.html"/>
+    <id>https://www.virzz.com/2018/07/31/real_world_ctf_2018_some_writeup.html</id>
+    <updated>2018-07-31 11:22:44</updated>
+    <content type="html"><![CDATA[## 0x01 advertisement (check-in)
+### Detail
+### Writeup
+## 0x02 dot free (Web)
+### Detail
+### Writeup
+## 0x03 BookHub (web)
+## 0x04 PrintMD (web) 复现
+### Detail
+### Writeup
+### exp.py]]></content>
+    <summary type="html">
+## 0x01 advertisement (check-in)
+### Detail
+### Writeup
+## 0x02 dot free (Web)
+### Detail
+### Writeup
+## 0x03 BookHub (web)
+## 0x04 PrintMD (web) 复现
+### Detail
+### Writeup
+### exp.py
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>看我如何玩转PHP代码加密与解密</title>
+    <link href="https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html"/>
+    <id>https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html</id>
+    <updated>2018-06-22 17:14:22</updated>
+    <content type="html"><![CDATA[## 前言
+## 代码混淆
+## 代码加密解密
+### 加密
+### 解密
+### 案例
+## 扩展加密解密
+### 加密
+### 解密
+### 案例
+## OpCode混淆
+### 加密方式
+### 解密
+## Open Source
+## 参考
+## 转载声明]]></content>
+    <summary type="html">
+## 前言
+## 代码混淆
+## 代码加密解密
+### 加密
+### 解密
+### 案例
+## 扩展加密解密
+### 加密
+### 解密
+### 案例
+## OpCode混淆
+### 加密方式
+### 解密
+## Open Source
+## 参考
+## 转载声明
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="tools" scheme="https://www.virzz.com/tags/tools/"/>
+  </entry>
+  <entry>
+    <title>CTF老赛棍退休简述</title>
+    <link href="https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html"/>
+    <id>https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html</id>
+    <updated>2018-04-25 11:27:49</updated>
+    <content type="html"><![CDATA[## 前言
+## 赛棍入门
+## 赛棍进阶
+## 赛棍养成
+## 赛棍战友
+## 赛棍退休
+## 赛棍总结
+## 搅屎棍
+## 结束语]]></content>
+    <summary type="html">
+## 前言
+## 赛棍入门
+## 赛棍进阶
+## 赛棍养成
+## 赛棍战友
+## 赛棍退休
+## 赛棍总结
+## 搅屎棍
+## 结束语
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    <category term="default" scheme="https://www.virzz.com/tags/default/"/>
+  </entry>
+  <entry>
+    <title>Nginx + LuaJIT + Webhook</title>
+    <link href="https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html"/>
+    <id>https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html</id>
+    <updated>2018-04-17 10:11:50</updated>
+    <content type="html"><![CDATA[## Install
+### Base
+### Download and DeCompression
+### Install LuaJIT
+### Install Nginx
+## Configure
+### Server
+### Github
+## Finish]]></content>
+    <summary type="html">
+## Install
+### Base
+### Download and DeCompression
+### Install LuaJIT
+### Install Nginx
+## Configure
+### Server
+### Github
+## Finish
+    </summary>
+    <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
+    <category term="lua" scheme="https://www.virzz.com/tags/lua/"/>
+    <category term="webhooks" scheme="https://www.virzz.com/tags/webhooks/"/>
+  </entry>
+  <entry>
+    <title>PHP扩展-扩展的生成和编译</title>
+    <link href="https://www.virzz.com/2017/08/15/create_and_make_php_ext.html"/>
+    <id>https://www.virzz.com/2017/08/15/create_and_make_php_ext.html</id>
+    <updated>2018-03-13 21:44:35</updated>
+    <content type="html"><![CDATA[## 0x00 说明
+### PHP扩展有两种编译方式
+### 源码环境
+## 0x01 创建PHP扩展
+## 0x02 修改文件*config.m4*
+## 0x03-1 编译PHP时直接将扩展编译进去
+## 0x03-2 编译成.so文件 【推荐】
+## 0x04 加载扩展]]></content>
+    <summary type="html">
+## 0x00 说明
+### PHP扩展有两种编译方式
+### 源码环境
+## 0x01 创建PHP扩展
+## 0x02 修改文件*config.m4*
+## 0x03-1 编译PHP时直接将扩展编译进去
+## 0x03-2 编译成.so文件 【推荐】
+## 0x04 加载扩展
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+  </entry>
+  <entry>
+    <title>有意思的命令注入</title>
+    <link href="https://www.virzz.com/2018/02/17/a_funny_command_injection.html"/>
+    <id>https://www.virzz.com/2018/02/17/a_funny_command_injection.html</id>
+    <updated>2018-02-21 03:27:07</updated>
+    <content type="html"><![CDATA[## 0x00 意外的题目
+## 0x01 看看代码
+## 0x02 撸它
+## 0x03 Flag
+## 0x04 脚本]]></content>
+    <summary type="html">
+## 0x00 意外的题目
+## 0x01 看看代码
+## 0x02 撸它
+## 0x03 Flag
+## 0x04 脚本
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+  </entry>
+  <entry>
+    <title>搭建PHPStorm＋XDebug代碼審計環境</title>
+    <link href="https://www.virzz.com/2016/12/15/make_a_env_for_php_code_audit_with_phpstorm_and_xdebug.html"/>
+    <id>https://www.virzz.com/2016/12/15/make_a_env_for_php_code_audit_with_phpstorm_and_xdebug.html</id>
+    <updated>2018-02-13 03:04:43</updated>
+    <content type="html"><![CDATA[## 前言
+## Nginx
+## Mysql
+## PHP
+## XDebug
+## PHPStorm
+## 配置
+### 配置項目運行環境
+### 配置調試端口
+### 配置DBCpProxy
+### Run/Debug Configure
+## XDebug Helper 插件（Chrome）
+## 測試]]></content>
+    <summary type="html">
+## 前言
+## Nginx
+## Mysql
+## PHP
+## XDebug
+## PHPStorm
+## 配置
+### 配置項目運行環境
+### 配置調試端口
+### 配置DBCpProxy
+### Run/Debug Configure
+## XDebug Helper 插件（Chrome）
+## 測試
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
+  </entry>
+  <entry>
+    <title>Bilibili安卓客户端缓存视频导出小记</title>
+    <link href="https://www.virzz.com/2017/12/24/bilibili_android_cache_videos_export.html"/>
+    <id>https://www.virzz.com/2017/12/24/bilibili_android_cache_videos_export.html</id>
+    <updated>2017-12-24 01:44:07</updated>
+    <content type="html"><![CDATA[## 0x01 我有一个想要搞事情的想法
+## 0x02 她是咋缓存视频的
+### 普通视频
+### 番剧视频
+### 小结
+## 0x03 怎么把视频弄出来
+### 手工（NONONO）
+### 写代码
+## 0x04 无奈]]></content>
+    <summary type="html">
+## 0x01 我有一个想要搞事情的想法
+## 0x02 她是咋缓存视频的
+### 普通视频
+### 番剧视频
+### 小结
+## 0x03 怎么把视频弄出来
+### 手工（NONONO）
+### 写代码
+## 0x04 无奈
+    </summary>
+    <category term="java" scheme="https://www.virzz.com/tags/java/"/>
+    <category term="android" scheme="https://www.virzz.com/tags/android/"/>
+  </entry>
+  <entry>
+    <title>論如何在CTF比賽中攪屎</title>
+    <link href="https://www.virzz.com/2017/05/25/how_to_fuck_the_ctf.html"/>
+    <id>https://www.virzz.com/2017/05/25/how_to_fuck_the_ctf.html</id>
+    <updated>2017-11-23 00:57:15</updated>
+    <content type="html"><![CDATA[## 0x00 前言
+## 0x01 預備知識
+## 0x02 攪屎之不死鳥
+## 0x03 攪屎之核彈
+## 0x04 攪屎之你死我活
+## 0x05 攪屎之WAF
+### 有root權限
+### 只有user權限
+## 0x06 結束語
+## 0x07 轉載聲明]]></content>
+    <summary type="html">
+## 0x00 前言
+## 0x01 預備知識
+## 0x02 攪屎之不死鳥
+## 0x03 攪屎之核彈
+## 0x04 攪屎之你死我活
+## 0x05 攪屎之WAF
+### 有root權限
+### 只有user權限
+## 0x06 結束語
+## 0x07 轉載聲明
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</title>
+    <link href="https://www.virzz.com/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html"/>
+    <id>https://www.virzz.com/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html</id>
+    <updated>2017-09-22 21:44:10</updated>
+    <content type="html"><![CDATA[## 0x01 题目介绍
+## 0x02 Writeup
+### 拿源码
+### 看源码
+### Playload
+### 解密
+### Flag
+### PHPjiami_decode]]></content>
+    <summary type="html">
+## 0x01 题目介绍
+## 0x02 Writeup
+### 拿源码
+### 看源码
+### Playload
+### 解密
+### Flag
+### PHPjiami_decode
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="pwnhub" scheme="https://www.virzz.com/tags/pwnhub/"/>
+  </entry>
+  <entry>
+    <title>The 2017 Top Programming Languages</title>
+    <link href="https://www.virzz.com/2017/07/24/the_2017_top_programming_languages.html"/>
+    <id>https://www.virzz.com/2017/07/24/the_2017_top_programming_languages.html</id>
+    <updated>2017-07-24 01:24:21</updated>
+    <content type="html"><![CDATA[## Python jumps to No. 1, and Swift enters the Top Ten]]></content>
+    <summary type="html">
+## Python jumps to No. 1, and Swift enters the Top Ten
+    </summary>
+    <category term="default" scheme="https://www.virzz.com/tags/default/"/>
+  </entry>
+  <entry>
+    <title>閱讀筆記《当呼吸化为空气》</title>
+    <link href="https://www.virzz.com/2017/05/21/reading_notes_for_when_breath_becomes_air.html"/>
+    <id>https://www.virzz.com/2017/05/21/reading_notes_for_when_breath_becomes_air.html</id>
+    <updated>2017-06-01 23:45:13</updated>
+    <content type="html"><![CDATA[## 書籍相關
+## 閱讀次數，時間
+## 讀後感
+## 佳句摘抄]]></content>
+    <summary type="html">
+## 書籍相關
+## 閱讀次數，時間
+## 讀後感
+## 佳句摘抄
+    </summary>
+    <category term="reading" scheme="https://www.virzz.com/tags/reading/"/>
+  </entry>
+  <entry>
+    <title>那些强悍的PHP一句话后门</title>
+    <link href="https://www.virzz.com/2016/10/19/php_webshell.html"/>
+    <id>https://www.virzz.com/2016/10/19/php_webshell.html</id>
+    <updated>2017-06-01 23:44:51</updated>
+    <content type="html"><![CDATA[## 利用404页面隐藏PHP小马：
+## 无特征隐藏PHP一句话：
+## 超级隐蔽的PHP后门：
+## 层级请求，编码运行PHP后门：
+## PHP后门生成工具weevely
+## 三个变形的一句话PHP木马
+### 第一个
+### 第二个
+### 第三个
+## 最后列几个高级的PHP一句话木马后门：
+### 1、
+### 2、
+### 3、
+### 4、
+### 5、include ($uid);
+### 6、典型一句话
+## 总结]]></content>
+    <summary type="html">
+## 利用404页面隐藏PHP小马：
+## 无特征隐藏PHP一句话：
+## 超级隐蔽的PHP后门：
+## 层级请求，编码运行PHP后门：
+## PHP后门生成工具weevely
+## 三个变形的一句话PHP木马
+### 第一个
+### 第二个
+### 第三个
+## 最后列几个高级的PHP一句话木马后门：
+### 1、
+### 2、
+### 3、
+### 4、
+### 5、include ($uid);
+### 6、典型一句话
+## 总结
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="webshell" scheme="https://www.virzz.com/tags/webshell/"/>
+  </entry>
+  <entry>
+    <title>自省之CTF思維</title>
+    <link href="https://www.virzz.com/2016/12/14/introspection_by_ctf.html"/>
+    <id>https://www.virzz.com/2016/12/14/introspection_by_ctf.html</id>
+    <updated>2017-06-01 23:44:30</updated>
+    <content type="html"><![CDATA[## Pwnhub 某 CTF
+## 憂傷]]></content>
+    <summary type="html">
+## Pwnhub 某 CTF
+## 憂傷
+    </summary>
+    <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+  </entry>
+  <entry>
+    <title>胖哈勃破處﹣绝对防御</title>
+    <link href="https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html"/>
+    <id>https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html</id>
+    <updated>2017-06-01 23:44:04</updated>
+    <content type="html"><![CDATA[## 题目介绍
+## Get Cookie
+## Get Flag
+### 查看源碼
+### 查看響應頭
+## Poc
+### Flag]]></content>
+    <summary type="html">
+## 题目介绍
+## Get Cookie
+## Get Flag
+### 查看源碼
+### 查看響應頭
+## Poc
+### Flag
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="pwnhub" scheme="https://www.virzz.com/tags/pwnhub/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>渣渣也去围观ZCTF2016</title>
+    <link href="https://www.virzz.com/2016/01/24/writeups_for_zctf_2016.html"/>
+    <id>https://www.virzz.com/2016/01/24/writeups_for_zctf_2016.html</id>
+    <updated>2017-06-01 23:43:36</updated>
+    <content type="html"><![CDATA[## web150 ##
+## web100 ##
+## web400 ##
+## web500 ##
+## 最后 ##]]></content>
+    <summary type="html">
+## web150 ##
+## web100 ##
+## web400 ##
+## web500 ##
+## 最后 ##
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>某CTF 2017</title>
+    <link href="https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html"/>
+    <id>https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html</id>
+    <updated>2017-06-01 23:43:12</updated>
+    <content type="html"><![CDATA[## WEB 抽奖呗
+### 源碼大法
+### 可疑文件
+### AAENCODE &amp; decode
+### Get Flag
+## WEB 继续抽
+### 源碼大法
+### Payload
+## Get Flag
+### Web just a test
+### Get Flag
+## WEB Wrong
+### get file
+### hack it
+### Get Flag
+### Poc
+## End]]></content>
+    <summary type="html">
+## WEB 抽奖呗
+### 源碼大法
+### 可疑文件
+### AAENCODE &amp; decode
+### Get Flag
+## WEB 继续抽
+### 源碼大法
+### Payload
+## Get Flag
+### Web just a test
+### Get Flag
+## WEB Wrong
+### get file
+### hack it
+### Get Flag
+### Poc
+## End
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>如何折腾我的Flask博客VirzzBlog</title>
+    <link href="https://www.virzz.com/2016/11/15/how_to_make_my_flask_blog_virzzblog.html"/>
+    <id>https://www.virzz.com/2016/11/15/how_to_make_my_flask_blog_virzzblog.html</id>
+    <updated>2017-06-01 23:42:10</updated>
+    <content type="html"><![CDATA[## 简单总结一下我的博客是如何折腾的
+## Python 環境
+### Python2.7
+### PIP
+### Virtualenv
+### 配置環境
+## Flask
+## MySQL
+## uWSGI
+### 安裝
+### 配置文件 uwsgi.ini
+### Flask啟動文件例子manage.py
+## Supervisor
+### 安裝
+### 配置文件
+### 操作
+## Nginx
+### 安裝
+### 配置
+### 提醒
+## SSL
+### 安装 &amp; 生成Let&#x27;s Encrypt证书
+### 配置Nginx
+### 配置 Let&#x27;s Encrypt 自动续期
+### 强制使用https访问 或者 換域名
+## 結束語
+### 關於本文
+### 為何用Flask
+### 關於開源
+### 真的結束了]]></content>
+    <summary type="html">
+## 简单总结一下我的博客是如何折腾的
+## Python 環境
+### Python2.7
+### PIP
+### Virtualenv
+### 配置環境
+## Flask
+## MySQL
+## uWSGI
+### 安裝
+### 配置文件 uwsgi.ini
+### Flask啟動文件例子manage.py
+## Supervisor
+### 安裝
+### 配置文件
+### 操作
+## Nginx
+### 安裝
+### 配置
+### 提醒
+## SSL
+### 安装 &amp; 生成Let&#x27;s Encrypt证书
+### 配置Nginx
+### 配置 Let&#x27;s Encrypt 自动续期
+### 强制使用https访问 或者 換域名
+## 結束語
+### 關於本文
+### 為何用Flask
+### 關於開源
+### 真的結束了
+    </summary>
+    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    <category term="python" scheme="https://www.virzz.com/tags/python/"/>
+    <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
+    <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
+  </entry>
+  <entry>
+    <title>代碼審計-三個白帽-条条大路通罗马系列1</title>
+    <link href="https://www.virzz.com/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html"/>
+    <id>https://www.virzz.com/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html</id>
+    <updated>2017-06-01 23:40:36</updated>
+    <content type="html"><![CDATA[## 0x00 代碼審計
+## 0x01 非常規思路的黑科技
+## 0x02 常規思路]]></content>
+    <summary type="html">
+## 0x00 代碼審計
+## 0x01 非常規思路的黑科技
+## 0x02 常規思路
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>三种姿势秒破SYC招聘</title>
+    <link href="https://www.virzz.com/2016/04/13/three_ways_to_break_syc_recruitment.html"/>
+    <id>https://www.virzz.com/2016/04/13/three_ways_to_break_syc_recruitment.html</id>
+    <updated>2017-06-01 23:40:16</updated>
+    <content type="html"><![CDATA[## 0x00 缘由
+## 0x01 GOGOGO~
+## 0x02 第一种姿势，Big Bug 1
+## 第二种姿势，地底通道
+## 第三种姿势
+## Over]]></content>
+    <summary type="html">
+## 0x00 缘由
+## 0x01 GOGOGO~
+## 0x02 第一种姿势，Big Bug 1
+## 第二种姿势，地底通道
+## 第三种姿势
+## Over
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>三個白帽-条条大路通罗马系列2-Writeup</title>
+    <link href="https://www.virzz.com/2016/06/03/three_white_hats_all_roads_lead_to_the_romes_2.html"/>
+    <id>https://www.virzz.com/2016/06/03/three_white_hats_all_roads_lead_to_the_romes_2.html</id>
+    <updated>2017-06-01 23:39:29</updated>
+    <content type="html"><![CDATA[## 0x00 前言
+## 0x01 獲取源碼
+## 0x02 登陸的腦洞
+## 0x03 二次驗證
+## 0x04 PATHINFO模式
+## 0x05 上傳之fuzz後綴
+## 0x06 什麼鬼？Misc]]></content>
+    <summary type="html">
+## 0x00 前言
+## 0x01 獲取源碼
+## 0x02 登陸的腦洞
+## 0x03 二次驗證
+## 0x04 PATHINFO模式
+## 0x05 上傳之fuzz後綴
+## 0x06 什麼鬼？Misc
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>SSH代理轉socks5</title>
+    <link href="https://www.virzz.com/2016/12/25/ssh_proxy_to_socks5.html"/>
+    <id>https://www.virzz.com/2016/12/25/ssh_proxy_to_socks5.html</id>
+    <updated>2017-06-01 23:38:16</updated>
+    <content type="html"><![CDATA[## Set up the SSH tunnel
+## Set up System Preferences
+## Set up Firefox]]></content>
+    <summary type="html">
+## Set up the SSH tunnel
+## Set up System Preferences
+## Set up Firefox
+    </summary>
+    <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    <category term="socks" scheme="https://www.virzz.com/tags/socks/"/>
+    <category term="ssh" scheme="https://www.virzz.com/tags/ssh/"/>
+  </entry>
+  <entry>
+    <title>SCTF2016 痛苦的滲透之路</title>
+    <link href="https://www.virzz.com/2016/05/08/writeups_for_sctf_2016.html"/>
+    <id>https://www.virzz.com/2016/05/08/writeups_for_sctf_2016.html</id>
+    <updated>2017-06-01 23:37:49</updated>
+    <content type="html"><![CDATA[## 0x00 前言
+## 0x01 Pentest-homework-200
+## 0x02 Pentest-sycshell-200
+## 0x03 Pentest-DrugMarket1-300
+## 0x04 Pentest-ETO-200
+## 0x05 Pentest-Hackme-300-未成功
+## 0x06 写在最后]]></content>
+    <summary type="html">
+## 0x00 前言
+## 0x01 Pentest-homework-200
+## 0x02 Pentest-sycshell-200
+## 0x03 Pentest-DrugMarket1-300
+## 0x04 Pentest-ETO-200
+## 0x05 Pentest-Hackme-300-未成功
+## 0x06 写在最后
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>PHP本地文件包含(LFI)漏洞利用</title>
+    <link href="https://www.virzz.com/2016/10/16/php_local_file_include_lfi.html"/>
+    <id>https://www.virzz.com/2016/10/16/php_local_file_include_lfi.html</id>
+    <updated>2017-06-01 23:37:23</updated>
+    <content type="html"><![CDATA[## 0x00 案例
+### Linux
+### Win
+## Log Injection
+## DoFuck
+## 附录：可能的log路径]]></content>
+    <summary type="html">
+## 0x00 案例
+### Linux
+### Win
+## Log Injection
+## DoFuck
+## 附录：可能的log路径
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+  </entry>
+  <entry>
+    <title>PHP安全编码</title>
+    <link href="https://www.virzz.com/2016/11/12/php_coding_safely.html"/>
+    <id>https://www.virzz.com/2016/11/12/php_coding_safely.html</id>
+    <updated>2017-06-01 23:37:01</updated>
+    <content type="html"><![CDATA[## 验证过滤用户的输入
+## PHP中验证用户的输入]]></content>
+    <summary type="html">
+## 验证过滤用户的输入
+## PHP中验证用户的输入
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+  </entry>
+  <entry>
+    <title>PHPTrace PHP执行流程跟踪工具</title>
+    <link href="https://www.virzz.com/2015/12/12/php_trace.html"/>
+    <id>https://www.virzz.com/2015/12/12/php_trace.html</id>
+    <updated>2017-06-01 23:36:36</updated>
+    <content type="html"><![CDATA[## 最新版本下载： [https://pecl.php.net/package/trace](https://pecl.php.net/package/trace) #
+## 编译安装 ##
+## 解压缩源码包 ##
+## PHP扩展 - 编译安装 ##
+## PHP扩展 - 配置 ##]]></content>
+    <summary type="html">
+## 最新版本下载： [https://pecl.php.net/package/trace](https://pecl.php.net/package/trace) #
+## 编译安装 ##
+## 解压缩源码包 ##
+## PHP扩展 - 编译安装 ##
+## PHP扩展 - 配置 ##
+    </summary>
+    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    <category term="tools" scheme="https://www.virzz.com/tags/tools/"/>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+  </entry>
+  <entry>
+    <title>PHP 扩展开发(VS2012)小记</title>
+    <link href="https://www.virzz.com/2016/10/27/development_php_ext_with_vs2012.html"/>
+    <id>https://www.virzz.com/2016/10/27/development_php_ext_with_vs2012.html</id>
+    <updated>2017-06-01 23:36:12</updated>
+    <content type="html"><![CDATA[## 生成扩展模板
+## 模板说明
+### **php_extname.h**
+### **extname.c**
+## 加载工程
+### 0x02
+## 配置解决方案
+### **config.w32.h**
+### **php5.lib**
+## 结束语]]></content>
+    <summary type="html">
+## 生成扩展模板
+## 模板说明
+### **php_extname.h**
+### **extname.c**
+## 加载工程
+### 0x02
+## 配置解决方案
+### **config.w32.h**
+### **php5.lib**
+## 结束语
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="ext" scheme="https://www.virzz.com/tags/ext/"/>
+  </entry>
+  <entry>
+    <title>PCTF2017-web-ECHO</title>
+    <link href="https://www.virzz.com/2017/04/22/pctf_2017_web_echo.html"/>
+    <id>https://www.virzz.com/2017/04/22/pctf_2017_web_echo.html</id>
+    <updated>2017-06-01 23:35:34</updated>
+    <content type="html"><![CDATA[## Challenge ECHO
+## Fuck it
+### app.py
+### form.html
+### listen.html
+### run.py
+## Payload
+## MDZZ
+## Flag]]></content>
+    <summary type="html">
+## Challenge ECHO
+## Fuck it
+### app.py
+### form.html
+### listen.html
+### run.py
+## Payload
+## MDZZ
+## Flag
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>MariaDB for Ubuntu 16.04 TLS</title>
+    <link href="https://www.virzz.com/2017/04/11/mariadb_for_ubuntu_16.04_tls.html"/>
+    <id>https://www.virzz.com/2017/04/11/mariadb_for_ubuntu_16.04_tls.html</id>
+    <updated>2017-06-01 23:34:46</updated>
+    <content type="html"><![CDATA[## Install
+## Init Set Password
+## Error #1]]></content>
+    <summary type="html">
+## Install
+## Init Set Password
+## Error #1
+    </summary>
+    <category term="mysql" scheme="https://www.virzz.com/tags/mysql/"/>
+    <category term="mariadb" scheme="https://www.virzz.com/tags/mariadb/"/>
+  </entry>
+  <entry>
+    <title>Make ssh client For Mac OS X</title>
+    <link href="https://www.virzz.com/2016/11/28/make_ssh_client_for_mac_osx.html"/>
+    <id>https://www.virzz.com/2016/11/28/make_ssh_client_for_mac_osx.html</id>
+    <updated>2017-06-01 23:34:16</updated>
+    <content type="html"><![CDATA[## Install openssh and ssh-copy-id
+## Create SSH Key
+## Copy to your server
+## Configure
+## Set alias command
+## Finish]]></content>
+    <summary type="html">
+## Install openssh and ssh-copy-id
+## Create SSH Key
+## Copy to your server
+## Configure
+## Set alias command
+## Finish
+    </summary>
+    <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    <category term="ssh" scheme="https://www.virzz.com/tags/ssh/"/>
+  </entry>
+  <entry>
+    <title>Make and install php 5.6.28 for mac</title>
+    <link href="https://www.virzz.com/2016/11/27/make_and_install_php_5.6.28_for_mac_osx.html"/>
+    <id>https://www.virzz.com/2016/11/27/make_and_install_php_5.6.28_for_mac_osx.html</id>
+    <updated>2017-06-01 23:33:38</updated>
+    <content type="html"><![CDATA[## Install Brewhome
+## Install Mysql
+## Install Nginx
+## Download php-src
+### git
+### http
+## Install PHP
+## Configure
+### make and install
+## Setting
+## Start Services]]></content>
+    <summary type="html">
+## Install Brewhome
+## Install Mysql
+## Install Nginx
+## Download php-src
+### git
+### http
+## Install PHP
+## Configure
+### make and install
+## Setting
+## Start Services
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="install" scheme="https://www.virzz.com/tags/install/"/>
+    <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+  </entry>
+  <entry>
+    <title>Linux 反弹 shell</title>
+    <link href="https://www.virzz.com/2016/10/16/linux_shell.html"/>
+    <id>https://www.virzz.com/2016/10/16/linux_shell.html</id>
+    <updated>2017-06-01 23:32:58</updated>
+    <content type="html"><![CDATA[## bash版本：
+## perl版本:
+## python版本：
+## php版本：
+## ruby版本：
+## nc版本：
+## java版本
+## lua版本：
+## nc不使用-e：
+## 不使用nc
+### Method 1:
+### Method 2:
+### Method 3:]]></content>
+    <summary type="html">
+## bash版本：
+## perl版本:
+## python版本：
+## php版本：
+## ruby版本：
+## nc版本：
+## java版本
+## lua版本：
+## nc不使用-e：
+## 不使用nc
+### Method 1:
+### Method 2:
+### Method 3:
+    </summary>
+    <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
+    <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
+  </entry>
+  <entry>
+    <title>Leanote環境搭建小记</title>
+    <link href="https://www.virzz.com/2016/10/16/build_leanote_server.html"/>
+    <id>https://www.virzz.com/2016/10/16/build_leanote_server.html</id>
+    <updated>2017-06-01 23:30:48</updated>
+    <content type="html"><![CDATA[## Install Golang and revel
+### 下載安裝Golang
+### 設置環境變量
+### Install revel &amp; leanote
+## 安裝Mongdo
+### 設置環境變量(可有可無)
+### 新建一个目录data存放mongodb数据:
+### 用以下命令启动mongod:
+## 安裝Leanote
+### 修改配置
+### 導入初始數據
+### 运行leanote
+## 啟動管理
+### 創建配置文件
+### 運行]]></content>
+    <summary type="html">
+## Install Golang and revel
+### 下載安裝Golang
+### 設置環境變量
+### Install revel &amp; leanote
+## 安裝Mongdo
+### 設置環境變量(可有可無)
+### 新建一个目录data存放mongodb数据:
+### 用以下命令启动mongod:
+## 安裝Leanote
+### 修改配置
+### 導入初始數據
+### 运行leanote
+## 啟動管理
+### 創建配置文件
+### 運行
+    </summary>
+    <category term="leanote" scheme="https://www.virzz.com/tags/leanote/"/>
+    <category term="go" scheme="https://www.virzz.com/tags/go/"/>
+  </entry>
+  <entry>
+    <title>Flask-mongoengine 用法小記</title>
+    <link href="https://www.virzz.com/2017/02/06/flask_mongoengine.html"/>
+    <id>https://www.virzz.com/2017/02/06/flask_mongoengine.html</id>
+    <updated>2017-06-01 23:30:20</updated>
+    <content type="html"><![CDATA[## 模型設置
+## 增刪改查
+### 添加數據
+### 修改數據
+### 刪除數據
+### 查詢數據]]></content>
+    <summary type="html">
+## 模型設置
+## 增刪改查
+### 添加數據
+### 修改數據
+### 刪除數據
+### 查詢數據
+    </summary>
+    <category term="python" scheme="https://www.virzz.com/tags/python/"/>
+    <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
+    <category term="mongodb" scheme="https://www.virzz.com/tags/mongodb/"/>
+  </entry>
+  <entry>
+    <title>DTracing PHP</title>
+    <link href="https://www.virzz.com/2016/10/17/dtracing_for_php.html"/>
+    <id>https://www.virzz.com/2016/10/17/dtracing_for_php.html</id>
+    <updated>2017-06-01 23:29:40</updated>
+    <content type="html"><![CDATA[## 先决条件
+## Dtrace程序结构
+## PHP探针
+## 第一个例子
+## 高级示例]]></content>
+    <summary type="html">
+## 先决条件
+## Dtrace程序结构
+## PHP探针
+## 第一个例子
+## 高级示例
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="dtrace" scheme="https://www.virzz.com/tags/dtrace/"/>
+    <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
+  </entry>
+  <entry>
+    <title>中华人民共和国网络安全法</title>
+    <link href="https://www.virzz.com/2017/06/01/Network_security_law_of_the_PRC.html"/>
+    <id>https://www.virzz.com/2017/06/01/Network_security_law_of_the_PRC.html</id>
+    <updated>2017-06-01 23:28:44</updated>
+    <content type="html"><![CDATA[## 目录
+## 条文
+### 第一章 总 则
+### 第二章 网络安全支持与促进
+### 第三章 网络运行安全
+#### 第一节 一般规定
+#### 第二节 关键信息基础设施的运行安全
+### 第四章 网络信息安全
+### 第六章 法律责任
+### 第七章 附 则]]></content>
+    <summary type="html">
+## 目录
+## 条文
+### 第一章 总 则
+### 第二章 网络安全支持与促进
+### 第三章 网络运行安全
+#### 第一节 一般规定
+#### 第二节 关键信息基础设施的运行安全
+### 第四章 网络信息安全
+### 第六章 法律责任
+### 第七章 附 则
+    </summary>
+    <category term="law" scheme="https://www.virzz.com/tags/law/"/>
+  </entry>
+  <entry>
+    <title>Centos6.8 with Oracle UEK R3 for DTrace and PHP</title>
+    <link href="https://www.virzz.com/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html"/>
+    <id>https://www.virzz.com/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html</id>
+    <updated>2017-06-01 23:28:23</updated>
+    <content type="html"><![CDATA[## Install the UEKR3 repo
+## Disable all OL7 yum channels and enable UEK3 only
+## Make kernel-uek the new default
+## Import the OL7 RPM GPG key
+## Install kernel-uek
+## Confirm kernel-uek is default and reboot
+## Install dtrace-utils
+## Download PHP Source
+## Add epel repo
+## Install 依赖
+## Add user www
+## Install
+## Configure PHP
+### ini：
+### php-fpm service
+### Start php-fpm
+### Add PHP Command to PATH]]></content>
+    <summary type="html">
+## Install the UEKR3 repo
+## Disable all OL7 yum channels and enable UEK3 only
+## Make kernel-uek the new default
+## Import the OL7 RPM GPG key
+## Install kernel-uek
+## Confirm kernel-uek is default and reboot
+## Install dtrace-utils
+## Download PHP Source
+## Add epel repo
+## Install 依赖
+## Add user www
+## Install
+## Configure PHP
+### ini：
+### php-fpm service
+### Start php-fpm
+### Add PHP Command to PATH
+    </summary>
+    <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
+  </entry>
+  <entry>
+    <title>CCTF2016 web小记</title>
+    <link href="https://www.virzz.com/2016/04/24/web_writeup_for_cctf_2016.html"/>
+    <id>https://www.virzz.com/2016/04/24/web_writeup_for_cctf_2016.html</id>
+    <updated>2017-06-01 23:27:23</updated>
+    <content type="html"><![CDATA[## 0x00 死坑死坑的脑洞
+## 0x01 LOLI1 &amp; LOLI2
+## 0x02 Loli3
+## 0x03 IDS
+## 0x04 没什么好说的。]]></content>
+    <summary type="html">
+## 0x00 死坑死坑的脑洞
+## 0x01 LOLI1 &amp; LOLI2
+## 0x02 Loli3
+## 0x03 IDS
+## 0x04 没什么好说的。
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  </feed>
+  

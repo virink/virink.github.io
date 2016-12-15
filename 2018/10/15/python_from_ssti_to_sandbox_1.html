@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>Python中从服务端模板注入到沙盒逃逸的源码探索 (一) - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,python,ssti,sandbox">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2018/10/15/python_from_ssti_to_sandbox_1.html">Python中从服务端模板注入到沙盒逃逸的源码探索 (一)</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/python/"><i class="fa fa-tag"></i>python</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ssti/"><i class="fa fa-tag"></i>ssti</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/sandbox/"><i class="fa fa-tag"></i>sandbox</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-10-15 11:33:23">2018-10-15 11:33:23</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>原理</h2>
+<p>~~顾名思义，服务端模板注入，就是通过在<strong>服务端</strong>的<strong>模板文件</strong>或<strong>模板字符串</strong>中注入特定的恶意代码导致产生代码执行的一种漏洞攻击方式。~~</p>
+<p>不同的模板引擎，根据不同的解析方式相应的也是存在不同的利用方法。</p>
+<p>正常而言，出于安全考虑，模板引擎基本上都是拥有沙盒、命名空间的，代码的解析执行都是发生在有限的沙盒里面，因此，沙盒逃逸也成为 SSTI 不可或缺的存在。</p>
+<h2>Python Web 模板引擎</h2>
+<ul>
+<li>[x] Jinja2</li>
+<li>[x] Tornado.template</li>
+<li>[ ] Django.template</li>
+<li>&hellip;</li>
+</ul>
+<h3>SSTI in Tornado</h3>
+<p>Tornado 中模板渲染函数在有两个</p>
+<ul>
+<li>render</li>
+<li>render_string</li>
+</ul>
+<p><strong>tornado/web.py:</strong></p>
+<pre><code class="python">class RequestHandler(object):
+    ....
+    def render(self, template_name, **kwargs):
+        ...
+        html = self.render_string(template_name, **kwargs)
+        ...
+        return self.finish(html)
+
+    def render_string(self, template_name, **kwargs):
+
+        template_path = self.get_template_path()
+        ...
+        with RequestHandler._template_loader_lock:
+            if template_path not in RequestHandler._template_loaders:
+                loader = self.create_template_loader(template_path)
+                RequestHandler._template_loaders[template_path] = loader
+            else:
+                loader = RequestHandler._template_loaders[template_path]
+        t = loader.load(template_name)
+        namespace = self.get_template_namespace()
+        namespace.update(kwargs)
+        return t.generate(**namespace)
+
+    def get_template_namespace(self):
+        namespace = dict(
+            handler=self,
+            request=self.request,
+            current_user=self.current_user,
+            locale=self.locale,
+            _=self.locale.translate,
+            pgettext=self.locale.pgettext,
+            static_url=self.static_url,
+            xsrf_form_html=self.xsrf_form_html,
+            reverse_url=self.reverse_url
+        )
+        namespace.update(self.ui)
+        return namespace
+</code></pre>
+
+<p><strong>render_string</strong>:通过模板文件名加载模板，然后更新模板引擎中的命名空间，添加一些全局函数或其他对象，然后生成并返回渲染好的 html内容</p>
+<p><strong>render</strong>:依次调用<code>render_string</code>及相关渲染函数生成的内容，最后调用 finish 直接输出给客户端。</p>
+<p>我们跟进模板引擎相关类看看其中的实现。</p>
+<p><strong>tornado/template.py</strong></p>
+<pre><code class="python">class Template(object):
+    ...
+    def generate(self, **kwargs):
+        namespace = {
+            &quot;escape&quot;: escape.xhtml_escape,
+            &quot;xhtml_escape&quot;: escape.xhtml_escape,
+            &quot;url_escape&quot;: escape.url_escape,
+            &quot;json_encode&quot;: escape.json_encode,
+            &quot;squeeze&quot;: escape.squeeze,
+            &quot;linkify&quot;: escape.linkify,
+            &quot;datetime&quot;: datetime,
+            &quot;_tt_utf8&quot;: escape.utf8,  # for internal use
+            &quot;_tt_string_types&quot;: (unicode_type, bytes),
+            &quot;__name__&quot;: self.name.replace('.', '_'),
+            &quot;__loader__&quot;: ObjectDict(get_source=lambda name: self.code),
+        }
+        namespace.update(self.namespace)
+        namespace.update(kwargs)
+        exec_in(self.compiled, namespace)
+        execute = namespace[&quot;_tt_execute&quot;]
+        linecache.clearcache()
+        return execute()
+</code></pre>
+
+<p>在上面的代码中，我们很容易看出命名空间namespace中有哪些变量、函数的存在。其中，<strong>handler</strong>是一个神奇的存在。</p>
+<p><strong>tornado/web.py:</strong></p>
+<pre><code class="python">class RequestHandler(object):
+    ....
+    def __init__(self, application, request, **kwargs):
+        super(RequestHandler, self).__init__()
+
+        self.application = application
+        self.request = request
+</code></pre>
+
+<p>在<code>RequestHandler</code>类的构造函数中，可以看到<code>application</code>的赋值。</p>
+<p><strong>tornado/web.py:</strong></p>
+<pre><code class="python">class Application(ReversibleRouter):
+    ....
+    def __init__(self, handlers=None, default_host=None, transforms=None,
+                 **settings):
+        ...
+        self.wildcard_router = _ApplicationRouter(self, handlers)
+        self.default_router = _ApplicationRouter(self, [
+            Rule(AnyMatches(), self.wildcard_router)
+        ])
+
+class _ApplicationRouter(ReversibleRuleRouter):
+    def __init__(self, application, rules=None):
+        assert isinstance(application, Application)
+        self.application = application
+        super(_ApplicationRouter, self).__init__(rules)
+</code></pre>
+
+<p>因此，通过<code>handler.application</code>即可访问整个Tornado。</p>
+<p>简单而言通过<code>{{handler.application.settings}}</code>或者<code>{{handler.settings}}</code>就可获得<code>settings</code>中的<strong>cookie_secret</strong>。</p>
+<p>例题：<a href="https://github.com/CTFTraining/huwangbei_2018_easy_tornado">护网杯 2018 WEB (1) easy_tornado</a></p>
+<p>另外，跟进<code>exec_in</code>中也有新发现。</p>
+<p><strong>tornado/util.py:</strong></p>
+<pre><code class="python">def exec_in(code, glob, loc=None):
+    # type: (Any, Dict[str, Any], Optional[Mapping[str, Any]]) -&gt; Any
+    if isinstance(code, basestring_type):
+        # exec(string) inherits the caller's future imports; compile
+        # the string first to prevent that.
+        code = compile(code, '&lt;string&gt;', 'exec', dont_inherit=True)
+    exec(code, glob, loc)
+</code></pre>
+
+<p>这里用到了<strong>compile</strong>和<strong>exec</strong></p>
+<h3>SSTI in Flask</h3>
+<p>Flask 中模板渲染函数也是有两个</p>
+<ul>
+<li>render_template</li>
+<li>render_template_string</li>
+</ul>
+<p>Flask使用的是 Jinja2 模板引擎</p>
+<p><strong>flask/templating.py</strong></p>
+<pre><code class="python">def _default_template_ctx_processor():
+    &quot;&quot;&quot;Injects `request`,`session` and `g`.&quot;&quot;&quot;
+    reqctx = _request_ctx_stack.top
+    appctx = _app_ctx_stack.top
+    rv = {}
+    if appctx is not None:
+        rv['g'] = appctx.g
+    if reqctx is not None:
+        rv['request'] = reqctx.request
+        rv['session'] = reqctx.session
+    return rv
+
+def _render(template, context, app):
+    before_render_template.send(app, template=template, context=context)
+    rv = template.render(context)
+    template_rendered.send(app, template=template, context=context)
+    return rv
+
+def render_template(template_name_or_list, **context):
+    ctx = _app_ctx_stack.top
+    ctx.app.update_template_context(context)
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+                   context, ctx.app)
+
+def render_template_string(source, **context):
+    ctx = _app_ctx_stack.top
+    ctx.app.update_template_context(context)
+    return _render(ctx.app.jinja_env.from_string(source),
+                   context, ctx.app)
+</code></pre>
+
+<p><strong>render_template</strong>:通过模板文件加载内容并进行渲染</p>
+<p><strong>render_template_string</strong>:直接通过模板字符串进行渲染</p>
+<p>这上下文、栈啥的看的有点懵，也不深入了。（有兴趣自行了解）</p>
+<p>接着，我们看看 Flask 是怎么加载 Jinja2 的。<code>app.jinja_env</code></p>
+<p><strong>flask/app.py</strong></p>
+<pre><code class="python">class Flask(_PackageBoundObject):
+    ...
+    jinja_environment = Environment
+    ...
+    jinja_options = ImmutableDict(
+        extensions=['jinja2.ext.autoescape', 'jinja2.ext.with_']
+    )
+    ...
+    @locked_cached_property
+    def jinja_env(self):
+        return self.create_jinja_environment()
+    ...
+    def create_jinja_environment(self):
+        options = dict(self.jinja_options)
+        rv = self.jinja_environment(self, **options)
+        rv.globals.update(
+            url_for=url_for,
+            get_flashed_messages=get_flashed_messages,
+            config=self.config,
+            request=request,
+            session=session,
+            g=g
+        )
+        rv.filters['tojson'] = json.tojson_filter
+        return rv
+</code></pre>
+
+<p>这里我们可以看见<code>jinja_environment</code>中有6个全局变量，也就是说在模板引擎的解析环境中可以访问这6个对象。</p>
+<p>例题 <a href="https://github.com/CTFTraining/westerns_2018_shrine">TokyoWesterns CTF 4th 2018 shrine</a></p>
+<p>接下来，我们跟进 Jinja2 的代码里看看还有什么有意思的东西。</p>
+<p><strong>jinja2/environment.py</strong></p>
+<pre><code class="python">class Environment(object):
+    ...
+    def _generate(self, source, name, filename, defer_init=False):
+        return generate(source, self, name, filename, defer_init=defer_init,
+                        optimized=self.optimized)
+
+    def _compile(self, source, filename):
+        return compile(source, filename, 'exec')
+
+    @internalcode
+    def compile(self, source, name=None, filename=None, raw=False,
+                defer_init=False):
+        source_hint = None
+        try:
+            if isinstance(source, string_types):
+                source_hint = source
+                source = self._parse(source, name, filename)
+            source = self._generate(source, name, filename,
+                                    defer_init=defer_init)
+            if raw:
+                return source
+            if filename is None:
+                filename = '&lt;template&gt;'
+            else:
+                filename = encode_filename(filename)
+            return self._compile(source, filename)
+        except TemplateSyntaxError:
+            exc_info = sys.exc_info()
+        self.handle_exception(exc_info, source_hint=source_hint)
+
+class Template(object):
+    ...
+    def render(self, *args, **kwargs):
+        vars = dict(*args, **kwargs)
+        try:
+            return concat(self.root_render_func(self.new_context(vars)))
+        except Exception:
+            exc_info = sys.exc_info()
+        return self.environment.handle_exception(exc_info, True)
+    ...
+</code></pre>
+
+<p>这里也是通过<strong>compile</strong>对模板进行编译的</p>
+<p><strong>jinja2/parser.py</strong></p>
+<pre><code class="python">_statement_keywords = frozenset(['for', 'if', 'block', 'extends', 'print',
+                                 'macro', 'include', 'from', 'import',
+                                 'set', 'with', 'autoescape'])
+_compare_operators = frozenset(['eq', 'ne', 'lt', 'lteq', 'gt', 'gteq'])
+
+_math_nodes = {
+    'add': nodes.Add,
+    'sub': nodes.Sub,
+    'mul': nodes.Mul,
+    'div': nodes.Div,
+    'floordiv': nodes.FloorDiv,
+    'mod': nodes.Mod,
+}
+...
+class Parser(object):
+    def parse_statement(self):
+        ...
+        try:
+            if token.value in _statement_keywords:
+                return getattr(self, 'parse_' + self.stream.current.value)()
+        ...
+    def parse_print(self):
+        node = nodes.Output(lineno=next(self.stream).lineno)
+        node.nodes = []
+        while self.stream.current.type != 'block_end':
+            if node.nodes:
+                self.stream.expect('comma')
+            node.nodes.append(self.parse_expression())
+        return node
+</code></pre>
+
+<p>这里面，<strong>print</strong>是个好东西，某些场景，限制了<code>{{</code>和<code>}}</code>的使用，只能使用<code>{%</code>和<code>%}</code>。这种清空，一般的想法是利用<strong>if</strong>来进行逻辑盲注，但是<code>{% print somedata %}</code>可以直接输出。</p>
+<p>例题：网鼎杯 CTF 2018 第三场 Web mmmmy (暂无环境)</p>
+<p><strong>jinja2/defaults.py</strong></p>
+<pre><code class="python">DEFAULT_NAMESPACE = {
+    'range':        range_type,
+    'dict':         dict,
+    'lipsum':       generate_lorem_ipsum,
+    'cycler':       Cycler,
+    'joiner':       Joiner,
+    'namespace':    Namespace
+}
+</code></pre>
+
+<p>默认的命名空间里面还有一些奇奇怪怪的对象存在的。</p>
+<p>在探索测试的过程中发现，其实你随便输入一个字符串都是有用的。</p>
+<p>比如<code>{{vvv}}</code>，一般情况你会发现页面空白啥的没有，但是加点东西就是新世界<code>{{vvv.__class__}}</code>。Jinja2对不存在的对象有一个特殊的定义<strong>Undefined</strong>类<code>&lt;class 'jinja2.runtime.Undefined'&gt;</code>。</p>
+<p><strong>jinja2/runtime.py</strong></p>
+<pre><code class="python">@implements_to_string
+class Undefined(object):
+    ...
+</code></pre>
+
+<p>通过<code>{{ vvv.__class__.__init__.__globals__ }}</code>又能够搞事情了。</p>
+<p><strong>jinja2/filters.py</strong></p>
+<pre><code class="python">FILTERS = {
+    'abs':                  abs,
+    'attr':                 do_attr,
+    'batch':                do_batch,
+    'capitalize':           do_capitalize,
+    'center':               do_center,
+    'count':                len,
+    'd':                    do_default,
+    'default':              do_default,
+    'dictsort':             do_dictsort,
+    'e':                    escape,
+    'escape':               escape,
+    'filesizeformat':       do_filesizeformat,
+    'first':                do_first,
+    'float':                do_float,
+    'forceescape':          do_forceescape,
+    'format':               do_format,
+    'groupby':              do_groupby,
+    'indent':               do_indent,
+    'int':                  do_int,
+    'join':                 do_join,
+    'last':                 do_last,
+    'length':               len,
+    'list':                 do_list,
+    'lower':                do_lower,
+    'map':                  do_map,
+    'min':                  do_min,
+    'max':                  do_max,
+    'pprint':               do_pprint,
+    'random':               do_random,
+    'reject':               do_reject,
+    'rejectattr':           do_rejectattr,
+    'replace':              do_replace,
+    'reverse':              do_reverse,
+    'round':                do_round,
+    'safe':                 do_mark_safe,
+    'select':               do_select,
+    'selectattr':           do_selectattr,
+    'slice':                do_slice,
+    'sort':                 do_sort,
+    'string':               soft_unicode,
+    'striptags':            do_striptags,
+    'sum':                  do_sum,
+    'title':                do_title,
+    'trim':                 do_trim,
+    'truncate':             do_truncate,
+    'unique':               do_unique,
+    'upper':                do_upper,
+    'urlencode':            do_urlencode,
+    'urlize':               do_urlize,
+    'wordcount':            do_wordcount,
+    'wordwrap':             do_wordwrap,
+    'xmlattr':              do_xmlattr,
+    'tojson':               do_tojson,
+}
+</code></pre>
+
+<p>这些过滤器有些时候还是可以用到的，用法<code>{{ somedata | filter }}</code>,<code>{{url_for.__globals__.current_app.config|safe}}</code></p>
+<h2>结束语</h2>
+<p>本文到这里就告一段落了，主要收获就是模板引擎命名空间或全局变量中的各种对象和函数。另外，其实还有很多地方没深入研究，大家有兴趣不妨翻翻源码找找有意思的事物。</p>
+<p>标题有个<strong>(一)</strong>，算是给自己挖个坑，至于后续能不能填上就另说啦。。。。emmmmmmm</p>
+<h2>转载声明</h2>
+<p>本文首发于先知社区：<a href="https://xz.aliyun.com/t/2908">Python中从服务端模板注入到沙盒逃逸的源码探索 (一) https://xz.aliyun.com/t/2908</a></p>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/10/15/python_from_ssti_to_sandbox_1.html" target="_blank">Python中从服务端模板注入到沙盒逃逸的源码探索 (一)</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-10-15 11:33:23">2018-10-15 11:33:23</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-10-17 15:10:16">2018-10-17 15:10:16</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/10/15/python_from_ssti_to_sandbox_1.html" title="Python中从服务端模板注入到沙盒逃逸的源码探索 (一)" target="_blank">https://www.virzz.com/2018/10/15/python_from_ssti_to_sandbox_1.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

