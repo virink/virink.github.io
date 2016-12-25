@@ -5,22 +5,38 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
   <title>
-    所有文章: 2015 
+    SSH代理轉socks5 | Virink&#39;s Blog 
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <meta name="author" content="Virink">
 
 
-<meta name="description" content="Virink的小窩，記錄與分享一些網絡安全技術文章。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="所有文章: 2015">
-<meta property="og:url" content="https://www.virzz.com/archives/2015/index.html">
+<meta name="description" content="Set up the SSH tunnel
+ssh -D 1080 -f -C -q -N user@hostname.ca
+
+Set up System Preferences
+This is for Safari and other WebKit-based browsers.
+Note: this will also affect Mail and other CFNetwork-based">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSH代理轉socks5 | Virink's Blog">
+<meta property="og:url" content="https://www.virzz.com/2016/12/25/SSH代理轉socks5.html">
 <meta property="og:site_name" content="Virink's Blog">
-<meta property="og:description" content="Virink的小窩，記錄與分享一些網絡安全技術文章。">
+<meta property="og:description" content="Set up the SSH tunnel
+ssh -D 1080 -f -C -q -N user@hostname.ca
+
+Set up System Preferences
+This is for Safari and other WebKit-based browsers.
+Note: this will also affect Mail and other CFNetwork-based">
+<meta property="og:updated_time" content="2016-12-25T07:41:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="所有文章: 2015">
-<meta name="twitter:description" content="Virink的小窩，記錄與分享一些網絡安全技術文章。">
+<meta name="twitter:title" content="SSH代理轉socks5 | Virink's Blog">
+<meta name="twitter:description" content="Set up the SSH tunnel
+ssh -D 1080 -f -C -q -N user@hostname.ca
+
+Set up System Preferences
+This is for Safari and other WebKit-based browsers.
+Note: this will also affect Mail and other CFNetwork-based">
 
   <!-- favicon icon files -->
 
@@ -127,58 +143,81 @@
     <div class="content-wrapper__inner entry">
       <!-- body panel -->
       
-
-
-  <h1 class="archive-title">所有文章: 2015</h1>
-  <hr class="post-list__divider" />
-
-
-<div class="main-post-list">
-    <ol class="post-list">
+<article class="post-container post-container--single">
+  <header class="post-header">
+    <h1 class="post-title">SSH代理轉socks5</h1>
     
+    <div class="post-meta">
+      <time datetime="2016-12-25 15:19:25" class="post-meta__date date">2016-12-25 15:19:25</time> 
+      <span class="post-meta__tags tags">
+      
+      
+        &#8226; 标签:
+        <font class="tags">
+        <a class="tags-link" href="/tags/mac/">mac</a>, <a class="tags-link" href="/tags/socks/">socks</a>, <a class="tags-link" href="/tags/ssh/">ssh</a>
+        </font>
+      
+      </span>
+    </div>
     
-    <li>
+  </header>
+  <section id="post-content" class="article-content post">
+  <h2>Set up the SSH tunnel</h2>
+<pre><code>ssh -D 1080 -f -C -q -N user@hostname.ca
+</code></pre>
+<h2>Set up System Preferences</h2>
+<p>This is for Safari and other WebKit-based browsers.</p>
+<p>Note: this will also affect Mail and other CFNetwork-based applications.</p>
+<ol>
+<li>Select Apple &gt; System Preferences</li>
+<li>Click Network</li>
+<li>Select the network interface you wish to use</li>
+<li>Click Advanced</li>
+<li>Click Proxies</li>
+<li>Select Configure Proxies &gt; Manually (onlynecessary on Leopard and earlier)</li>
+<li>Check the box beside SOCKS Proxy</li>
+<li>fill in 'localhost' and '1080'</li>
+<li>Click OK or Click Apply</li>
+</ol>
+<h2>Set up Firefox</h2>
+<ol>
+<li>Select Firefox &gt; Preferences</li>
+<li>Click Advanced</li>
+<li>Click Network</li>
+<li>Click Settings</li>
+<li>Click 'Manual proxy configuration'</li>
+<li>Besides SOCKS Host, fill in 'localhost' and '8080'</li>
+<li>Do not fill in any other fields, including 'HTTP Proxy'</li>
+<li>Click SOCKS v5</li>
+<li>Click OK</li>
+</ol>
 
-      <h2 class="post-list__post-title post-title">
-        <a href="/2015/12/12/PHPTrace PHP执行流程跟踪工具.html" title="link to PHPTrace PHP执行流程跟踪工具">PHPTrace PHP执行流程跟踪工具</a>
-      </h2>
+  </section>
+  <div class="copyright">
+    <span>文本標題:</span><a href="/2016/12/25/SSH代理轉socks5.html" target="_blank">SSH代理轉socks5</a><br />
+    <span>文章作者:</span><a href="/" title="回到主页" target="_blank">Virink</a><br />
+    <span>發佈時間:</span>2016-12-25 15:19:25<br />
+    <span>最後更新:</span>2016-12-25 15:41:12<br />
+    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/12/25/SSH代理轉socks5.html" title="SSH代理轉socks5" target="_blank">https://www.virzz.com/2016/12/25/SSH代理轉socks5.html</a><br />
+    <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
+  </div>
+  
+<section class="post-comments">
+    <div class="ds-thread" data-thread-key="2016/12/25/SSH代理轉socks5.html" data-title="SSH代理轉socks5" data-url="https://www.virzz.com/2016/12/25/SSH代理轉socks5.html"></div>
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:"virink"};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+</section>
 
-      <div class="post-list__meta">
-
-        <time datetime="2015-12-12" class="post-list__meta--date date">2015-12-12</time> 
-
-        <span class="post-list__meta--tags tags">
-          
-            &#8226; 标签:
-            <font class="tags">
-            <a class="tags-link" href="/tags/php/">php</a>, <a class="tags-link" href="/tags/tools/">tools</a>, <a class="tags-link" href="/tags/web/">web</a>
-            </font>
-          
-        </span>
-
-      </div>
-
-      <div class="excerpt">
-        
-      </div>
-
-      <hr class="post-list__divider" />
-    </li>
-    
-  </ol>
-
-  <hr class="post-list__divider " />
-
-<nav class="pagination" role="navigation">
-    
-
-    <span class="pagination__page-number"> 1 / 1</span>
-    
-    
-</nav>
-
-
-</div>
+</article>
       <!-- footer panel -->
       <footer class="footer">
 	<center>
@@ -194,6 +233,30 @@
   <script src="/js/main.js"></script>
   <script src="/js/scale.fix.js"></script>
   <script src="/js/tagcloud.js"></script>
+  
+  
+	<script src="/js/jquery.fancybox.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.fancybox').fancybox();
+		});
+	</script>
+
+  
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript"> 
+        $(document).ready(function(){
+            MathJax.Hub.Config({ 
+                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+            });
+        });
+    </script>
+
+  <script src="//cdn.bootcss.com/highlight.js/9.8.0/highlight.min.js"></script>
+  <script src="/js/gallery.js"></script>
+  <script>
+  hljs.initHighlightingOnLoad();
+  </script>
   
   
 <div id="totop" style="position: fixed; bottom: 50px; right: 30px; cursor: pointer; opacity: 1;">
