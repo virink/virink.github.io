@@ -35,9 +35,9 @@ ssh -qTfnN -D 7070 -p 22 user@host
     
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
     
-      <category term="socks" scheme="https://www.virzz.com/tags/socks/"/>
-    
       <category term="ssh" scheme="https://www.virzz.com/tags/ssh/"/>
+    
+      <category term="socks" scheme="https://www.virzz.com/tags/socks/"/>
     
   </entry>
   
