@@ -133,9 +133,9 @@ ssh-keygen -t
     
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
-      <category term="install" scheme="https://www.virzz.com/tags/install/"/>
-    
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    
+      <category term="install" scheme="https://www.virzz.com/tags/install/"/>
     
   </entry>
   
