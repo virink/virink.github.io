@@ -81,7 +81,7 @@ yum-config-manager">
         
 
   <div id="tagscloud">
-<a href="/tags/php/" class="tagc1">php : 10</a><a href="/tags/ctf/" class="tagc2">ctf : 10</a><a href="/tags/writeups/" class="tagc3">writeups : 9</a><a href="/tags/web/" class="tagc4">web : 6</a><a href="/tags/thinking/" class="tagc5">thinking : 3</a><a href="/tags/mac/" class="tagc1">mac : 3</a><a href="/tags/audit/" class="tagc2">audit : 2</a><a href="/tags/shell/" class="tagc3">shell : 2</a><a href="/tags/linux/" class="tagc4">linux : 2</a><a href="/tags/ssh/" class="tagc5">ssh : 2</a><a href="/tags/install/" class="tagc1">install : 1</a><a href="/tags/dtrace/" class="tagc2">dtrace : 1</a><a href="/tags/go/" class="tagc3">go : 1</a><a href="/tags/socks/" class="tagc4">socks : 1</a><a href="/tags/leanote/" class="tagc5">leanote : 1</a><a href="/tags/tools/" class="tagc1">tools : 1</a><a href="/tags/webshell/" class="tagc2">webshell : 1</a><a href="/tags/python/" class="tagc3">python : 1</a><a href="/tags/flask/" class="tagc4">flask : 1</a><a href="/tags/nginx/" class="tagc5">nginx : 1</a>
+<a href="/tags/php/" class="tagc1">php : 10</a><a href="/tags/ctf/" class="tagc2">ctf : 10</a><a href="/tags/writeups/" class="tagc3">writeups : 9</a><a href="/tags/web/" class="tagc4">web : 6</a><a href="/tags/thinking/" class="tagc5">thinking : 3</a><a href="/tags/mac/" class="tagc1">mac : 3</a><a href="/tags/linux/" class="tagc2">linux : 2</a><a href="/tags/shell/" class="tagc3">shell : 2</a><a href="/tags/audit/" class="tagc4">audit : 2</a><a href="/tags/ssh/" class="tagc5">ssh : 2</a><a href="/tags/go/" class="tagc1">go : 1</a><a href="/tags/webshell/" class="tagc2">webshell : 1</a><a href="/tags/dtrace/" class="tagc3">dtrace : 1</a><a href="/tags/tools/" class="tagc4">tools : 1</a><a href="/tags/socks/" class="tagc5">socks : 1</a><a href="/tags/leanote/" class="tagc1">leanote : 1</a><a href="/tags/python/" class="tagc2">python : 1</a><a href="/tags/flask/" class="tagc3">flask : 1</a><a href="/tags/nginx/" class="tagc4">nginx : 1</a><a href="/tags/install/" class="tagc5">install : 1</a>
 </div>
 
         <div class="navigation-wrapper">
@@ -321,7 +321,15 @@ source ~/.bash_profile
 	<script src="/js/jquery.fancybox.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('.fancybox').fancybox();
+			// $('.fancybox').fancybox();
+			$(".fancybox").fancybox({
+	            padding: 0,
+	            helpers: {
+	                overlay: {
+	                  locked: false
+	                }
+	            }
+	        });
 		});
 	</script>
 
@@ -369,20 +377,16 @@ source ~/.bash_profile
     </script>
 
 
-  <script>
+  <!-- Push baidu -->
+<script>
 (function(){
     var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
+    bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
     var s = document.getElementsByTagName("script")[0];
     s.parentNode.insertBefore(bp, s);
 })();
 </script>
+<!-- Tongji Baidu -->
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -392,7 +396,15 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
+<!-- Analytics Google -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-83885261-1', 'auto');
+  ga('send', 'pageview');
+</script>
   
   <!--kill ie6 -->
 <!--[if IE 6]>
