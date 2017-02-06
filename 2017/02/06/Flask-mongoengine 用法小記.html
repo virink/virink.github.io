@@ -20,7 +20,7 @@
 <meta property="og:site_name" content="Virink's Blog">
 <meta property="og:description" content="模型設置
 1234567891011121314151617181920212223242526272829303132from mongoengine.errors import ValidationErrorfrom mongoengine.queryset import (DoesNotExist, MultipleObjectsReturned)import flask_mongoengi">
-<meta property="og:updated_time" content="2017-02-06T15:55:49.000Z">
+<meta property="og:updated_time" content="2017-02-06T16:21:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flask-mongoengine 用法小記 | Virink's Blog">
 <meta name="twitter:description" content="模型設置
@@ -66,7 +66,7 @@
         
 
   <div id="tagscloud">
-<a href="/tags/php/" class="tagc1">php : 10</a><a href="/tags/ctf/" class="tagc2">ctf : 10</a><a href="/tags/writeups/" class="tagc3">writeups : 9</a><a href="/tags/web/" class="tagc4">web : 6</a><a href="/tags/thinking/" class="tagc5">thinking : 3</a><a href="/tags/mac/" class="tagc1">mac : 3</a><a href="/tags/python/" class="tagc2">python : 2</a><a href="/tags/flask/" class="tagc3">flask : 2</a><a href="/tags/linux/" class="tagc4">linux : 2</a><a href="/tags/shell/" class="tagc5">shell : 2</a><a href="/tags/ssh/" class="tagc1">ssh : 2</a><a href="/tags/audit/" class="tagc2">audit : 2</a><a href="/tags/dtrace/" class="tagc3">dtrace : 1</a><a href="/tags/install/" class="tagc4">install : 1</a><a href="/tags/webshell/" class="tagc5">webshell : 1</a><a href="/tags/mongodb/" class="tagc1">mongodb : 1</a><a href="/tags/go/" class="tagc2">go : 1</a><a href="/tags/tools/" class="tagc3">tools : 1</a><a href="/tags/socks/" class="tagc4">socks : 1</a><a href="/tags/nginx/" class="tagc5">nginx : 1</a>
+<a href="/tags/ctf/" class="tagc1">ctf : 10</a><a href="/tags/php/" class="tagc2">php : 10</a><a href="/tags/writeups/" class="tagc3">writeups : 9</a><a href="/tags/web/" class="tagc4">web : 6</a><a href="/tags/thinking/" class="tagc5">thinking : 3</a><a href="/tags/mac/" class="tagc1">mac : 3</a><a href="/tags/audit/" class="tagc2">audit : 2</a><a href="/tags/shell/" class="tagc3">shell : 2</a><a href="/tags/linux/" class="tagc4">linux : 2</a><a href="/tags/python/" class="tagc5">python : 2</a><a href="/tags/flask/" class="tagc1">flask : 2</a><a href="/tags/ssh/" class="tagc2">ssh : 2</a><a href="/tags/install/" class="tagc3">install : 1</a><a href="/tags/webshell/" class="tagc4">webshell : 1</a><a href="/tags/mongodb/" class="tagc5">mongodb : 1</a><a href="/tags/dtrace/" class="tagc1">dtrace : 1</a><a href="/tags/go/" class="tagc2">go : 1</a><a href="/tags/tools/" class="tagc3">tools : 1</a><a href="/tags/socks/" class="tagc4">socks : 1</a><a href="/tags/nginx/" class="tagc5">nginx : 1</a>
 </div>
 
         <div class="navigation-wrapper">
@@ -160,19 +160,13 @@
 <h3>刪除數據</h3>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user = Users.objects._get(username=username,password=password [, **data])</div><div class="line"><span class="keyword">if</span> user:</div><div class="line">    user.delete()</div></pre></td></tr></table></figure>
 <h3>查詢數據</h3>
-<pre><code class="language-python"># 列出所有數據
-user = Users.objects.all()
-# 條件查詢
-user = Users.objects._get(username=username [,**data])
-if user:
-    print user.password</code></pre>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 列出所有數據</span></div><div class="line">user = Users.objects.all()</div><div class="line"><span class="comment"># 條件查詢</span></div><div class="line">user = Users.objects._get(username=username [,**data])</div><div class="line"><span class="keyword">if</span> user:</div><div class="line">    <span class="keyword">print</span> user.password</div></pre></td></tr></table></figure>
   </section>
   <div class="copyright">
     <span>文本標題:</span><a href="/2017/02/06/Flask-mongoengine 用法小記.html" target="_blank">Flask-mongoengine 用法小記</a><br />
     <span>文章作者:</span><a href="/" title="回到主页" target="_blank">Virink</a><br />
     <span>發佈時間:</span>2017-02-06 23:39:15<br />
-    <span>最後更新:</span>2017-02-06 23:55:49<br />
+    <span>最後更新:</span>2017-02-07 00:21:02<br />
     <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html" title="Flask-mongoengine 用法小記" target="_blank">https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html</a><br />
     <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
   </div>

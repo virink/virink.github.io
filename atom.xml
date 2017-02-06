@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-02-06T15:55:49.000Z</updated>
+  <updated>2017-02-06T16:21:02.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://www.virzz.com/2017/02/06/Flask-mongoengine%20%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98.html"/>
     <id>https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html</id>
     <published>2017-02-06T15:39:15.000Z</published>
-    <updated>2017-02-06T15:55:49.000Z</updated>
+    <updated>2017-02-06T16:21:02.000Z</updated>
     
     <summary type="html">
     
@@ -232,9 +232,9 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     </summary>
     
     
-      <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
-    
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+      <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
       <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
     
