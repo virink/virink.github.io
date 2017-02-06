@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2016-12-27T13:00:30.000Z</updated>
+  <updated>2017-02-06T15:55:49.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,29 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Flask-mongoengine 用法小記</title>
+    <link href="https://www.virzz.com/2017/02/06/Flask-mongoengine%20%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98.html"/>
+    <id>https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html</id>
+    <published>2017-02-06T15:39:15.000Z</published>
+    <updated>2017-02-06T15:55:49.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;模型設置&lt;/h2&gt;
+&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div cla
+    
+    </summary>
+    
+    
+      <category term="python" scheme="https://www.virzz.com/tags/python/"/>
+    
+      <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
+    
+      <category term="mongodb" scheme="https://www.virzz.com/tags/mongodb/"/>
+    
+  </entry>
   
   <entry>
     <title>SSH代理轉socks5</title>
@@ -35,9 +58,9 @@ ssh -qTfnN -D 7070 -p 22 user@host
     
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
     
-      <category term="socks" scheme="https://www.virzz.com/tags/socks/"/>
-    
       <category term="ssh" scheme="https://www.virzz.com/tags/ssh/"/>
+    
+      <category term="socks" scheme="https://www.virzz.com/tags/socks/"/>
     
   </entry>
   
@@ -158,11 +181,11 @@ ssh-keygen -t
     
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="python" scheme="https://www.virzz.com/tags/python/"/>
     
       <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
       <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
     

