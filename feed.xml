@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-03-13T15:19:39.000Z</updated>
+  <updated>2017-03-16T11:25:14.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>NJCTF 2017 some web writeups</title>
+    <link href="https://www.virzz.com/2017/03/16/NJCTF%202017%20some%20web%20writeups.html"/>
+    <id>https://www.virzz.com/2017/03/16/NJCTF 2017 some web writeups.html</id>
+    <published>2017-03-15T18:24:32.000Z</published>
+    <updated>2017-03-16T11:25:14.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;Sqlite SQL Injection&lt;/h2&gt;
+&lt;h3&gt;Source Code&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;?php
+require_once &amp;quot;db.php&amp;quot;;
+$auth = 0;
+
+if (isset($_COOKIE[&amp;quot
+    
+    </summary>
+    
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+  </entry>
   
   <entry>
     <title>(新)搭建PHPStorm＋XDebug代碼審計環境</title>
@@ -239,11 +265,11 @@ ssh-keygen -t
     </summary>
     
     
+      <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
       <category term="python" scheme="https://www.virzz.com/tags/python/"/>
     
       <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
-    
-      <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
       <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
