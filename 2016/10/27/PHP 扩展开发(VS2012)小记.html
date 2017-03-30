@@ -1,175 +1,16 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  
-  <title>
-    PHP 扩展开发(VS2012)小记 | Virink&#39;s Blog 
-  </title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-  <meta name="author" content="Virink">
-
-
-<meta name="description" content="生成扩展模板
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="chrome=1"><title> PHP 扩展开发(VS2012)小记 | Virink&#39;s Blog</title><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="author" content="Virink"><meta name="description" content="生成扩展模板
 人性化的PHP项目组给出了一个模板，也就是ext目录下的skeleton
 其实我们可以直接COPY过来用的，网上很多方法都是去执行sh脚本ext_skel或者php脚本ext_skel_win32.php
 ext_skel的作用极速生成一个skeleton插件而已，而源码中一般的已经生成好了的。
-所以我们只需要改写几句ext_skel_win32.php的脚本就能直接生成而不用安装C">
-<meta property="og:type" content="article">
-<meta property="og:title" content="PHP 扩展开发(VS2012)小记 | Virink's Blog">
-<meta property="og:url" content="https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html">
-<meta property="og:site_name" content="Virink's Blog">
-<meta property="og:description" content="生成扩展模板
+所以我们只需要改写几句ext_skel_win32.php的脚本就能直接生成而不用安装C"><meta property="og:type" content="article"><meta property="og:title" content="PHP 扩展开发(VS2012)小记 | Virink's Blog"><meta property="og:url" content="https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html"><meta property="og:site_name" content="Virink's Blog"><meta property="og:description" content="生成扩展模板
 人性化的PHP项目组给出了一个模板，也就是ext目录下的skeleton
 其实我们可以直接COPY过来用的，网上很多方法都是去执行sh脚本ext_skel或者php脚本ext_skel_win32.php
 ext_skel的作用极速生成一个skeleton插件而已，而源码中一般的已经生成好了的。
-所以我们只需要改写几句ext_skel_win32.php的脚本就能直接生成而不用安装C">
-<meta property="og:updated_time" content="2016-12-11T16:05:49.000Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PHP 扩展开发(VS2012)小记 | Virink's Blog">
-<meta name="twitter:description" content="生成扩展模板
+所以我们只需要改写几句ext_skel_win32.php的脚本就能直接生成而不用安装C"><meta property="og:updated_time" content="2016-12-11T16:05:49.000Z"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="PHP 扩展开发(VS2012)小记 | Virink's Blog"><meta name="twitter:description" content="生成扩展模板
 人性化的PHP项目组给出了一个模板，也就是ext目录下的skeleton
 其实我们可以直接COPY过来用的，网上很多方法都是去执行sh脚本ext_skel或者php脚本ext_skel_win32.php
 ext_skel的作用极速生成一个skeleton插件而已，而源码中一般的已经生成好了的。
-所以我们只需要改写几句ext_skel_win32.php的脚本就能直接生成而不用安装C">
-
-  <!-- favicon icon files -->
-
-  <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-  <link rel="icon" href="/images/favicon.ico">
-
-  <!-- css files -->
-  <link rel="stylesheet" href="/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/css/uno.css">
-  <link rel="stylesheet" href="/css/tagscloud.css">
-  <link rel="stylesheet" href="/css/links.css">
-  <link rel="stylesheet" href="/css/archive.css">
-  <link rel="stylesheet" href="/css/jquery.fancybox.css">
-  <link href="//cdn.bootcss.com/highlight.js/9.8.0/styles/monokai-sublime.min.css" rel="stylesheet">
-</head>
-<body>
-  <!-- mobile menu -->
-  <span class="mobile btn-mobile-menu">
-    <i class="fa btn-mobile-menu__icon fa-bars" aria-hidden="true"></i>
-  </span>
-  <!-- side panel -->
-  
-  <header class="panel-cover panel-cover--collapsed">
-
-  <div class="panel-main">
-    <div class="panel-main__inner panel-inverted">
-      <div class="panel-main__content">
-      
-        <a href="/" title="link to homepage for Virink&#39;s Blog"><img src="/images/avatar.png" width="80" alt="Virink&#39;s Blog logo" class="panel-cover__logo logo" /></a>
-      
-        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Virink</a></h1>
-        <hr class="panel-cover__divider" />
-        
-        <p class="panel-cover__description">
-          探索技術，追求超越。
-        </p>
-        <hr class="panel-cover__divider" />
-        
-        <!-- TagsCloud -->
-        
-
-  <div id="tagscloud">
-<a href="/tags/php/" class="tagc1">php : 11</a><a href="/tags/ctf/" class="tagc2">ctf : 11</a><a href="/tags/writeups/" class="tagc3">writeups : 10</a><a href="/tags/web/" class="tagc4">web : 6</a><a href="/tags/mac/" class="tagc5">mac : 4</a><a href="/tags/audit/" class="tagc1">audit : 3</a><a href="/tags/thinking/" class="tagc2">thinking : 3</a><a href="/tags/ssh/" class="tagc3">ssh : 2</a><a href="/tags/flask/" class="tagc4">flask : 2</a><a href="/tags/linux/" class="tagc5">linux : 2</a><a href="/tags/shell/" class="tagc1">shell : 2</a><a href="/tags/python/" class="tagc2">python : 2</a><a href="/tags/app/" class="tagc3">app : 1</a><a href="/tags/debug/" class="tagc4">debug : 1</a><a href="/tags/leanote/" class="tagc5">leanote : 1</a><a href="/tags/go/" class="tagc1">go : 1</a><a href="/tags/dtrace/" class="tagc2">dtrace : 1</a><a href="/tags/install/" class="tagc3">install : 1</a><a href="/tags/mongodb/" class="tagc4">mongodb : 1</a><a href="/tags/osx/" class="tagc5">osx : 1</a>
-</div>
-
-        <div class="navigation-wrapper">
-          <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-            
-              
-              <li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客</a></li>
-            
-              
-              <li class="navigation__item"><a href="/archive" title="" class="">歸檔</a></li>
-            
-              
-              <li class="navigation__item"><a href="/links" title="" class="">友鏈</a></li>
-            
-              
-              <li class="navigation__item"><a href="/about" title="" class="">關於</a></li>
-            
-              
-              <li class="navigation__item"><a href="/feed.xml" title="" class="">訂閱</a></li>
-            
-            </ul>
-          </nav>
-          
-<hr class="panel-cover__divider">
-<nav class="cover-navigation navigation--social">
-  <ul class="navigation">
-    
-      <!-- Github -->
-      <li class="navigation__item">
-        <a href="https://github.com/virink" title="Virink's GitHub">
-          <i class='fa fa-github'></i>
-          <span class="label">GitHub</span>
-        </a>
-      </li>
-    
-    
-      <!-- Twitter -->
-      <li class="navigation__item">
-        <a href="https://twitter.com/virinkz" title="Virink's Twitter">
-          <i class='fa fa-twitter'></i>
-          <span class="label">Twitter</span>
-        </a>
-      </li>
-    
-    
-      <!-- Telegram -->
-      <li class="navigation__item">
-        <a href="https://telegram.me/virink" title="Virink's Telegram">
-          <i class='fa fa-paper-plane'></i>
-          <span class="label">Telegram</span>
-        </a>
-      </li>
-    
-  </ul>
-</nav>
-
-        </div>
-      </div>
-    </div>
-    <div class="panel-cover--overlay"></div>
-  </div>
-</header>
-  <div class="content-wrapper">
-    <div class="content-wrapper__inner entry">
-      <!-- body panel -->
-      
-<article class="post-container post-container--single">
-  <header class="post-header">
-    <h1 class="post-title">PHP 扩展开发(VS2012)小记</h1>
-    
-    <div class="post-meta">
-      <time datetime="2016-10-27 04:08:20" class="post-meta__date date">2016-10-27 04:08:20</time> 
-      <span class="post-meta__tags tags">
-      
-      
-        &#8226; 標籤:
-        <font class="tags">
-        <a class="tags-link" href="/tags/php/">php</a>
-        </font>
-      
-      </span>
-    </div>
-    
-  </header>
-  <section id="post-content" class="article-content post">
-  <h2>生成扩展模板</h2>
-<p>人性化的PHP项目组给出了一个模板，也就是ext目录下的<strong>skeleton</strong></p>
-<p>其实我们可以直接COPY过来用的，网上很多方法都是去执行<strong>sh</strong>脚本<code>ext_skel</code>或者<strong>php</strong>脚本<code>ext_skel_win32.php</code></p>
-<p><code>ext_skel</code>的作用极速生成一个skeleton插件而已，而源码中一般的已经生成好了的。</p>
-<p>所以我们只需要改写几句<code>ext_skel_win32.php</code>的脚本就能直接生成而不用安装<strong>CygWin</strong></p>
-<p><strong>ext_skel_win32_virink.php</strong></p>
-<pre><code>&lt;?php
+所以我们只需要改写几句ext_skel_win32.php的脚本就能直接生成而不用安装C"><link rel="icon" type="image/x-icon" href="/images/favicon.ico"><link rel="icon" href="/images/favicon.ico"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="stylesheet" href="/css/uno.css"><link rel="stylesheet" href="/css/tagscloud.css"><link rel="stylesheet" href="/css/links.css"><link rel="stylesheet" href="/css/archive.css"><link rel="stylesheet" href="/css/jquery.fancybox.css"><link href="//cdn.bootcss.com/highlight.js/9.8.0/styles/monokai-sublime.min.css" rel="stylesheet"></head><body><span class="mobile btn-mobile-menu"><i class="fa btn-mobile-menu__icon fa-bars" aria-hidden="true"></i></span><header class="panel-cover panel-cover--collapsed"><div class="panel-main"><div class="panel-main__inner panel-inverted"><div class="panel-main__content"> <a href="/" title="link to homepage for Virink&#39;s Blog"><img src="/images/avatar.png" width="80" alt="Virink&#39;s Blog logo" class="panel-cover__logo logo"></a><h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage">Virink</a></h1><hr class="panel-cover__divider"><p class="panel-cover__description"> 探索技術，追求超越。</p><hr class="panel-cover__divider"><div id="tagscloud"> <a href="/tags/php/" class="tagc1">php : 11</a><a href="/tags/ctf/" class="tagc2">ctf : 11</a><a href="/tags/writeups/" class="tagc3">writeups : 10</a><a href="/tags/web/" class="tagc4">web : 6</a><a href="/tags/mac/" class="tagc5">mac : 4</a><a href="/tags/audit/" class="tagc1">audit : 3</a><a href="/tags/thinking/" class="tagc2">thinking : 3</a><a href="/tags/shell/" class="tagc3">shell : 2</a><a href="/tags/ssh/" class="tagc4">ssh : 2</a><a href="/tags/flask/" class="tagc5">flask : 2</a><a href="/tags/linux/" class="tagc1">linux : 2</a><a href="/tags/python/" class="tagc2">python : 2</a><a href="/tags/app/" class="tagc3">app : 1</a><a href="/tags/debug/" class="tagc4">debug : 1</a><a href="/tags/dtrace/" class="tagc5">dtrace : 1</a><a href="/tags/leanote/" class="tagc1">leanote : 1</a><a href="/tags/go/" class="tagc2">go : 1</a><a href="/tags/install/" class="tagc3">install : 1</a><a href="/tags/mongodb/" class="tagc4">mongodb : 1</a><a href="/tags/osx/" class="tagc5">osx : 1</a></div><div class="navigation-wrapper"><nav class="cover-navigation cover-navigation--primary"><ul class="navigation"><li class="navigation__item"><a href="/#blog" title="" class="blog-button">博客</a></li><li class="navigation__item"><a href="/archive" title="" class="">歸檔</a></li><li class="navigation__item"><a href="/links" title="" class="">友鏈</a></li><li class="navigation__item"><a href="/about" title="" class="">關於</a></li><li class="navigation__item"><a href="/feed.xml" title="" class="">訂閱</a></li></ul></nav><hr class="panel-cover__divider"><nav class="cover-navigation navigation--social"><ul class="navigation"><li class="navigation__item"><a href="https://github.com/virink" title="Virink's GitHub"><i class="fa fa-github"></i> <span class="label">GitHub</span></a></li><li class="navigation__item"><a href="https://twitter.com/virinkz" title="Virink's Twitter"><i class="fa fa-twitter"></i> <span class="label">Twitter</span></a></li><li class="navigation__item"><a href="https://telegram.me/virink" title="Virink's Telegram"><i class="fa fa-paper-plane"></i> <span class="label">Telegram</span></a></li></ul></nav></div></div></div><div class="panel-cover--overlay"></div></div></header><div class="content-wrapper"><div class="content-wrapper__inner entry"><article class="post-container post-container--single"><header class="post-header"><h1 class="post-title">PHP 扩展开发(VS2012)小记</h1><div class="post-meta"> <time datetime="2016-10-27 04:08:20" class="post-meta__date date">2016-10-27 04:08:20</time> <span class="post-meta__tags tags">&#8226; 標籤: <font class="tags"><a class="tags-link" href="/tags/php/">php</a></font></span></div></header><section id="post-content" class="article-content post"><h2>生成扩展模板</h2><p>人性化的PHP项目组给出了一个模板，也就是ext目录下的<strong>skeleton</strong></p><p>其实我们可以直接COPY过来用的，网上很多方法都是去执行<strong>sh</strong>脚本<code>ext_skel</code>或者<strong>php</strong>脚本<code>ext_skel_win32.php</code></p><p><code>ext_skel</code>的作用极速生成一个skeleton插件而已，而源码中一般的已经生成好了的。</p><p>所以我们只需要改写几句<code>ext_skel_win32.php</code>的脚本就能直接生成而不用安装<strong>CygWin</strong></p><p><strong>ext_skel_win32_virink.php</strong></p><pre><code>&lt;?php
 $extname = &quot;YourExtName&quot;;
 $skel = &quot;skeleton&quot;;
 $fp = fopen(&quot;$skel/skeleton.dsp&quot;, &quot;rb&quot;);
@@ -197,31 +38,19 @@ if ($fp) {
 	}
 }
 ?&gt;
-</code></pre>
-<h2>模板说明</h2>
-<p>最核心的内容就是<code>php_extname.h</code>和<code>extname.c</code>这两个文件，其他的都是辅助编译的。</p>
-<h3><strong>php_extname.h</strong></h3>
-<pre><code>#ifndef PHP_EXTNAME_H
+</code></pre><h2>模板说明</h2><p>最核心的内容就是<code>php_extname.h</code>和<code>extname.c</code>这两个文件，其他的都是辅助编译的。</p><h3><strong>php_extname.h</strong></h3><pre><code>#ifndef PHP_EXTNAME_H
 #define PHP_EXTNAME_H
-</code></pre>
-<p>上面两句没什么用</p>
-<pre><code>extern zend_module_entry extname_module_entry;
+</code></pre><p>上面两句没什么用</p><pre><code>extern zend_module_entry extname_module_entry;
 #define phpext_extname_ptr &amp;extname_module_entry
-</code></pre>
-<p>这两句就是声明扩展模块的入口，给PHP调用的</p>
-<pre><code>#define PHP_EXTNAME_VERSION &quot;0.1.0&quot;
-</code></pre>
-<p>定义版本号</p>
-<pre><code>#ifdef PHP_WIN32
+</code></pre><p>这两句就是声明扩展模块的入口，给PHP调用的</p><pre><code>#define PHP_EXTNAME_VERSION &quot;0.1.0&quot;
+</code></pre><p>定义版本号</p><pre><code>#ifdef PHP_WIN32
 #	define PHP_EXTNAME_API __declspec(dllexport)
 #elif defined(__GNUC__) &amp;&amp; __GNUC__ &gt;= 4
 #	define PHP_EXTNAME_API __attribute__ ((visibility(&quot;default&quot;)))
 #else
 #	define PHP_EXTNAME_API
 #endif
-</code></pre>
-<p>判断操作系统以及编译器类型</p>
-<pre><code>#ifdef ZTS
+</code></pre><p>判断操作系统以及编译器类型</p><pre><code>#ifdef ZTS
 #include &quot;TSRM.h&quot;
 #endif
 
@@ -232,24 +61,15 @@ if ($fp) {
 #endif
 
 #endif	/* PHP_EXTNAME_H */
-</code></pre>
-<p>ZTS是是否启用线程安全模式，不定义就是<strong>Non Thread Safe</strong></p>
-<h3><strong>extname.c</strong></h3>
-<pre><code>#ifdef HAVE_CONFIG_H
+</code></pre><p>ZTS是是否启用线程安全模式，不定义就是<strong>Non Thread Safe</strong></p><h3><strong>extname.c</strong></h3><pre><code>#ifdef HAVE_CONFIG_H
 #include &quot;config.h&quot;
 #endif
-</code></pre>
-<p>没什么用，无视</p>
-<pre><code>#include &quot;php.h&quot;
+</code></pre><p>没什么用，无视</p><pre><code>#include &quot;php.h&quot;
 #include &quot;php_ini.h&quot;
 #include &quot;ext/standard/info.h&quot;
 #include &quot;php_extname.h&quot;
-</code></pre>
-<p>头文件，你懂的~~</p>
-<pre><code>static int le_extname;
-</code></pre>
-<p>定义全局资源（全局变量），在线程安全模式(<code>thread safety</code>)下就不需要了</p>
-<pre><code>PHP_FUNCTION(confirm_extname_compiled)
+</code></pre><p>头文件，你懂的~~</p><pre><code>static int le_extname;
+</code></pre><p>定义全局资源（全局变量），在线程安全模式(<code>thread safety</code>)下就不需要了</p><pre><code>PHP_FUNCTION(confirm_extname_compiled)
 {
 	char *arg = NULL;
 	int arg_len, len;
@@ -262,22 +82,14 @@ if ($fp) {
 	len = spprintf(&amp;strg, 0, &quot;Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.&quot;, &quot;extname&quot;, arg);
 	RETURN_STRINGL(strg, len, 0);
 }
-</code></pre>
-<p>定义一个php函数，这个函数是在php脚本里调用的。</p>
-<p><strong>PHP_FUNCTION</strong>是定义php函数的宏</p>
-<pre><code>// php.h
+</code></pre><p>定义一个php函数，这个函数是在php脚本里调用的。</p><p><strong>PHP_FUNCTION</strong>是定义php函数的宏</p><pre><code>// php.h
 #define PHP_FUNCTION			ZEND_FUNCTION
 // zend_API.h
 #define ZEND_FUNCTION(name)				ZEND_NAMED_FUNCTION(ZEND_FN(name))
 #define ZEND_NAMED_FUNCTION(name)		void name(INTERNAL_FUNCTION_PARAMETERS)
 #define ZEND_FN(name) zif_##name
-</code></pre>
-<p>函数名：<code>confirm_extname_compiled</code>,调用：<code>&lt;?php confirm_extname_compiled(); ?&gt;</code></p>
-<p><strong>zend_parse_parameters</strong>，获取函数参数</p>
-<pre><code>ZEND_API int zend_parse_parameters(int num_args TSRMLS_DC, const char *type_spec, ...);
-</code></pre>
-<p><strong>RETURN_STRINGL</strong>，返回处理的结果</p>
-<pre><code>// zend_API.h
+</code></pre><p>函数名：<code>confirm_extname_compiled</code>,调用：<code>&lt;?php confirm_extname_compiled(); ?&gt;</code></p><p><strong>zend_parse_parameters</strong>，获取函数参数</p><pre><code>ZEND_API int zend_parse_parameters(int num_args TSRMLS_DC, const char *type_spec, ...);
+</code></pre><p><strong>RETURN_STRINGL</strong>，返回处理的结果</p><pre><code>// zend_API.h
 #define RETURN_STRINGL(s, l, duplicate) { RETVAL_STRINGL(s, l, duplicate); return; }
 #define RETVAL_STRINGL(s, l, duplicate) 	ZVAL_STRINGL(return_value, s, l, duplicate)
 #define ZVAL_STRINGL(z, s, l, duplicate) do {	\
@@ -287,39 +99,29 @@ if ($fp) {
 	Z_STRVAL_P(__z) = (duplicate?estrndup(__s, __l):(char*)__s);\
 	Z_TYPE_P(__z) = IS_STRING;				\
 } while (0)
-</code></pre>
-<p>各种宏很多的~~想要知道的更多，自己去读源码咯</p>
-<pre><code>PHP_MINIT_FUNCTION(extname)
+</code></pre><p>各种宏很多的~~想要知道的更多，自己去读源码咯</p><pre><code>PHP_MINIT_FUNCTION(extname)
 {
 	/* If you have INI entries, uncomment these lines 
 	REGISTER_INI_ENTRIES();
 	*/
 	return SUCCESS;
 }
-</code></pre>
-<p>Zend Engine加载了该模块时执行的函数，如果模块有ini配置，则需要使用<code>REGISTER_INI_ENTRIES();</code>注册</p>
-<pre><code>PHP_MSHUTDOWN_FUNCTION(extname)
+</code></pre><p>Zend Engine加载了该模块时执行的函数，如果模块有ini配置，则需要使用<code>REGISTER_INI_ENTRIES();</code>注册</p><pre><code>PHP_MSHUTDOWN_FUNCTION(extname)
 {
 	/* uncomment this line if you have INI entries
 	UNREGISTER_INI_ENTRIES();
 	*/
 	return SUCCESS;
 }
-</code></pre>
-<p>ZE结束的时候执行此函数，最后关闭自己的核心子系统</p>
-<pre><code>PHP_RINIT_FUNCTION(extname)
+</code></pre><p>ZE结束的时候执行此函数，最后关闭自己的核心子系统</p><pre><code>PHP_RINIT_FUNCTION(extname)
 {
 	return SUCCESS;
 }
-</code></pre>
-<p>PHP收到请求的时候都执行该函数</p>
-<pre><code>PHP_RSHUTDOWN_FUNCTION(extname)
+</code></pre><p>PHP收到请求的时候都执行该函数</p><pre><code>PHP_RSHUTDOWN_FUNCTION(extname)
 {
 	return SUCCESS;
 }
-</code></pre>
-<p>PHP脚本执行完毕后执行该函数</p>
-<pre><code>PHP_MINFO_FUNCTION(extname)
+</code></pre><p>PHP脚本执行完毕后执行该函数</p><pre><code>PHP_MINFO_FUNCTION(extname)
 {
 	php_info_print_table_start();
 	php_info_print_table_header(2, &quot;extname support&quot;, &quot;enabled&quot;);
@@ -329,15 +131,11 @@ if ($fp) {
 	DISPLAY_INI_ENTRIES();
 	*/
 }
-</code></pre>
-<p>在<code>phpinfo()</code>中显示相关信息</p>
-<pre><code>const zend_function_entry extname_functions[] = {
+</code></pre><p>在<code>phpinfo()</code>中显示相关信息</p><pre><code>const zend_function_entry extname_functions[] = {
 	PHP_FE(confirm_extname_compiled,	NULL)
 	PHP_FE_END
 };
-</code></pre>
-<p>声明自定义的php函数，供Zend Engine获取以便调用。</p>
-<pre><code>zend_module_entry extname_module_entry = {
+</code></pre><p>声明自定义的php函数，供Zend Engine获取以便调用。</p><pre><code>zend_module_entry extname_module_entry = {
 	STANDARD_MODULE_HEADER,
 	&quot;extname&quot;,
 	extname_functions,
@@ -349,152 +147,12 @@ if ($fp) {
 	PHP_EXTNAME_VERSION,
 	STANDARD_MODULE_PROPERTIES
 };
-</code></pre>
-<p>实现扩展模块的入口</p>
-<pre><code>#ifdef COMPILE_DL_EXTNAME
+</code></pre><p>实现扩展模块的入口</p><pre><code>#ifdef COMPILE_DL_EXTNAME
 ZEND_GET_MODULE(extname)
 #endif
-</code></pre>
-<p>编译为zend扩展</p>
-<h2>加载工程</h2>
-<p>###　0x01</p>
-<p>打开VS2012,选择&quot;文件&quot;--&quot;新建&quot;--&quot;从现有代码创建目录&quot;</p>
-<p>选择**C++**类型的项目，下一步</p>
-<p>然后，选择你的php扩展文件夹路径，并且给项目命名，下一步</p>
-<p>选择动态链接库项目。</p>
-<h3>0x02</h3>
-<p>直接用vs2012打开extname.dsp文件，升级工程</p>
-<h2>配置解决方案</h2>
-<p>右键项目属性，配置列表选择所有配置，然后选择C/C++，常规，附加包含目录，编辑</p>
-<p>加入以下几个php源码目录（实际目录以开发者自己的目录为准）：</p>
-<pre><code>E:\php-x.x.x-src
+</code></pre><p>编译为zend扩展</p><h2>加载工程</h2><p>###　0x01</p><p>打开VS2012,选择&quot;文件&quot;--&quot;新建&quot;--&quot;从现有代码创建目录&quot;</p><p>选择**C++**类型的项目，下一步</p><p>然后，选择你的php扩展文件夹路径，并且给项目命名，下一步</p><p>选择动态链接库项目。</p><h3>0x02</h3><p>直接用vs2012打开extname.dsp文件，升级工程</p><h2>配置解决方案</h2><p>右键项目属性，配置列表选择所有配置，然后选择C/C++，常规，附加包含目录，编辑</p><p>加入以下几个php源码目录（实际目录以开发者自己的目录为准）：</p><pre><code>E:\php-x.x.x-src
 E:\php-x.x.x-src\main
 E:\php-x.x.x-src\TSRM
 E:\php-x.x.x-src\Zend
-</code></pre>
-<p>然后选择预处理器，预处理器定义，编辑，加入以下变量：</p>
-<ul>
-<li>ZEND_DEBUG=0</li>
-<li>PHP_EXTENSION</li>
-<li>PHP_WIN32</li>
-<li>ZEND_WIN32</li>
-<li>HAVE_EXTNAME=1</li>
-<li>COMPILE_DL_EXTNAME</li>
-<li>ZTS（这一个变量加上是开启线程安全，不加是关闭线程安全）</li>
-</ul>
-<p><strong>（这里EXTNAME，要改成你的扩展名称，不改成你的扩展名，php会不识别）</strong></p>
-<h3><strong>config.w32.h</strong></h3>
-<p>在<code>E:\php-x.x.x-src\win32\build\</code>文件夹里找到&quot;config.w32.h.in&quot;，</p>
-<p>将这个文件复制到<code>E:\php-x.x.x-src\main\</code>文件夹里，去掉后面的&quot;.in&quot;</p>
-<p>然后修改该文件里面的PHP_COMPILER_ID</p>
-<pre><code>#define PHP_COMPILER_ID &quot;VC11&quot; //编译器版本号
-</code></pre>
-<p>项目属性，链接器，输入，附加依赖项，编辑，将<strong>php5.lib</strong>的路径放进去</p>
-<h3><strong>php5.lib</strong></h3>
-<p>这个文件在编译好了的php程序目录dev里面有</p>
-<h2>结束语</h2>
-<p>导致了基本上好了，编译吧~~最简单的Demo扩展</p>
-<p>然后，你可以根据PHP的各种API去编写你心仪的扩展啦</p>
-
-  </section>
-  <div class="copyright">
-    <span>文本標題:</span><a href="/2016/10/27/PHP 扩展开发(VS2012)小记.html" target="_blank">PHP 扩展开发(VS2012)小记</a><br />
-    <span>文章作者:</span><a href="/" title="回到主頁" target="_blank">Virink</a><br />
-    <span>發佈時間:</span>2016-10-27 04:08:20<br />
-    <span>最後更新:</span>2016-12-12 00:05:49<br />
-    <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html" title="PHP 扩展开发(VS2012)小记" target="_blank">https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html</a><br />
-    <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。
-  </div>
-</article>
-      <!-- footer panel -->
-      <footer class="footer">
-	<center>
-    <span class="footer__copyright">&copy; 2016-2017. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/virink/vhuno">vHuno</a></span>
-    <span>本站採用<i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
-    </center>
-</footer>
-    </div>
-  </div>
-  <!-- js files -->
-  <script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="/js/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/js/main.js"></script>
-  <script src="/js/scale.fix.js"></script>
-  <script src="/js/tagcloud.js"></script>
-  
-  
-	<script src="/js/jquery.fancybox.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			// $('.fancybox').fancybox();
-			$(".fancybox").fancybox({
-	            padding: 0,
-	            helpers: {
-	                overlay: {
-	                  locked: false
-	                }
-	            }
-	        });
-		});
-	</script>
-
-  
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <script type="text/javascript"> 
-        $(document).ready(function(){
-            MathJax.Hub.Config({ 
-                tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
-            });
-        });
-    </script>
-
-  <script src="//cdn.bootcss.com/highlight.js/9.8.0/highlight.min.js"></script>
-  <script src="/js/gallery.js"></script>
-  <script>
-  hljs.initHighlightingOnLoad();
-  </script>
-  
-  
-<div id="totop" style="position: fixed; bottom: 50px; right: 30px; cursor: pointer; opacity: 1;">
-	<a title="back to top"><img style="width:30px;height:30px;" src="/images/totop.png"></a>
-</div>
-<script>
-    (function($) {
-        var upperLimit = 100;
-        var scrollElem = $('#totop');
-        var scrollSpeed = 500;
-        scrollElem.hide();
-        $(window).scroll(function() {
-            var scrollTop = $(document).scrollTop();
-            if (scrollTop > upperLimit) {
-                $(scrollElem).stop().fadeTo(300, 1); // fade back in
-            } else {
-                $(scrollElem).stop().fadeTo(300, 0); // fade out
-            }
-        });
-        $(scrollElem).click(function() {
-            $('html, body').animate({
-                scrollTop: 0
-            }, scrollSpeed);
-            return false;
-        });
-    })(jQuery);
-    </script>
-
-
-  <!-- Analytics Google -->
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-  ga('create', 'UA-83885261-1', 'auto');
-  ga('send', 'pageview');
-</script>
-  
-  <!--kill ie6 -->
-<!--[if IE 6]>
-  <script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script>
-<![endif]-->
-</body>
-</html>
+</code></pre><p>然后选择预处理器，预处理器定义，编辑，加入以下变量：</p><ul><li>ZEND_DEBUG=0</li><li>PHP_EXTENSION</li><li>PHP_WIN32</li><li>ZEND_WIN32</li><li>HAVE_EXTNAME=1</li><li>COMPILE_DL_EXTNAME</li><li>ZTS（这一个变量加上是开启线程安全，不加是关闭线程安全）</li></ul><p><strong>（这里EXTNAME，要改成你的扩展名称，不改成你的扩展名，php会不识别）</strong></p><h3><strong>config.w32.h</strong></h3><p>在<code>E:\php-x.x.x-src\win32\build\</code>文件夹里找到&quot;config.w32.h.in&quot;，</p><p>将这个文件复制到<code>E:\php-x.x.x-src\main\</code>文件夹里，去掉后面的&quot;.in&quot;</p><p>然后修改该文件里面的PHP_COMPILER_ID</p><pre><code>#define PHP_COMPILER_ID &quot;VC11&quot; //编译器版本号
+</code></pre><p>项目属性，链接器，输入，附加依赖项，编辑，将<strong>php5.lib</strong>的路径放进去</p><h3><strong>php5.lib</strong></h3><p>这个文件在编译好了的php程序目录dev里面有</p><h2>结束语</h2><p>导致了基本上好了，编译吧~~最简单的Demo扩展</p><p>然后，你可以根据PHP的各种API去编写你心仪的扩展啦</p></section><div class="copyright"> <span>文本標題:</span><a href="/2016/10/27/PHP 扩展开发(VS2012)小记.html" target="_blank">PHP 扩展开发(VS2012)小记</a><br> <span>文章作者:</span><a href="/" title="回到主頁" target="_blank">Virink</a><br> <span>發佈時間:</span>2016-10-27 04:08:20<br> <span>最後更新:</span>2016-12-12 00:05:49<br> <span>原始鏈接:</span><a class="post-url" href="https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html" title="PHP 扩展开发(VS2012)小记" target="_blank">https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html</a><br> <span>轉載聲明:</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。</div></article><footer class="footer"><center> <span class="footer__copyright">&copy; 2016-2017. | ❤ <a href="mailto:virink@outlook.com">Virink</a> | 由<a href="https://hexo.io/">Hexo</a>强力驱动 | 主题<a href="https://github.com/virink/vhuno">vHuno</a></span> <span>本站採用<i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span></center></footer></div></div><script src="//cdn.bootcss.com/jquery/3.1.1/jquery.js"></script><script>!window.jQuery&&document.write(unescape('%3Cscript src="/js/jquery.min.js"%3E%3C/script%3E'))</script><script src="/js/main.js"></script><script src="/js/scale.fix.js"></script><script src="/js/tagcloud.js"></script><script src="/js/jquery.fancybox.js"></script><script type="text/javascript">$(document).ready(function(){$(".fancybox").fancybox({padding:0,helpers:{overlay:{locked:!1}}})})</script><script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><script type="text/javascript">$(document).ready(function(){MathJax.Hub.Config({tex2jax:{inlineMath:[["[latex]","[/latex]"],["\\(","\\)"]]}})})</script><script src="//cdn.bootcss.com/highlight.js/9.8.0/highlight.min.js"></script><script src="/js/gallery.js"></script><script>hljs.initHighlightingOnLoad()</script><div id="totop" style="position:fixed;bottom:50px;right:30px;cursor:pointer;opacity:1"> <a title="back to top"><img style="width:30px;height:30px" src="/images/totop.png"></a></div><script>!function(o){var t=o("#totop");t.hide(),o(window).scroll(function(){o(document).scrollTop()>100?o(t).stop().fadeTo(300,1):o(t).stop().fadeTo(300,0)}),o(t).click(function(){return o("html, body").animate({scrollTop:0},500),!1})}(jQuery)</script><script>!function(e,t,a,n,c,o,s){e.GoogleAnalyticsObject=c,e[c]=e[c]||function(){(e[c].q=e[c].q||[]).push(arguments)},e[c].l=1*new Date,o=t.createElement(a),s=t.getElementsByTagName(a)[0],o.async=1,o.src="https://www.google-analytics.com/analytics.js",s.parentNode.insertBefore(o,s)}(window,document,"script",0,"ga"),ga("create","UA-83885261-1","auto"),ga("send","pageview")</script> <!--[if IE 6]><script src="//letskillie6.googlecode.com/svn/trunk/2/zh_CN.js"></script><![endif]--></body></html>
