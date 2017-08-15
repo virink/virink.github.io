@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-08-15T08:37:58.000Z</updated>
+  <updated>2017-08-15T13:37:42.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,91 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PHP扩展-扩展的生成和编译</title>
+    <link href="https://www.virzz.com/2017/08/15/create_and_make_php_ext.html"/>
+    <id>https://www.virzz.com/2017/08/15/create_and_make_php_ext.html</id>
+    <published>2017-08-15T13:37:34.000Z</published>
+    <updated>2017-08-15T13:37:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2>0x00 说明</h2>
+<h3>PHP扩展有两种编译方式</h3>
+<ol>
+<li>在编译PHP时直接将扩展编译进去</li>
+<li>扩展被编译成.so文件，在php.ini里配置加载路径</li>
+</ol>
+<h3>源码环境</h3>
+<p>先下载源码，可以通过<code>git clone</code>等，进入源码跟目录，进入插件目录</p>
+<pre><code>cd php-5.6.31
+cd ext
+</code></pre>
+<h2>0x01 创建PHP扩展</h2>
+<p>执行<code>ext_skel</code>命令生成扩展框架</p>
+<pre><code>./ext_skel --extname=demo
+</code></pre>
+<p>执行成功后会有一个操作步骤提示</p>
+<blockquote>
+<p>To use your new extension, you will have to execute the following steps:</p>
+</blockquote>
+<ol>
+<li>$ cd ..</li>
+<li>$ vi ext/demo/config.m4</li>
+<li>$ ./buildconf</li>
+<li>$ ./configure --[with|enable]-demo</li>
+<li>$ make</li>
+<li>$ ./sapi/cli/php -f ext/demo/demo</li>
+<li>$ vi ext/demo/demo</li>
+<li>$ make</li>
+</ol>
+<p>这是源码编译的步骤</p>
+<h2>0x02 修改文件<em>config.m4</em></h2>
+<p>重点看line10-18的代码，用于设置./configure时启用此扩展的命令选项，将其中line16和line18的dnl删掉，把dnl理解为注释符。</p>
+<pre><code>14 dnl Otherwise use enable:
+15
+16 dnl PHP_ARG_ENABLE(myfirstext, whether to enable myfirstext support,
+17 dnl Make sure that the comment is aligned:
+18 dnl [ --enable-myfirstext Enable myfirstext support])
+19
+20 if test &quot;$PHP_MYFIRSTEXT&quot; != &quot;no&quot;; then
+21 dnl Write more examples of tests here...
+</code></pre>
+<h2>0x03-1 编译PHP时直接将扩展编译进去</h2>
+<pre><code>cd php-src/
+./buildconf or ./buildconf --force
+./configure –enable-demo
+make
+</code></pre>
+<p>大概这样子就OK了，但是我没有这样编译过，一般用另一种方式的。同时也推荐用另一种方式</p>
+<h2>0x03-2 编译成.so文件</h2>
+<pre><code>cd php-src/ext/demo
+phpize
+./configure –enable-demo
+make
+</code></pre>
+<p>然后扩展就是成功编译，并且保存在<code>php-src/ext/demo/modules/demo.so</code></p>
+<h2>0x04 加载扩展</h2>
+<p>在<code>php.ini</code>中，添加<code>extension=/path/demo.dll</code>或者<code>zend_extension=/path/demo.so</code></p>
+<p>根据不同的扩展类型选择不同的加载方式。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;0x00 说明&lt;/h2&gt;
+&lt;h3&gt;PHP扩展有两种编译方式&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;在编译PHP时直接将扩展编译进去&lt;/li&gt;
+&lt;li&gt;扩展被编译成.so文件，在php.ini里配置加载路径&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;源码环境&lt;/h3&gt;
+&lt;p&gt;先下载源码，可以通过
+    
+    </summary>
+    
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+  </entry>
   
   <entry>
     <title>推荐一个PHP框架</title>
@@ -1640,9 +1725,9 @@ if (strpos($url, 'http://127.0.0.1:8888/')&gt;-1)
     
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
   </entry>
   
@@ -4053,9 +4138,9 @@ curl_close($ch);
     </summary>
     
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
   </entry>
   
