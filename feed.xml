@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-07-23T17:26:48.000Z</updated>
+  <updated>2017-08-15T08:37:58.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,50 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>推荐一个PHP框架</title>
+    <link href="https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html"/>
+    <id>https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html</id>
+    <published>2017-08-15T08:37:46.000Z</published>
+    <updated>2017-08-15T08:37:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2>Slim 3</h2>
+<p><img src="https://img.virzz.com/15027859675395.jpg" alt=""></p>
+<p>Slim is a PHP micro framework that helps you quickly write simple yet powerful web applications and APIs.</p>
+<p>Slim是一款 PHP 微框架，可以帮助你快速编写简单但功能强大的 web 应用和 API 。在它的核心，Slim 是一个调度程序，它接收一个 HTTP 请求，调用一个适当的回调例程，然后返回一个 HTTP 响应。就这样简单。</p>
+<h2>重点是什么？</h2>
+<p>Slim是一个用来创建销毁、重用或发布数据的理想工具。Slim 也是一个用来快速构建原型的好工具。你甚至可以用 Slim 来创建带有用户界面的功能完整的 web 应用程序。更重要的是，Slim 速度超快，代码很简单。实际上，一个下午你就能读完并理解它的源代码！</p>
+<blockquote>
+<p>At its core, Slim is a dispatcher that receives an HTTP request, invokes an appropriate callback routine, and returns an HTTP response. That’s it.</p>
+</blockquote>
+<p>你并不总是需要一套全方位的解决方案，比如 Symfony 或者 Laravel 。当然，它们都是了不起的工具。但它们往往矫枉过正。相反，Slim 只最小限度地提供你所需要用的工具，没有其他多余的东西。</p>
+<h2>Biubiubiu~</h2>
+<p>这两天做了个小项目，后台管理以及前台api给客户端调用的小玩意儿。B/C模式？</p>
+<p>一开始打算用flask写api的、、、最后，默默地Google了一个PHP的框架，也就是 Slim 3。用了下手感不错。三百多行代码实现了几个表的CURD和API接口。（行数过多的原因是我技术太渣，略微沉余~）</p>
+<p>题外话，后台用的React+Antd，这个就是有点尴尬了、、学习React的练手作，各种bug简直了。。。。</p>
+<h2>Links</h2>
+<ul>
+<li><a href="https://github.com/slimphp/Slim" target="_blank" rel="external">源码 https://github.com/slimphp/Slim</a></li>
+<li><a href="http://slimframework.com/" target="_blank" rel="external">官网 http://slimframework.com</a></li>
+<li><a href="http://www.slimphp.net/" target="_blank" rel="external">中文 http://www.slimphp.net</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;Slim 3&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.virzz.com/15027859675395.jpg&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Slim is a PHP micro framework that helps you quickly w
+    
+    </summary>
+    
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+      <category term="default" scheme="https://www.virzz.com/tags/default/"/>
+    
+  </entry>
   
   <entry>
     <title>The 2017 Top Programming Languages</title>
