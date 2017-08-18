@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-08-15T13:37:42.000Z</updated>
+  <updated>2017-08-18T02:05:42.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,113 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>终端命令行下一些有趣的函数</title>
+    <link href="https://www.virzz.com/2017/08/18/some_helpful_functions_for_terminal.html"/>
+    <id>https://www.virzz.com/2017/08/18/some_helpful_functions_for_terminal.html</id>
+    <published>2017-08-18T01:46:31.000Z</published>
+    <updated>2017-08-18T02:05:42.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2>0x00 Biubiubiu~</h2>
+<p>OS : Mac OSX<br>
+Shell : zsh<br>
+Plugin : oh-my-zsh</p>
+<h2>0x01 IP Helper</h2>
+<pre><code>ip2hex () {
+    local a b c d ip=$@
+    IFS=. read -r a b c d &lt;&lt;&lt; &quot;$ip&quot;
+    printf '0x%x\n' &quot;$((a * 256 ** 3 + b * 256 ** 2 + c * 256 + d))&quot;
+}
+hex2ip () {
+    local ip dec=$@
+    desc=$(($desc))
+        for e in {3..0}
+    do
+        ((octet = dec / (256 ** e) ))
+            ((dec -= octet * 256 ** e))
+            ip+=$delim$octet
+            delim=.
+            done
+            printf '%s\n' &quot;$ip&quot;
+}
+ip2dec () {
+    local a b c d ip=$@
+        IFS=. read -r a b c d &lt;&lt;&lt; &quot;$ip&quot;
+        printf '%d\n' &quot;$((a * 256 ** 3 + b * 256 ** 2 + c * 256 + d))&quot;
+}
+dec2ip () {
+    local ip dec=$@
+        for e in {3..0}
+    do
+        ((octet = dec / (256 ** e) ))
+            ((dec -= octet * 256 ** e))
+            ip+=$delim$octet
+            delim=.
+            done
+            printf '%s\n' &quot;$ip&quot;
+}
+</code></pre>
+<h2>0x02 Socks5 Proxy</h2>
+<pre><code>function ssup() {
+    export ALL_PROXY=socks5://127.0.0.1:1080
+}
+
+function ssdown() {
+    unset ALL_PROXY
+}
+
+# show my ip
+function myip(){
+    curl myip.ipip.net
+}
+</code></pre>
+<h2>0x03 String Helper</h2>
+<pre><code>function str2hex() {
+    printf &quot;0x&quot;
+    I=0
+    while [ $I -lt ${#1} ];
+    do
+    printf &quot;%x&quot; &quot;'&quot;${1:$I:1}
+    let &quot;I += 1&quot;
+    done
+    echo &quot;&quot;
+}
+
+function hex2str () {
+    // TODO
+}
+</code></pre>
+<h2>0x04 Python Helper</h2>
+<pre><code>function clearpyc(){
+    echo &quot;list *.pyc&quot;
+    find `pwd` -name &quot;*.pyc&quot; -o -name &quot;__pycache__&quot;
+    echo &quot;Deleting *.pyc ...&quot;
+    find `pwd` -name &quot;*.pyc&quot; -delete
+    echo &quot;Deleting __pycache__ ...&quot;
+    find `pwd` -type d -name &quot;__pycache__&quot; -exec rm -rf {} \;
+    echo &quot;Successfully&quot;
+}
+alias clspyc='clearpyc'
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;0x00 Biubiubiu~&lt;/h2&gt;
+&lt;p&gt;OS : Mac OSX&lt;br&gt;
+Shell : zsh&lt;br&gt;
+Plugin : oh-my-zsh&lt;/p&gt;
+&lt;h2&gt;0x01 IP Helper&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;ip2hex () {
+    local
+    
+    </summary>
+    
+    
+      <category term="terminal" scheme="https://www.virzz.com/tags/terminal/"/>
+    
+  </entry>
   
   <entry>
     <title>PHP扩展-扩展的生成和编译</title>
@@ -1898,9 +2005,9 @@ brew services start nginx</code></pre>
     </summary>
     
     
-      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    
       <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
       <category term="install" scheme="https://www.virzz.com/tags/install/"/>
     
@@ -2238,11 +2345,11 @@ tos = True
     
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    
       <category term="python" scheme="https://www.virzz.com/tags/python/"/>
     
       <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
-    
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
       <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
     
@@ -3338,9 +3445,9 @@ Compile Time: 99604
     
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
-      <category term="dtrace" scheme="https://www.virzz.com/tags/dtrace/"/>
-    
       <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
+    
+      <category term="dtrace" scheme="https://www.virzz.com/tags/dtrace/"/>
     
   </entry>
   
@@ -4138,9 +4245,9 @@ curl_close($ch);
     </summary>
     
     
-      <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
-    
       <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    
+      <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
     
   </entry>
   
