@@ -1924,9 +1924,9 @@ if (strpos($url, 'http://127.0.0.1:8888/')&gt;-1)
     
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
-      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    
       <category term="web" scheme="https://www.virzz.com/tags/web/"/>
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     
   </entry>
   
