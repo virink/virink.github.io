@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html</loc>
+    
+    <lastmod>2017-11-06T05:16:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.virzz.com/2017/10/05/pwnhub_2013_years.html</loc>
     
     <lastmod>2017-10-05T11:17:16.000Z</lastmod>
@@ -96,13 +103,6 @@
     <loc>https://www.virzz.com/2017/04/22/pwnhub_writeups_absolute_defense.html</loc>
     
     <lastmod>2017-04-21T17:55:55.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html</loc>
-    
-    <lastmod>2017-04-16T13:27:42.000Z</lastmod>
     
   </url>
   

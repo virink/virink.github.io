@@ -1137,7 +1137,7 @@ $.get(&quot;/adminshigesha233e3333/flag.php&quot;,
     <link href="https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html"/>
     <id>https://www.virzz.com/2017/04/16/writeups_for_a_ctf_2017.html</id>
     <published>2017-04-16T12:36:22.000Z</published>
-    <updated>2017-04-16T13:27:42.000Z</updated>
+    <updated>2017-11-06T05:16:07.000Z</updated>
     
     <content type="html"><![CDATA[<h2>WEB 抽奖呗</h2>
 <h3>源碼大法</h3>
@@ -1274,6 +1274,10 @@ echo curl_get($url.&quot;index.php?pwd=$pwd&amp;login=&quot;,&quot;&quot;);
     
     </summary>
     
+    
+      <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    
+      <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     
   </entry>
   
@@ -3154,9 +3158,9 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     </summary>
     
     
-      <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
-    
       <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    
+      <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
     
       <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
     
