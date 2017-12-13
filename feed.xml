@@ -3158,9 +3158,9 @@ wget http://public-yum.oracle.com/public-yum-ol6.repo
     </summary>
     
     
-      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    
       <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    
+      <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     
       <category term="linux" scheme="https://www.virzz.com/tags/linux/"/>
     
