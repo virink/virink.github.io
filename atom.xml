@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-02-27T00:21:33+08:00</updated>
+  <updated>2018-02-27T00:42:20+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -73,13 +73,6 @@
     </summary>
     <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
-  </entry>
-  <entry>
-    <title>test</title>
-    <link href="https://www.virzz.com/2017/12/27/test.html"/>
-    <id>https://www.virzz.com/2017/12/27/test.html</id>
-    <updated>2018-02-13 02:30:11</updated>
-    <content type="html"><![CDATA[]]></content>
   </entry>
   <entry>
     <title>推荐一个PHP框架</title>
