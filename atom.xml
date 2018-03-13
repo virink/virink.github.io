@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-02-27T00:42:20+08:00</updated>
+  <updated>2018-03-13T21:59:03+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,31 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>PHP扩展-扩展的生成和编译</title>
+    <link href="https://www.virzz.com/2017/08/15/create_and_make_php_ext.html"/>
+    <id>https://www.virzz.com/2017/08/15/create_and_make_php_ext.html</id>
+    <updated>2018-03-13 21:44:35</updated>
+    <content type="html"><![CDATA[## 0x00 说明
+### PHP扩展有两种编译方式
+### 源码环境
+## 0x01 创建PHP扩展
+## 0x02 修改文件*config.m4*
+## 0x03-1 编译PHP时直接将扩展编译进去
+## 0x03-2 编译成.so文件 【推荐】
+## 0x04 加载扩展]]></content>
+    <summary type="html">
+## 0x00 说明
+### PHP扩展有两种编译方式
+### 源码环境
+## 0x01 创建PHP扩展
+## 0x02 修改文件*config.m4*
+## 0x03-1 编译PHP时直接将扩展编译进去
+## 0x03-2 编译成.so文件 【推荐】
+## 0x04 加载扩展
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+  </entry>
   <entry>
     <title>有意思的命令注入</title>
     <link href="https://www.virzz.com/2018/02/17/a_funny_command_injection.html"/>
@@ -148,31 +173,6 @@
     </summary>
     <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-  </entry>
-  <entry>
-    <title>PHP扩展-扩展的生成和编译</title>
-    <link href="https://www.virzz.com/2017/08/15/create_and_make_php_ext.html"/>
-    <id>https://www.virzz.com/2017/08/15/create_and_make_php_ext.html</id>
-    <updated>2017-11-22 23:25:47</updated>
-    <content type="html"><![CDATA[## 0x00 说明
-### PHP扩展有两种编译方式
-### 源码环境
-## 0x01 创建PHP扩展
-## 0x02 修改文件*config.m4*
-## 0x03-1 编译PHP时直接将扩展编译进去
-## 0x03-2 编译成.so文件 【推荐】
-## 0x04 加载扩展]]></content>
-    <summary type="html">
-## 0x00 说明
-### PHP扩展有两种编译方式
-### 源码环境
-## 0x01 创建PHP扩展
-## 0x02 修改文件*config.m4*
-## 0x03-1 编译PHP时直接将扩展编译进去
-## 0x03-2 编译成.so文件 【推荐】
-## 0x04 加载扩展
-    </summary>
-    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
   </entry>
   <entry>
     <title>The 2017 Top Programming Languages</title>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  
   <url>
     <loc>https://www.virzz.com/2018/02/17/a_funny_command_injection.html</loc>
     <lastmod>2018-02-21T03:27:07+08:00</lastmod>
@@ -13,7 +12,7 @@
   
   <url>
     <loc>https://www.virzz.com/2017/08/15/create_and_make_php_ext.html</loc>
-    <lastmod>2017-11-22T23:25:47+08:00</lastmod>
+    <lastmod>2018-03-13T21:44:35+08:00</lastmod>
   </url>
   
   <url>
@@ -205,5 +204,4 @@
     <loc>https://www.virzz.com/2015/12/12/php_trace.html</loc>
     <lastmod>2017-06-01T23:36:36+08:00</lastmod>
   </url>
-  
-</urlset>
+  </urlset>
