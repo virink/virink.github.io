@@ -170,6 +170,7 @@ sudo -Hu www-data git clone git@github.com:yourname/yourrepo.git /var/www/html
 <pre><code>local ffi = require(&quot;ffi&quot;)
 local args = nil
 local token = &#39;anything what your set for github secret&#39;
+local request_method = ngx.var.request_method
 if &quot;POST&quot; == request_method then
     ngx.req.read_body()
     args = ngx.req.get_post_args()
@@ -211,7 +212,7 @@ end
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/04/16/use_webhooks_by_nginx_luajit.html" target="_blank">Nginx + LuaJIT + Webhook</a><br />
               <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
               <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-04-16 23:56:06">2018-04-16 23:56:06</time><br />
-              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-04-17 09:23:08">2018-04-17 09:23:08</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-04-17 10:11:50">2018-04-17 10:11:50</time><br />
               <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html" title="Nginx + LuaJIT + Webhook" target="_blank">https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html</a><br />
               <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
               <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
