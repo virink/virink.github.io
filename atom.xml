@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-04-20T23:06:05+08:00</updated>
+  <updated>2018-04-20T23:13:05+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,33 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>CTF老赛棍退休简述</title>
+    <link href="https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html"/>
+    <id>https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html</id>
+    <updated>2018-04-20 22:54:25</updated>
+    <content type="html"><![CDATA[## 前言
+## 赛棍入门
+## 赛棍进阶
+## 赛棍养成
+## 赛棍退休
+## 赛棍总结
+## 搅屎棍
+## 结束语]]></content>
+    <summary type="html">
+## 前言
+## 赛棍入门
+## 赛棍进阶
+## 赛棍养成
+## 赛棍退休
+## 赛棍总结
+## 搅屎棍
+## 结束语
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="thinking" scheme="https://www.virzz.com/tags/thinking/"/>
+    <category term="default" scheme="https://www.virzz.com/tags/default/"/>
+  </entry>
   <entry>
     <title>Nginx + LuaJIT + Webhook</title>
     <link href="https://www.virzz.com/2018/04/16/use_webhooks_by_nginx_luajit.html"/>
