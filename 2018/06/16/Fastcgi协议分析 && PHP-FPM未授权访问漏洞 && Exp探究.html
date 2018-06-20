@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <base href="https://www.virzz.com">
+  
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>pwnhub - Virink's Blog</title>
+  <title>Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究 - Virink's Blog</title>
   <meta name="author" content="Virink">
   <meta name="keywords" content="PHP,CODE,AUDIT,CTF,Writeup,Sec,Virink,代码审计,技术博客">
   <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
-
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -76,73 +75,44 @@
     <div class="content-wrap">
         <article class="article animated fadeIn">
             <div class="article-title">
-                <i class="fa fa-book"></i>&nbsp;<a href="/2017/04/22/pwnhub_writeups_absolute_defense.html">胖哈勃破處﹣绝对防御</a>
+                <i class="fa fa-book"></i>&nbsp;<a href="/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html">Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究</a>
             </div>
             <div class="article-tag">
-                
-                <div class="article-tag-item">
-                    <a href="/tags/ctf/"><i class="fa fa-tag"></i>ctf</a>
-                </div>
-                
-                <div class="article-tag-item">
-                    <a href="/tags/pwnhub/"><i class="fa fa-tag"></i>pwnhub</a>
-                </div>
-                
-                <div class="article-tag-item">
-                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
-                </div>
                 
             </div>
             <div class="article-meta">
                 <div class="article-date">
-                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-04-22 00:55:51">2017-04-22 00:55:51</time>
-                </div>
-                <div class="article-more">
-                    <i class="fa fa-link"></i>&nbsp;&nbsp;<a href="/2017/04/22/pwnhub_writeups_absolute_defense.html#more">More &gt;&gt;</a>
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-06-16 21:49:28">2018-06-16 21:49:28</time>
                 </div>
             </div>
-            <div class="clearfix"></div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
+                <h2>0x00 序</h2>
+
+<p>今天在高铁上有些无聊，于是乎就有了这篇文章。</p>
+
+<p>起因是这样的，高铁基本上搭起了WIFI，不知道谁说的，不要随随便便就使用公告WIFI，因此简单检测了一下高铁WIFI的安全性。</p>
+
+<h2>0x01 WiFi需要认证</h2>
+
+<p>连上WIFI后，得到了一个分配的IP地址<code>192.168.14.178</code>，但是仍然没办法上午，也没有弹出认证登陆的页面。</p>
+
+<p>似乎出现了奇奇怪怪的Bug，于是乎</p>
+
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html" target="_blank">Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究</a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-06-16 21:49:28">2018-06-16 21:49:28</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-06-16 21:58:47">2018-06-16 21:58:47</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html" title="Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究" target="_blank">https://www.virzz.com/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
         </article>
-        <article class="article animated fadeIn">
-            <div class="article-title">
-                <i class="fa fa-book"></i>&nbsp;<a href="/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html">PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</a>
-            </div>
-            <div class="article-tag">
-                
-                <div class="article-tag-item">
-                    <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
-                </div>
-                
-                <div class="article-tag-item">
-                    <a href="/tags/writeups/"><i class="fa fa-tag"></i>writeups</a>
-                </div>
-                
-                <div class="article-tag-item">
-                    <a href="/tags/pwnhub/"><i class="fa fa-tag"></i>pwnhub</a>
-                </div>
-                
-            </div>
-            <div class="article-meta">
-                <div class="article-date">
-                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-09-20 13:31:16">2017-09-20 13:31:16</time>
-                </div>
-                <div class="article-more">
-                    <i class="fa fa-link"></i>&nbsp;&nbsp;<a href="/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html#more">More &gt;&gt;</a>
-                </div>
-            </div>
-            <div class="clearfix"></div>
-        </article>
-        
-        <div class="divider__70"></div>
-        <div class="pagination">
-            
-            
-            
-            <li><a class="current" href="/tags/pwnhub/index.html">1</a></li>
-            
-            
-        </div>  
-        </div>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
 
     </div>
 
@@ -162,12 +132,25 @@
   <script src="/static/js/hackrain.js"></script>
   <script>
     
-    $(document).ready(function(){
-      hackrain();
-    });
-    
   </script>
   
+
+<script src="//cdn.bootcss.com/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdn.bootcss.com/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
 
   <!-- Analytics Google -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
