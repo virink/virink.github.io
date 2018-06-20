@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-06-21T01:56:21+08:00</updated>
+  <updated>2018-06-21T03:07:52+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,18 +16,6 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
-  <entry>
-    <title>Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究</title>
-    <link href="https://www.virzz.com/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html"/>
-    <id>https://www.virzz.com/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html</id>
-    <updated>2018-06-16 21:58:47</updated>
-    <content type="html"><![CDATA[## 0x00 序
-## 0x01 WiFi需要认证]]></content>
-    <summary type="html">
-## 0x00 序
-## 0x01 WiFi需要认证
-    </summary>
-  </entry>
   <entry>
     <title>CTF老赛棍退休简述</title>
     <link href="https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html"/>

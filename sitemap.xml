@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.virzz.com/2018/06/16/Fastcgi协议分析 && PHP-FPM未授权访问漏洞 && Exp探究.html</loc>
-    <lastmod>2018-06-16T21:58:47+08:00</lastmod>
-  </url>
-  <url>
     <loc>https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html</loc>
     <lastmod>2018-04-25T11:27:49+08:00</lastmod>
   </url>
