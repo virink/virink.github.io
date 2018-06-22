@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-06-22T16:49:54+08:00</updated>
+  <updated>2018-06-22T17:28:43+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -20,7 +20,7 @@
     <title>看我如何玩转PHP代码加密与解密</title>
     <link href="https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html"/>
     <id>https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html</id>
-    <updated>2018-06-22 14:15:05</updated>
+    <updated>2018-06-22 17:14:22</updated>
     <content type="html"><![CDATA[## 前言
 ## 代码混淆
 ## 代码加密解密

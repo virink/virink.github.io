@@ -133,13 +133,7 @@
 
 <p>源码 -&gt; 加密处理（压缩，替换，BASE64，转义）-&gt; 安全处理（验证文件 MD5 值，限制 IP、限域名、限时间、防破解、防命令行调试）-&gt; 加密程序成品，再简单的说：密文源码 + 自解密外壳 == 密文代码</p>
 
-<pre><code class="language-flow">st=&gt;start: Source Code
-ed=&gt;end: EnCrypt Code
-op1=&gt;operation: Do Crypt
-op2=&gt;operation: Safe Handling
-op3=&gt;operation: Code + Shell
-st-&gt;op1-&gt;op2-&gt;op3-&gt;ed
-</code></pre>
+<p><img src="https://img.virzz.com/15296587363314.jpg" alt=""></p>
 
 <p><strong>加密方式</strong></p>
 
@@ -191,9 +185,9 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
 
 <p><strong>Challenge:</strong> <a href="https://www.virzz.com/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html">PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</a></p>
 
-<p><img src="media/15295010885516/15296343877536.jpg" alt=""><br>
-<img src="media/15295010885516/15296344455289.jpg" alt=""><br>
-<img src="media/15295010885516/15296345384378.jpg" alt=""></p>
+<p><img src="https://img.virzz.com/15296343877536.jpg" alt=""><br>
+<img src="https://img.virzz.com/15296344455289.jpg" alt=""><br>
+<img src="https://img.virzz.com/15296345384378.jpg" alt=""></p>
 
 <h2>扩展加密解密</h2>
 
@@ -210,11 +204,7 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
 
 <p>源码 -&gt; 加密处理（对称/非对称加密、自定义加密）-&gt; 加密成品：密文代码</p>
 
-<pre><code class="language-flow">st=&gt;start: Source Code
-ed=&gt;end: EnCrypt Code
-op1=&gt;operation: Do Crypt
-st-&gt;op1-&gt;ed
-</code></pre>
+<p><img src="https://img.virzz.com/15296588027345.jpg" alt=""></p>
 
 <p><strong>加密方式</strong></p>
 
@@ -231,18 +221,7 @@ st-&gt;op1-&gt;ed
 
 <p>但是其中有一个坑点，PHP的扩展是“栈”加载的，也就是先加载的先Hook，后执行。我们需要获取到解密之后的内容，所以需要让“加密”插件先执行，也就是我们的解密插件要先加载。</p>
 
-<pre><code class="language-sequence">title: 扩展加载、执行顺序时序图
-participant Engine
-participant DecodeExt
-participant DecryptExt
-participant DecryptExtAction
-Engine-&gt;DecodeExt: Hook compile_file
-Engine--&gt;DecryptExt: Hook decode_compile_file
-Engine--&gt;DecryptExtAction: DoDecrypt
-DecryptExtAction--&gt;Engine: Do decrypt_compile_file
-DecryptExt--&gt;Engine: Do decode_compile_file
-DecodeExt-&gt;Engine: Do zend_compile_file
-</code></pre>
+<p><img src="https://img.virzz.com/15296588284787.jpg" alt=""></p>
 
 <p>要实现这个操作，只需要在INI配置文件中先写我们的插件。(不保证)</p>
 
@@ -287,16 +266,16 @@ static zend_op_array *phpjiami_decode_compile_file(zend_file_handle *file_handle
 <li>phpinfo.php</li>
 </ul>
 
-<p><img src="media/15295010885516/15296325194141.jpg" alt="密文代码"></p>
+<p><img src="https://img.virzz.com/15296325194141.jpg" alt="密文代码"></p>
 
-<p><img src="media/15295010885516/15296328924555.jpg" alt=""></p>
+<p><img src="https://img.virzz.com/15296328924555.jpg" alt=""></p>
 
 <ul>
 <li>login.php</li>
 </ul>
 
-<p><img src="media/15295010885516/15296326760974.jpg" alt=""><br>
-<img src="media/15295010885516/15296327843894.jpg" alt=""></p>
+<p><img src="https://img.virzz.com/15296326760974.jpg" alt=""><br>
+<img src="https://img.virzz.com/15296327843894.jpg" alt=""></p>
 
 <h2>OpCode混淆</h2>
 
@@ -339,7 +318,7 @@ static zend_op_array *phpjiami_decode_compile_file(zend_file_handle *file_handle
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/06/20/php_code_s_encrypt_and_decrypt.html" target="_blank">看我如何玩转PHP代码加密与解密</a><br />
               <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
               <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-06-20 21:24:48">2018-06-20 21:24:48</time><br />
-              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-06-22 14:15:05">2018-06-22 14:15:05</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-06-22 17:14:22">2018-06-22 17:14:22</time><br />
               <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html" title="看我如何玩转PHP代码加密与解密" target="_blank">https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html</a><br />
               <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
               <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
