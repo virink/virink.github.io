@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-06-21T03:07:52+08:00</updated>
+  <updated>2018-06-22T16:49:54+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,48 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>看我如何玩转PHP代码加密与解密</title>
+    <link href="https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html"/>
+    <id>https://www.virzz.com/2018/06/20/php_code_s_encrypt_and_decrypt.html</id>
+    <updated>2018-06-22 14:15:05</updated>
+    <content type="html"><![CDATA[## 前言
+## 代码混淆
+## 代码加密解密
+### 加密
+### 解密
+### 案例
+## 扩展加密解密
+### 加密
+### 解密
+### 案例
+## OpCode混淆
+### 加密方式
+### 解密
+## Open Source
+## 参考
+## 转载声明]]></content>
+    <summary type="html">
+## 前言
+## 代码混淆
+## 代码加密解密
+### 加密
+### 解密
+### 案例
+## 扩展加密解密
+### 加密
+### 解密
+### 案例
+## OpCode混淆
+### 加密方式
+### 解密
+## Open Source
+## 参考
+## 转载声明
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="tools" scheme="https://www.virzz.com/tags/tools/"/>
+  </entry>
   <entry>
     <title>CTF老赛棍退休简述</title>
     <link href="https://www.virzz.com/2018/04/20/the_retire_sketch_by_old_ctfer.html"/>
