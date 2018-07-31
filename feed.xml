@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-07-31T02:34:10+08:00</updated>
+  <updated>2018-07-31T11:15:14+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,36 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>BookHub Writeup - Real World CTF 2018</title>
+    <link href="https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html"/>
+    <id>https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html</id>
+    <updated>2018-07-31 11:12:26</updated>
+    <content type="html"><![CDATA[## Detail
+## Writeup
+### 0x01 Bypass IP
+#### X-Forwarded-For(XFF)伪造
+### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
+### 0x03 Redis &amp; Lua Injection
+### 0x04 flask_session Pickle &amp; Rebound Shell
+## exp.py
+## 感想
+## 转载声明]]></content>
+    <summary type="html">
+## Detail
+## Writeup
+### 0x01 Bypass IP
+#### X-Forwarded-For(XFF)伪造
+### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
+### 0x03 Redis &amp; Lua Injection
+### 0x04 flask_session Pickle &amp; Rebound Shell
+## exp.py
+## 感想
+## 转载声明
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
   <entry>
     <title>Real World CTF (RWCTF) 2018 部分 Writeup</title>
     <link href="https://www.virzz.com/2018/07/30/real_world_ctf_2018_some_writeup.html"/>
@@ -44,34 +74,6 @@
 ### Detail
 ### Writeup
 ### exp.py
-    </summary>
-    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-  </entry>
-  <entry>
-    <title>BookHub Writeup - Real World CTF 2018</title>
-    <link href="https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html"/>
-    <id>https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html</id>
-    <updated>2018-07-31 02:09:25</updated>
-    <content type="html"><![CDATA[## Detail
-## Writeup
-### 0x01 Bypass IP
-### 0x02 Login or Unauthorized Access
-### 0x03 Redis &amp; Lua Injection
-### 0x04 flask_session Pickle &amp; Rebound Shell
-## exp.py
-## 感想
-## 转载声明]]></content>
-    <summary type="html">
-## Detail
-## Writeup
-### 0x01 Bypass IP
-### 0x02 Login or Unauthorized Access
-### 0x03 Redis &amp; Lua Injection
-### 0x04 flask_session Pickle &amp; Rebound Shell
-## exp.py
-## 感想
-## 转载声明
     </summary>
     <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>

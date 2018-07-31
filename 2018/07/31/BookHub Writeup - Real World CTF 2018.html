@@ -151,95 +151,169 @@ def get_remote_addr():
 
 <p><img src="https://img.virzz.com/15329696502354.jpg" alt=""></p>
 
-<h3>0x02 Login or Unauthorized Access</h3>
+<h4>X-Forwarded-For(XFF)伪造</h4>
+
+<blockquote>
+<p>X-Forwarded-For位于HTTP协议的请求头， 是一个 HTTP 扩展头部。HTTP/1.1（RFC 2616）协议并没有对它的定义，它最开始是由 Squid 这个缓存代理软件引入，用来表示 HTTP 请求端真实 IP。如今它已经成为事实上的标准，被各大 HTTP 代理、负载均衡等转发服务广泛使用，并被写入RFC 7239（Forwarded HTTP Extension）标准之中。</p>
+</blockquote>
+
+<p><strong>格式 :</strong><code>X-Forwarded-For: client, proxy1, proxy2</code></p>
+
+<p>这个请求头可以被用户或者代理服务器修改的，因此也就可能存在<strong>XFF伪造</strong>的问题。</p>
+
+<p>以Nginx为例：</p>
+
+<pre><code>location / {
+        proxy_pass http://webserver;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+</code></pre>
+
+<p><code>$proxy_add_x_forwarded_for</code>变量包含客户端请求头中的<code>X-Forwarded-For</code>，与<code>$remote_addr</code>用逗号分开，如果没有<code>X-Forwarded-For</code>请求头，则<code>$proxy_add_x_forwarded_for</code>等于<code>$remote_addr</code>。</p>
+
+<p>第一个代理获取的是客户端的<code>X-Forwarded-For</code>或者是<code>remote_addr</code>，而第二个代理获取的必然是第一个代理的<code>remote_addr</code>。</p>
+
+<p><strong>X-Forwarded-For: [xff|client_addr], proxy1, proxy2</strong></p>
+
+<p>所以，在代理的情况下，<code>address = flask.request.headers.get(<br>
+        &#39;X-Forwarded-For&#39;, flask.request.remote_addr)</code>获取到的就不是单个IP了，而是用<code>,</code>分割的IP字符串。</p>
+
+<p>PHP中获取IP的代码：<br>
+<code>php<br>
+// thinkphp_3.2.3<br>
+function get_client_ip($type = 0) {<br>
+    $type       =  $type ? 1 : 0;<br>
+    static $ip  =   NULL;<br>
+    if ($ip !== NULL) return $ip[$type];<br>
+    if (isset($_SERVER[&#39;HTTP_X_FORWARDED_FOR&#39;])) {<br>
+        $arr    =   explode(&#39;,&#39;, $_SERVER[&#39;HTTP_X_FORWARDED_FOR&#39;]);<br>
+        $pos    =   array_search(&#39;unknown&#39;,$arr);<br>
+        if(false !== $pos) unset($arr[$pos]);<br>
+        $ip     =   trim($arr[0]);<br>
+    }elseif (isset($_SERVER[&#39;HTTP_CLIENT_IP&#39;])) {<br>
+        $ip     =   $_SERVER[&#39;HTTP_CLIENT_IP&#39;];<br>
+    }elseif (isset($_SERVER[&#39;REMOTE_ADDR&#39;])) {<br>
+        $ip     =   $_SERVER[&#39;REMOTE_ADDR&#39;];<br>
+    }<br>
+    // IP地址合法验证<br>
+    $long = sprintf(&quot;%u&quot;,ip2long($ip));<br>
+    $ip   = $long ? array($ip, $long) : array(&#39;0.0.0.0&#39;, 0);<br>
+    return $ip[$type];<br>
+}<br>
+</code></p>
+
+<p>分割<code>X-Forwarded-For</code>并获取第一个，也就是获取到有可能存在的伪造的<strong>[xff|client_addr]</strong></p>
+
+<h3>0x02 Login or Unauthorized Access (感谢chybeta大佬指正)</h3>
 
 <p>有一次掉进坑里，事实上，如图源码里的<strong>migrations</strong>，数据库里面根本没有用户，还zz地爆破弱口令</p>
 
-<p><strong>./bookhub/models/user.py</strong><br>
+<p><strong>./bookhub/views/user.py</strong><br>
 ```python<br>
-class User(db.Model):<br>
-    id = db.Column(db.Integer, primary_key=True)<br>
-    username = db.Column(db.String(64), unique=True, nullable=False)<br>
-    password = db.Column(db.String(128))</p>
+if app.debug:</p>
 
-<pre><code>...
+<pre><code>@user_blueprint.route(&#39;/admin/system/&#39;)
+@login_required
+def system():
 
-@property
-def is_authenticated(self):
-    return True
+@user_blueprint.route(&#39;/admin/system/change_name/&#39;, methods=[&#39;POST&#39;])
+@login_required
+def change_name():
+    ...
+
+@login_required
+@user_blueprint.route(&#39;/admin/system/refresh_session/&#39;, methods=[&#39;POST&#39;])
+def refresh_session():
 </code></pre>
 
 <pre><code>
-这个点是**flask_login**的点，`@login_required`判断的方法就是返回`is_authenticated`的值，也就是恒为真。
+可以看出，**refresh_session()**的装饰器顺序和其他的不同。
 
-根本不需要登陆！！！
+Python的装上器是一层一层添加的
 
-### 0x03 Redis &amp; Lua Injection
-
-**./bookhub/views/user.py**
 ```python
-if app.debug:
-    ...
-    @login_required
-    @user_blueprint.route(&#39;/admin/system/refresh_session/&#39;, methods=[&#39;POST&#39;])
-    def refresh_session():
-
-        status = &#39;success&#39;
-        sessionid = flask.session.sid
-        prefix = app.config[&#39;SESSION_KEY_PREFIX&#39;]
-
-        if flask.request.form.get(&#39;submit&#39;, None) == &#39;1&#39;:
-            try:
-                rds.eval(rf&#39;&#39;&#39;
-                local function has_value (tab, val)
-                    for index, value in ipairs(tab) do
-                        if value == val then
-                            return true
-                        end
-                    end
-                    return false
-                end
-
-                local inputs = {{ &quot;{prefix}{sessionid}&quot; }}
-                local sessions = redis.call(&quot;keys&quot;, &quot;{prefix}*&quot;)
-                
-                for index, sid in ipairs(sessions) do
-                    if not has_value(inputs, sid) then
-                        redis.call(&quot;del&quot;, sid)
-                    end
-                end
-                &#39;&#39;&#39;, 0)
-            except redis.exceptions.ResponseError as e:
-                print(e)
-                app.logger.exception(e)
-                status = &#39;fail&#39;
-
-        return flask.jsonify(dict(status=status))
+@warp2
+@warp1
+def func():
+    print(1)
 </code></pre>
 
-<ul>
-<li><strong>sessionid = flask.session.sid</strong></li>
-<li><strong>rds.eval(...)</strong></li>
-<li><strong>local inputs = {{ &quot;{prefix}{sessionid}&quot; }}</strong></li>
-<li><strong>Lua Script Inject &amp; ByPass del</strong></li>
-</ul>
+<p>调用函数的时候：<code>func(warp2)-&gt;func(warp1)-&gt;func</code></p>
 
-<p>这一步就4个点，<strong>sessionid</strong>可控，并注入到<strong>Lua脚本</strong>被<strong>redis.eval</strong>执行，还得绕过<strong>del</strong></p>
+<p>在Flask中，访问<code>/admin/system/</code>：system(user<em>blueprint)-&gt;system(login</em>required)-&gt;system()，这时候就会判断<strong>login_required</strong>对登陆状态进行验证。</p>
 
-<p><strong>Test Pyaload :</strong> <br>
-<code>lua<br>
--- 闭合语句<br>
-local inputs = { &quot;{prefix}&quot; } <br>
--- urlDecode 处理不可见字符<br>
-local function urlDecode(s) <br>
-    s=string.gsub(s,&#39;%%(%x%x)&#39;,function(h) return string.char(tonumber(h, 16)) end) <br>
-    return s <br>
-end<br>
--- 写payload<br>
-redis.call(&quot;set&quot;,&quot;bookhub:session:sid&quot;,urlDecode(&quot;payload&quot;))<br>
--- 绕过del并注释后面的内容<br>
-inputs ={ &quot;bookhub:session:sid&quot; } -- &quot; }<br>
-</code></p>
+<p>而访问<code>/admin/system/refresh_session/</code>：refresh<em>session(user</em>blueprint)-&gt;refresh<em>session()，这个地方就是没有**login</em>required**什么事了，也就造成了绕过权限控制的问题</p>
+
+<hr>
+
+<p>我还是太菜了</p>
+
+<h3>0x03 Redis &amp; Lua Injection</h3>
+
+<p><strong>./bookhub/views/user.py</strong><br>
+```python<br>
+if app.debug:<br>
+    ...<br>
+    @login<em>required<br>
+    @user</em>blueprint.route(&#39;/admin/system/refresh<em>session/&#39;, methods=[&#39;POST&#39;])<br>
+    def refresh</em>session():</p>
+
+<pre><code>    status = &#39;success&#39;
+    sessionid = flask.session.sid
+    prefix = app.config[&#39;SESSION_KEY_PREFIX&#39;]
+
+    if flask.request.form.get(&#39;submit&#39;, None) == &#39;1&#39;:
+        try:
+            rds.eval(rf&#39;&#39;&#39;
+            local function has_value (tab, val)
+                for index, value in ipairs(tab) do
+                    if value == val then
+                        return true
+                    end
+                end
+                return false
+            end
+
+            local inputs = {{ &quot;{prefix}{sessionid}&quot; }}
+            local sessions = redis.call(&quot;keys&quot;, &quot;{prefix}*&quot;)
+
+            for index, sid in ipairs(sessions) do
+                if not has_value(inputs, sid) then
+                    redis.call(&quot;del&quot;, sid)
+                end
+            end
+            &#39;&#39;&#39;, 0)
+        except redis.exceptions.ResponseError as e:
+            print(e)
+            app.logger.exception(e)
+            status = &#39;fail&#39;
+
+    return flask.jsonify(dict(status=status))
+</code></pre>
+
+<pre><code>
+- **sessionid = flask.session.sid**
+- **rds.eval(...)**
+- **local inputs = {{ &quot;{prefix}{sessionid}&quot; }}**
+- **Lua Script Inject &amp; ByPass del**
+
+这一步就4个点，**sessionid**可控，并注入到**Lua脚本**被**redis.eval**执行，还得绕过**del**
+
+**Test Pyaload :** 
+```lua
+-- 闭合语句
+local inputs = { &quot;{prefix}&quot; } 
+-- urlDecode 处理不可见字符
+local function urlDecode(s) 
+    s=string.gsub(s,&#39;%%(%x%x)&#39;,function(h) return string.char(tonumber(h, 16)) end) 
+    return s 
+end
+-- 写payload
+redis.call(&quot;set&quot;,&quot;bookhub:session:sid&quot;,urlDecode(&quot;payload&quot;))
+-- 绕过del并注释后面的内容
+inputs ={ &quot;bookhub:session:sid&quot; } -- &quot; }
+</code></pre>
 
 <p>注入语句是没有换行的，当然Lua脚本的格式也和换行无关</p>
 
@@ -383,7 +457,7 @@ if __name__ == &#39;__main__&#39;:
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/07/31/bookhub_for_rwctf2018_writeups.html" target="_blank">BookHub Writeup - Real World CTF 2018</a><br />
               <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
               <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 00:46:32">2018-07-31 00:46:32</time><br />
-              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 02:09:25">2018-07-31 02:09:25</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 11:12:26">2018-07-31 11:12:26</time><br />
               <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html" title="BookHub Writeup - Real World CTF 2018" target="_blank">https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html</a><br />
               <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
               <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
