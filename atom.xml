@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-07-31T11:19:25+08:00</updated>
+  <updated>2018-07-31T11:22:49+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -18,9 +18,9 @@
 
   <entry>
     <title>Real World CTF (RWCTF) 2018 部分 Writeup</title>
-    <link href="https://www.virzz.com/2018/07/30/real_world_ctf_2018_some_writeup.html"/>
-    <id>https://www.virzz.com/2018/07/30/real_world_ctf_2018_some_writeup.html</id>
-    <updated>2018-07-31 11:18:56</updated>
+    <link href="https://www.virzz.com/2018/07/31/real_world_ctf_2018_some_writeup.html"/>
+    <id>https://www.virzz.com/2018/07/31/real_world_ctf_2018_some_writeup.html</id>
+    <updated>2018-07-31 11:22:44</updated>
     <content type="html"><![CDATA[## 0x01 advertisement (check-in)
 ### Detail
 ### Writeup
@@ -50,8 +50,8 @@
   </entry>
   <entry>
     <title>BookHub Writeup - Real World CTF 2018</title>
-    <link href="https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html"/>
-    <id>https://www.virzz.com/2018/07/31/bookhub_for_rwctf2018_writeups.html</id>
+    <link href="https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html"/>
+    <id>https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html</id>
     <updated>2018-07-31 11:12:26</updated>
     <content type="html"><![CDATA[## Detail
 ## Writeup
