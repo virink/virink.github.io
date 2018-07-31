@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -108,118 +116,73 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>简单总结一下我的博客是如何折腾的</h2>
-
 <p><strong>本博客程序及环境</strong>：Nginx + MySQL + Flask + uWSGI + Supervisor + SSL</p>
-
 <h2>Python 環境</h2>
-
 <h3>Python2.7</h3>
-
 <p>我反正是習慣用這個版本</p>
-
 <pre><code>sudo apt-get install python-dev build-essential
 </code></pre>
-
 <h3>PIP</h3>
-
 <p>Python插件安裝管理工具</p>
-
 <p>安裝</p>
-
 <pre><code>sudo apt-get install python-pip
 </code></pre>
-
 <p>更新</p>
-
-<pre><code>sudo pip install --upgrade pip 
+<pre><code>sudo pip install --upgrade pip
 </code></pre>
-
 <h3>Virtualenv</h3>
-
 <p>Python依賴虛擬環境</p>
-
 <p>安裝</p>
-
 <pre><code>sudo pip install --upgrade virtualenv
 </code></pre>
-
 <h3>配置環境</h3>
-
 <p>可以本地調試或者綫上部署都可以配置一個依賴虛擬環境，防止依賴混亂</p>
-
 <p>新建 網站程序 目錄</p>
-
 <pre><code>mkdir web-flask
 cd web-flask
 </code></pre>
-
 <p>生成 虛擬環境 目錄</p>
-
 <pre><code>virtualenv venv
 </code></pre>
-
 <p>使用当前命令行状态进入虚拟环境</p>
-
 <pre><code>source venv/bin/activate
 </code></pre>
-
 <p>通過清单文件【requirements.txt】一次性安装Flask和他的相关依赖</p>
-
 <pre><code>pip install -r requirements.txt
 </code></pre>
-
 <h2>Flask</h2>
-
 <p>一套基於Python的web框架，至於怎麼玩，Baidu or Google！</p>
-
 <p>我是通過研究 <a href="https://github.com/isislab/CTFd" title="CTFd">https://github.com/isislab/CTFd</a> 源碼來學習的</p>
-
 <p>主要分四個達模塊</p>
-
 <ul>
-<li>utils -- 公共函數集合</li>
-<li>models -- 數據庫模型</li>
-<li>admin -- 後臺</li>
-<li>view -- 前臺</li>
+<li>utils &ndash; 公共函數集合</li>
+<li>models &ndash; 數據庫模型</li>
+<li>admin &ndash; 後臺</li>
+<li>view &ndash; 前臺</li>
 </ul>
-
 <p>然後是兩個靜態文件夾</p>
-
 <ul>
-<li>templates -- 模板html</li>
+<li>templates &ndash; 模板html</li>
 <li>static - css、js、img等</li>
 </ul>
-
 <p>最後是</p>
-
 <ul>
-<li>_<em>init</em>_ -- 這個不知道怎麼翻譯（意會吧）</li>
-<li>config -- 配置</li>
-<li>manage -- 本地測試啟動入口</li>
+<li>__init__ &ndash; 這個不知道怎麼翻譯（意會吧）</li>
+<li>config &ndash; 配置</li>
+<li>manage &ndash; 本地測試啟動入口</li>
 </ul>
-
 <p>關於 Flask 可以去看文檔，或者我以後有空再說</p>
-
 <h2>MySQL</h2>
-
 <p>也就那麼回事</p>
-
 <pre><code>sudo apt-get install mysql-server mysql-client
 </code></pre>
-
 <p>不同環境不同命令、自己看著辦</p>
-
 <h2>uWSGI</h2>
-
 <p>实现了WSGI协议一個web服務器。</p>
-
 <h3>安裝</h3>
-
 <pre><code>pip install uwsgi
 </code></pre>
-
 <h3>配置文件 uwsgi.ini</h3>
-
 <pre><code>[uwsgi]
 # 任意未使用的端口，也可以是文件模式
 socket = 127.0.0.1:9000
@@ -238,30 +201,21 @@ threads = 2
 #stats = 127.0.0.1:9191 # 狀態顯示？大概是
 daemonize = /home/virink/flask-web/logs/uwsgi.log # 日誌
 </code></pre>
-
 <h3>Flask啟動文件例子manage.py</h3>
-
 <pre><code>#!/usr/bin/env python
 from ICore import create_app
 app = create_app()
 # 一下可有可無
-if __name__ == &#39;__main__&#39;:
-    app.run(debug=True, host=&quot;0.0.0.0&quot;, port=8000)
+if __name__ == '__main__':
+    app.run(debug=True, host="0.0.0.0", port=8000)
 </code></pre>
-
 <h2>Supervisor</h2>
-
 <h3>安裝</h3>
-
 <pre><code>sudo apt-get install supervisor
 </code></pre>
-
 <h3>配置文件</h3>
-
 <p>Supervisor 的全局的配置文件位置在 <code>/etc/supervisor/supervisor.conf</code></p>
-
 <p>我們可以在 <code>/etc/supervisor/conf.d/</code> 添加一個新的 <code>*.conf</code> 文件</p>
-
 <pre><code>[program:flask-web]
 # 启动命令入口
 command=/home/virink/flask-web/venv/bin/uwsgi /home/virink/flask-web/config.ini
@@ -276,44 +230,29 @@ autorestart=true
 #日志地址
 stdout_logfile=/home/virink/flask-web/logs/uwsgi_supervisor.log
 </code></pre>
-
 <h3>操作</h3>
-
 <pre><code>// 启动服务
 sudo service supervisor start
 // 终止服务
 sudo service supervisor stop
 </code></pre>
-
 <p>停止服務之後 <strong>uwsgi</strong> 是不會關閉的，所以要更新flask的時候要 <code>kill</code> 了所有的 <strong>uwsgi</strong> 進程</p>
-
 <p>我寫了個腳本</p>
-
 <p><strong>restart.sh</strong></p>
-
 <pre><code>#!/bin/bash
-service supervisor stop &amp;&amp; kill -9 $(ps -e|grep uwsgi |awk &#39;{print $1}&#39;) &amp;&amp; service supervisor start
+service supervisor stop &amp;&amp; kill -9 $(ps -e|grep uwsgi |awk '{print $1}') &amp;&amp; service supervisor start
 </code></pre>
-
 <p>運行腳本就好了</p>
-
 <pre><code>chmod +x restart.sh
 sudo ./restart.sh
 </code></pre>
-
 <h2>Nginx</h2>
-
 <h3>安裝</h3>
-
 <pre><code>sudo apt-get install nginx
 </code></pre>
-
 <h3>配置</h3>
-
 <p>不要去改动默认的 <code>nginx.conf</code></p>
-
 <p>而是修改配置文件 <code>/etc/nginx/sites-available/default</code></p>
-
 <pre><code>server {
     listen  80;
     server_name domain; #公网地址
@@ -328,30 +267,18 @@ sudo ./restart.sh
     }
 }
 </code></pre>
-
 <p>然後重啟 <code>sudo service nginx restart</code></p>
-
 <h3>提醒</h3>
-
 <p>如果不是改動<strong>default</strong>而是添加一個新的配置文件<strong>xxx</strong></p>
-
 <p>需要把該文件鏈接到 <strong>sites-enabled</strong> 文件夾</p>
-
 <p>創建文件<code>/etc/nginx/sites-enabled/xxx</code>鏈接到<code>/etc/nginx/sites-available/xxx</code></p>
-
 <pre><code>ln -s /etc/nginx/sites-enabled/xxx /etc/nginx/sites-available/xxx
 </code></pre>
-
 <p>到這裡就基本折騰好了</p>
-
 <h2>SSL</h2>
-
 <p>最近聽說 基於<strong>SSL</strong>的<strong>https</strong>比較流行，所以....</p>
-
-<h3>安装 &amp; 生成Let&#39;s Encrypt证书</h3>
-
+<h3>安装 &amp; 生成Let&rsquo;s Encrypt证书</h3>
 <p><strong>运行时保證80端口可以访问以及拥有root权限</strong></p>
-
 <pre><code>apt-get update
 apt-get -y install git
 git clone https://github.com/letsencrypt/letsencrypt
@@ -363,56 +290,35 @@ or
 sudo apt-get install letsencrypt 
 letsencrypt certonly --standalone -d yourdomain.com -d www.yourdomain.com
 </code></pre>
-
 <p>输入邮箱，</p>
-
-<p>Agree Let&#39;s Encrypt的TOS，</p>
-
+<p>Agree Let&rsquo;s Encrypt的TOS，</p>
 <p>证书成功，存放位置为 <code>/etc/letsencrypt/live/yourdomain.com/fullchain.pem</code></p>
-
 <h3>配置Nginx</h3>
-
 <p>修改 <code>listen 80;</code> 为 <code>listen 443 ssl;</code></p>
-
 <p>然后添加</p>
-
 <pre><code>ssl_certificate /etc/letsencrypt/live/yourdomain.com/fullchain.pem;
 ssl_certificate_key /etc/letsencrypt/live/yourdomain.com/privkey.pem;
 ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
 ssl_prefer_server_ciphers on;
 ssl_ciphers AES256+EECDH:AES256+EDH:!aNULL;
 </code></pre>
-
 <p>在 <code>location /</code> 中添加 <code>uwsgi_param UWSGI_SCHEME https;</code></p>
-
-<h3>配置 Let&#39;s Encrypt 自动续期</h3>
-
+<h3>配置 Let&rsquo;s Encrypt 自动续期</h3>
 <p>确保<code>/etc/letsencrypt/renewal/yourdomain.com.conf</code>文件的几个重要参数正常</p>
-
 <pre><code>email = youremail@xxx.com
 tos = True
 </code></pre>
-
 <p><strong>接下來的我还不会、、、Orz, 大概是利用 crontab</strong></p>
-
 <pre><code>sudo crontab -u root -e
 * * * */1 * /usr/sbin/service nginx stop;/usr/bin/letsencrypt renew;/usr/sbin/service nginx start
 </code></pre>
-
 <h3>强制使用https访问 或者 換域名</h3>
-
 <p>因為大多數人是不會輸入<strong>https://www.virzz.com</strong>而是輸入<strong>http://www.virzz.com</strong></p>
-
 <p>所以有必要開一個80端口進行<strong>rewrite</strong>重定向，</p>
-
 <p>另外，換域名和換目錄也可以用<strong>rewrite</strong>重定向，</p>
-
 <p>我上一個 <strong>Blog</strong> 用的是 <strong>Typecho</strong> ，文章訪問格式是 <strong>www.old.com/分類/文章</strong>，</p>
-
 <p>而我新的 <strong>Blog</strong> 是 <strong>www.yourdomain.com/文章</strong></p>
-
 <p><strong>flask_nginx</strong></p>
-
 <pre><code>server {  
     listen  80;
     listen 443 ssl;
@@ -421,14 +327,14 @@ tos = True
     charset     utf-8;
 
     # 如果不是 **www.yourdomain.com** 則跳轉到 **https://www.yourdomain.com**
-    if ($host != &#39;www.yourdomain.com&#39; ) {
+    if ($host != 'www.yourdomain.com' ) {
         rewrite ^/(\w+)/(.*)$ https://www.yourdomain.com/$2 permanent;
         # ^/(\w+)/(.*)$ 匹配 目錄/文章， 取文章
         # permanent 指 301 永久重定向
     }
 
     # 如果不是 **https** 則跳轉到 **https://www.yourdomain.com**
-    if ($scheme != &#39;https&#39; ) {
+    if ($scheme != 'https' ) {
         rewrite ^/(.*)$ https://www.yourdomain.com/$1 permanent;
     }
 
@@ -453,13 +359,9 @@ tos = True
     }
 }
 </code></pre>
-
 <p>搞定、收功、、不成功的話、一起交流、、</p>
-
 <p>因為我現在的方式是兩個不同的配置文件</p>
-
-<p><strong>https<em>flask</em>web</strong></p>
-
+<p><strong>https_flask_web</strong></p>
 <pre><code>server {
     listen  443 ssl;
     server_name www.yourdomain.com;
@@ -486,18 +388,16 @@ tos = True
     }
 }
 </code></pre>
-
-<p><strong>http<em>flask</em>web</strong></p>
-
+<p><strong>http_flask_web</strong></p>
 <pre><code>server {
     listen  80;
     server_name www.yourdomain.com;
     server_name www.old.com;
 
-    if ($host != &#39;www.yourdomain.com&#39; ) {
+    if ($host != 'www.yourdomain.com' ) {
         rewrite ^/(\w+)/(.*)$ https://www.yourdomain.com/$2 permanent;
     }
-    if ($scheme != &#39;https&#39; ) {
+    if ($scheme != 'https' ) {
         rewrite ^/(.*)$ https://www.yourdomain.com/$1 permanent;
     }
 
@@ -510,33 +410,19 @@ tos = True
     error_page 404 https://www.virzz.com;
 }
 </code></pre>
-
 <h2>結束語</h2>
-
 <h3>關於本文</h3>
-
 <p>折騰這個blog画的時間蠻久的，不過總算弄出來了。</p>
-
 <p>期間不知道 百度、Google了多少回，各種文章的方法反復測試。</p>
-
 <p>為了然其他像我這樣不得門而入的童鞋不走冤枉路，特此寫了篇文章。</p>
-
 <h3>為何用Flask</h3>
-
 <p>至於為什麼不用PHP是因為我想裝個逼~~PHP的MVC不好玩，也不會用框架，各種麻煩</p>
-
 <p>Python開發挺好玩的吧、我加了幾個不錯的插件~~</p>
-
 <p>發文章的同時、可以同步發微博和推特、並且實時推送文章鏈接送到Baidu【百度站長-鏈接提交】</p>
-
 <h3>關於開源</h3>
-
 <p>最後、暫時還不打算開源、比較開發基礎不太好、代碼淩亂沉余、真心不好意思開源污染大夥的眼睛。</p>
-
 <h3>真的結束了</h3>
-
 <p>Over</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/11/15/how_to_make_my_flask_blog_virzzblog.html" target="_blank">如何折腾我的Flask博客VirzzBlog</a><br />

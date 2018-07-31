@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-07-31T11:22:49+08:00</updated>
+  <updated>2018-08-01T00:00:00+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,149 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>BookHub Writeup - Real World CTF 2018</title>
+    <link href="https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html"/>
+    <id>https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html</id>
+    <updated>2018-07-31 23:57:54</updated>
+    <content type="html"><![CDATA[## Detail
+## Writeup
+### 0x01 Bypass IP
+#### X-Forwarded-For(XFF)伪造
+### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
+### 0x03 Redis &amp; Lua Injection
+### 0x04 flask_session Pickle &amp; Rebound Shell
+## exp.py
+## 感想
+## 转载声明]]></content>
+    <summary type="html">
+## Detail
+## Writeup
+### 0x01 Bypass IP
+#### X-Forwarded-For(XFF)伪造
+### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
+### 0x03 Redis &amp; Lua Injection
+### 0x04 flask_session Pickle &amp; Rebound Shell
+## exp.py
+## 感想
+## 转载声明
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
+  <entry>
+    <title>(新)搭建PHPStorm＋XDebug代碼審計環境</title>
+    <link href="https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html"/>
+    <id>https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html</id>
+    <updated>2018-07-31 12:20:00</updated>
+    <content type="html"><![CDATA[## 前言
+## Nginx
+## Mysql
+## PHP
+## XDebug
+### 單IP模式
+### 多IP模式
+## PHPStorm
+## 配置
+### 配置項目運行PHP環境
+### PHP Debug 配置
+## 瀏覽器(Chrome)配置
+## 測試
+## 結束語]]></content>
+    <summary type="html">
+## 前言
+## Nginx
+## Mysql
+## PHP
+## XDebug
+### 單IP模式
+### 多IP模式
+## PHPStorm
+## 配置
+### 配置項目運行PHP環境
+### PHP Debug 配置
+## 瀏覽器(Chrome)配置
+## 測試
+## 結束語
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+    <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
+  </entry>
+  <entry>
+    <title>三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup</title>
+    <link href="https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html"/>
+    <id>https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html</id>
+    <updated>2018-07-31 12:08:43</updated>
+    <content type="html"><![CDATA[## 挑战介绍
+## 第一個坑 密码怎么会告诉你
+## 第二個坑 SQL注入
+## 第三個坑 putenv LD_PRELOAD
+### flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}]]></content>
+    <summary type="html">
+## 挑战介绍
+## 第一個坑 密码怎么会告诉你
+## 第二個坑 SQL注入
+## 第三個坑 putenv LD_PRELOAD
+### flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>三个白帽-寻找来自星星的你-第一期</title>
+    <link href="https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html"/>
+    <id>https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html</id>
+    <updated>2018-07-31 12:06:50</updated>
+    <content type="html"><![CDATA[## 挑战介绍
+## 挑战目标
+## 0x01 信息收集
+## 利用漏洞
+## 命令執行
+## 反彈shell
+## GETFLAG]]></content>
+    <summary type="html">
+## 挑战介绍
+## 挑战目标
+## 0x01 信息收集
+## 利用漏洞
+## 命令執行
+## 反彈shell
+## GETFLAG
+    </summary>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+  </entry>
+  <entry>
+    <title>NJCTF 2017 some web writeups</title>
+    <link href="https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html"/>
+    <id>https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html</id>
+    <updated>2018-07-31 12:03:26</updated>
+    <content type="html"><![CDATA[## Sqlite SQL Injection
+### Source Code
+### First
+### Next
+#### 從數據庫找到所有表
+#### 發現flag表，查詢flag表的字段
+#### 發現id類型為varchar(255),flag很有藏在其中
+### Finally
+## Ruby on Rails
+## The end]]></content>
+    <summary type="html">
+## Sqlite SQL Injection
+### Source Code
+### First
+### Next
+#### 從數據庫找到所有表
+#### 發現flag表，查詢flag表的字段
+#### 發現id類型為varchar(255),flag很有藏在其中
+### Finally
+## Ruby on Rails
+## The end
+    </summary>
+    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
+    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
+  </entry>
   <entry>
     <title>Real World CTF (RWCTF) 2018 部分 Writeup</title>
     <link href="https://www.virzz.com/2018/07/31/real_world_ctf_2018_some_writeup.html"/>
@@ -44,36 +187,6 @@
 ### Detail
 ### Writeup
 ### exp.py
-    </summary>
-    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-  </entry>
-  <entry>
-    <title>BookHub Writeup - Real World CTF 2018</title>
-    <link href="https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html"/>
-    <id>https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html</id>
-    <updated>2018-07-31 11:12:26</updated>
-    <content type="html"><![CDATA[## Detail
-## Writeup
-### 0x01 Bypass IP
-#### X-Forwarded-For(XFF)伪造
-### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
-### 0x03 Redis &amp; Lua Injection
-### 0x04 flask_session Pickle &amp; Rebound Shell
-## exp.py
-## 感想
-## 转载声明]]></content>
-    <summary type="html">
-## Detail
-## Writeup
-### 0x01 Bypass IP
-#### X-Forwarded-For(XFF)伪造
-### 0x02 Login or Unauthorized Access (感谢chybeta大佬指正)
-### 0x03 Redis &amp; Lua Injection
-### 0x04 flask_session Pickle &amp; Rebound Shell
-## exp.py
-## 感想
-## 转载声明
     </summary>
     <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
@@ -375,45 +488,6 @@
     <category term="default" scheme="https://www.virzz.com/tags/default/"/>
   </entry>
   <entry>
-    <title>(新)搭建PHPStorm＋XDebug代碼審計環境</title>
-    <link href="https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html"/>
-    <id>https://www.virzz.com/2017/03/13/new_make_env_for_php_code_audit_with_phpstorm_xdebug.html</id>
-    <updated>2017-06-01 23:45:35</updated>
-    <content type="html"><![CDATA[## 前言
-## Nginx
-## Mysql
-## PHP
-## XDebug
-### 單IP模式
-### 多IP模式
-## PHPStorm
-## 配置
-### 配置項目運行PHP環境
-### PHP Debug 配置
-## 瀏覽器(Chrome)配置
-## 測試
-## 結束語]]></content>
-    <summary type="html">
-## 前言
-## Nginx
-## Mysql
-## PHP
-## XDebug
-### 單IP模式
-### 多IP模式
-## PHPStorm
-## 配置
-### 配置項目運行PHP環境
-### PHP Debug 配置
-## 瀏覽器(Chrome)配置
-## 測試
-## 結束語
-    </summary>
-    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
-    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
-    <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
-  </entry>
-  <entry>
     <title>閱讀筆記《当呼吸化为空气》</title>
     <link href="https://www.virzz.com/2017/05/21/reading_notes_for_when_breath_becomes_air.html"/>
     <id>https://www.virzz.com/2017/05/21/reading_notes_for_when_breath_becomes_air.html</id>
@@ -604,9 +678,9 @@
 ### 配置
 ### 提醒
 ## SSL
-### 安装 &amp; 生成Let&#39;s Encrypt证书
+### 安装 &amp; 生成Let&#x27;s Encrypt证书
 ### 配置Nginx
-### 配置 Let&#39;s Encrypt 自动续期
+### 配置 Let&#x27;s Encrypt 自动续期
 ### 强制使用https访问 或者 換域名
 ## 結束語
 ### 關於本文
@@ -635,9 +709,9 @@
 ### 配置
 ### 提醒
 ## SSL
-### 安装 &amp; 生成Let&#39;s Encrypt证书
+### 安装 &amp; 生成Let&#x27;s Encrypt证书
 ### 配置Nginx
-### 配置 Let&#39;s Encrypt 自动续期
+### 配置 Let&#x27;s Encrypt 自动续期
 ### 强制使用https访问 或者 換域名
 ## 結束語
 ### 關於本文
@@ -689,24 +763,6 @@
     <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
   </entry>
   <entry>
-    <title>三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup</title>
-    <link href="https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html"/>
-    <id>https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html</id>
-    <updated>2017-06-01 23:39:52</updated>
-    <content type="html"><![CDATA[## 第一個坑 密码怎么会告诉你
-## 第二個坑 SQL注入
-## 第三個坑 putenv LD_PRELOAD
-### flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}]]></content>
-    <summary type="html">
-## 第一個坑 密码怎么会告诉你
-## 第二個坑 SQL注入
-## 第三個坑 putenv LD_PRELOAD
-### flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}
-    </summary>
-    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-  </entry>
-  <entry>
     <title>三個白帽-条条大路通罗马系列2-Writeup</title>
     <link href="https://www.virzz.com/2016/06/03/three_white_hats_all_roads_lead_to_the_romes_2.html"/>
     <id>https://www.virzz.com/2016/06/03/three_white_hats_all_roads_lead_to_the_romes_2.html</id>
@@ -729,72 +785,6 @@
     </summary>
     <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-  </entry>
-  <entry>
-    <title>三个白帽-寻找来自星星的你-第一期</title>
-    <link href="https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html"/>
-    <id>https://www.virzz.com/2016/06/06/three_white_hats_find_you_from_star_first.html</id>
-    <updated>2017-06-01 23:39:01</updated>
-    <content type="html"><![CDATA[## 挑战介绍
-## 挑战目标
-## 0x01 信息收集
-## 利用漏洞
-## 命令執行
-## 反彈shell
-## GETFLAG]]></content>
-    <summary type="html">
-## 挑战介绍
-## 挑战目标
-## 0x01 信息收集
-## 利用漏洞
-## 命令執行
-## 反彈shell
-## GETFLAG
-    </summary>
-    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-  </entry>
-  <entry>
-    <title>Web渗透中的反弹Shell与端口转发的奇淫技巧</title>
-    <link href="https://www.virzz.com/2016/10/16/rebound_shell_and_port_forwarding.html"/>
-    <id>https://www.virzz.com/2016/10/16/rebound_shell_and_port_forwarding.html</id>
-    <updated>2017-06-01 23:38:40</updated>
-    <content type="html"><![CDATA[## 0x00 前言
-## 0x01 反弹shell
-### 1) Bash
-### 2) NetCat
-### 3) PHP
-### 4) JSP
-### 5) Python
-## 关于交互式正向连接shell，⼏几点需要注意的地⽅方
-### 6) Perl
-### 7) Ruby
-### 8) Java
-### 9) Lua
-## 0x02 端口转发
-## 0x03 开放代理
-## 0x04 小结
-## 0x05 参考资料]]></content>
-    <summary type="html">
-## 0x00 前言
-## 0x01 反弹shell
-### 1) Bash
-### 2) NetCat
-### 3) PHP
-### 4) JSP
-### 5) Python
-## 关于交互式正向连接shell，⼏几点需要注意的地⽅方
-### 6) Perl
-### 7) Ruby
-### 8) Java
-### 9) Lua
-## 0x02 端口转发
-## 0x03 开放代理
-## 0x04 小结
-## 0x05 参考资料
-    </summary>
-    <category term="shell" scheme="https://www.virzz.com/tags/shell/"/>
-    <category term="web" scheme="https://www.virzz.com/tags/web/"/>
   </entry>
   <entry>
     <title>SSH代理轉socks5</title>
@@ -948,36 +938,6 @@
 ## Payload
 ## MDZZ
 ## Flag
-    </summary>
-    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-  </entry>
-  <entry>
-    <title>NJCTF 2017 some web writeups</title>
-    <link href="https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html"/>
-    <id>https://www.virzz.com/2017/03/16/some_web_writeups_for_njctf_2017.html</id>
-    <updated>2017-06-01 23:35:13</updated>
-    <content type="html"><![CDATA[## Sqlite SQL Injection
-### Source Code
-### First
-### Next
-#### 從數據庫找到所有表
-#### 發現flag表，查詢flag表的字段
-#### 發現id類型為varchar(255),flag很有藏在其中
-### Finally
-## Ruby on Rails
-## The end]]></content>
-    <summary type="html">
-## Sqlite SQL Injection
-### Source Code
-### First
-### Next
-#### 從數據庫找到所有表
-#### 發現flag表，查詢flag表的字段
-#### 發現id類型為varchar(255),flag很有藏在其中
-### Finally
-## Ruby on Rails
-## The end
     </summary>
     <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
     <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>

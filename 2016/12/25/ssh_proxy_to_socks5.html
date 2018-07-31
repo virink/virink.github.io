@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -100,17 +108,12 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Set up the SSH tunnel</h2>
-
 <pre><code>ssh -D 1080 -f -C -q -N user@host
 ssh -qTfnN -D 7070 -p 22 user@host
 </code></pre>
-
 <h2>Set up System Preferences</h2>
-
 <p>This is for Safari and other WebKit-based browsers. </p>
-
 <p>Note: this will also affect Mail and other CFNetwork-based applications.</p>
-
 <ol>
 <li>Select Apple &gt; System Preferences</li>
 <li>Click Network</li>
@@ -119,24 +122,21 @@ ssh -qTfnN -D 7070 -p 22 user@host
 <li>Click Proxies</li>
 <li>Select Configure Proxies &gt; Manually (onlynecessary on Leopard and earlier)</li>
 <li>Check the box beside SOCKS Proxy</li>
-<li>fill in &#39;localhost&#39; and &#39;1080&#39;</li>
+<li>fill in &lsquo;localhost&rsquo; and &lsquo;1080&rsquo;</li>
 <li>Click OK or Click Apply</li>
 </ol>
-
 <h2>Set up Firefox</h2>
-
 <ol>
 <li>Select Firefox &gt; Preferences</li>
 <li>Click Advanced</li>
 <li>Click Network</li>
 <li>Click Settings</li>
-<li>Click &#39;Manual proxy configuration&#39;</li>
-<li>Besides SOCKS Host, fill in &#39;localhost&#39; and &#39;8080&#39;</li>
-<li>Do not fill in any other fields, including &#39;HTTP Proxy&#39;</li>
+<li>Click &lsquo;Manual proxy configuration&rsquo;</li>
+<li>Besides SOCKS Host, fill in &lsquo;localhost&rsquo; and &lsquo;8080&rsquo;</li>
+<li>Do not fill in any other fields, including &lsquo;HTTP Proxy&rsquo;</li>
 <li>Click SOCKS v5</li>
 <li>Click OK</li>
 </ol>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/12/25/ssh_proxy_to_socks5.html" target="_blank">SSH代理轉socks5</a><br />

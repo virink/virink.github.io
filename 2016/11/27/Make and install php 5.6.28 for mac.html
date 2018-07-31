@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -100,44 +108,29 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Install Brewhome</h2>
-
-<pre><code>/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+<pre><code>/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 </code></pre>
-
 <h2>Install Mysql</h2>
-
 <pre><code>brew install mysql
 </code></pre>
-
 <h2>Install Nginx</h2>
-
 <pre><code>brew install nginx
 </code></pre>
-
 <h2>Download php-src</h2>
-
 <p>You can do it by git or http</p>
-
 <h3>git</h3>
-
 <pre><code>git clone https://github.com/php/php-src.git
 </code></pre>
-
 <h3>http</h3>
-
 <pre><code>http://php.net/downloads.php
 </code></pre>
-
 <h2>Install PHP</h2>
-
-<pre><code>brew install autoconf openssl libpng libjpeg libxml gettext libmcrypt libiconv libmhash 
+<pre><code>brew install autoconf openssl libpng libjpeg libxml gettext libmcrypt libiconv libmhash
 
 cd path/php-src(what you save)
 buildconf --force
 </code></pre>
-
 <h2>Configure</h2>
-
 <pre><code>./configure \
 --prefix=/usr/local/php56 \
 --mandir=/usr/share/man \
@@ -184,40 +177,29 @@ buildconf --force
 --enable-sysvsem \
 --enable-debug
 </code></pre>
-
 <h3>make and install</h3>
-
 <pre><code>sudo make &amp;&amp; make install
 </code></pre>
-
 <h2>Setting</h2>
-
 <p>Write it in <strong>.zshrc</strong> (I used zsh)</p>
-
-<pre><code>export PATH=&quot;/usr/local/php56/bin:/usr/local/php56/sbin:$PATH&quot;
+<pre><code>export PATH="/usr/local/php56/bin:/usr/local/php56/sbin:$PATH"
 </code></pre>
-
 <p>Rewrite your configure:</p>
-
 <ul>
 <li>/etc/php.ini</li>
 <li>/etp/php-fmp.conf</li>
-<li>/usr/local/etc/nginx/nginx.conf
-
-<ul>
+<li>/usr/local/etc/nginx/nginx.conf<ul>
 <li>add <code>include vhost/*.conf</code> in http{}</li>
 <li>mkdir /usr/local/etc/nginx/vhost</li>
 <li>vim your site setting in vhost/yourname.conf</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <h2>Start Services</h2>
-
 <pre><code>php-fpm -y /etp/php-fmp.conf -D
 brew services start mysql
 brew services start nginx
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/11/27/make_and_install_php_5.6.28_for_mac_osx.html" target="_blank">Make and install php 5.6.28 for mac</a><br />

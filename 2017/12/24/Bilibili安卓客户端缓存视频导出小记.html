@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,139 +104,85 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>0x01 我有一个想要搞事情的想法</h2>
-
 <p>介于xxx原因，想要把B站的视频导出来，于是乎就折腾了一番</p>
-
 <h2>0x02 她是咋缓存视频的</h2>
-
 <p>一波搜索，发现其视频存在<code>/sdcard/Android/data/tv.danmaku.bili/download/</code>文件夹</p>
-
 <p>tv.danmaku.bili -&gt; danmaku 奇奇怪怪的名称，弹码(幕)库?</p>
-
 <p>然后又分两种类型的视频，分别存放于两种格式命名的文件夹</p>
-
 <ul>
 <li>普通视频 : (AV编号) xxxxxxxxx</li>
-<li>番剧视频 : (s<em>番号) s</em>xxxx</li>
+<li>番剧视频 : (s_番号) s_xxxx</li>
 </ul>
-
 <h3>普通视频</h3>
-
 <p>进入某一个普通视频目录 </p>
-
 <p><code>/sdcard/Android/data/tv.danmaku.bili/download/xxxxxxxxx</code></p>
-
-<p>然后是以片段序数命名的文件夹 1、2、3、...etc,也就是默认P1、P2那种的</p>
-
+<p>然后是以片段序数命名的文件夹 1、2、3、&hellip;etc,也就是默认P1、P2那种的</p>
 <p>再进入第一个片段目录</p>
-
 <p><code>/sdcard/Android/data/tv.danmaku.bili/download/xxxxxxxxx/1</code></p>
-
 <p>你会看到一个文件夹和两个文件</p>
-
 <ul>
 <li>lua.flv.bili2api.X 视频目录(不同的视频X是不同的。。具体是啥我没研究)</li>
 <li>danmaku.xml 弹幕文件</li>
-<li>entry.json 关于视频的一些相关信息
-
-<ul>
+<li>entry.json 关于视频的一些相关信息<ul>
 <li>avid</li>
 <li>title</li>
-<li>type_tag : &#39;lua.flv.bili2api.X&#39;</li>
+<li>type_tag : &lsquo;lua.flv.bili2api.X&rsquo;</li>
 <li>part 片段名称</li>
 <li>etc,还有一些视频时长、封面啥的信息</li>
-</ul></li>
 </ul>
-
+</li>
+</ul>
 <p>再进入视频目录</p>
-
 <p><code>/sdcard/Android/data/tv.danmaku.bili/download/xxxxxxxxx/1/lua.flv.bili2api.X</code></p>
-
 <p>这里就是最终的视频目录了</p>
-
 <p>B站的视频在客户端是以blv为后缀命名的FLV(Flash Video)文件， 具体信息 <code>ffmpeg -i x.blv</code></p>
-
-<p>再然后就是，视频时长比较长，就会分割成一段一段的，0.blv, 1.blv,...x.blv</p>
-
+<p>再然后就是，视频时长比较长，就会分割成一段一段的，0.blv, 1.blv,&hellip;x.blv</p>
 <p>除了视频文件，还有一类x.blv.4m.sum校验文件以及 index.json 索引信息文件</p>
-
 <h3>番剧视频</h3>
-
 <p>s_xxxx里面就是每一集视频的ep编号, 和普通视频的片段目录差不多，其他都一样</p>
-
 <h3>小结</h3>
-
 <p>普通视频</p>
-
 <p><code>/sdcard/Android/data/tv.danmaku.bili/download/av编号/片段序号/lua.flv.bili2api.X/xx.blv</code></p>
-
 <p>番剧视频</p>
-
 <p><code>/sdcard/Android/data/tv.danmaku.bili/download/s_番号/ep编号/lua.flv.bili2api.X/xx.blv</code></p>
-
 <p>视频信息</p>
-
 <p>entry.json</p>
-
 <h2>0x03 怎么把视频弄出来</h2>
-
 <h3>手工（NONONO）</h3>
-
 <p>我傻啊，手工</p>
-
 <h3>写代码</h3>
-
 <p>于是乎，New 了一个 Android 工程 XXXXX</p>
-
 <ul>
 <li>get SdcardPath</li>
-<li>exists SdcardPath + &#39;/Android/data/tv.danmaku.bili&#39; ?</li>
+<li>exists SdcardPath + &lsquo;/Android/data/tv.danmaku.bili&rsquo; ?</li>
 <li>遍历 download 目录 -&gt; 遍历</li>
 <li>读取 entry.json 找到 lua.flv.bili2api.X -&gt; 遍历 x.blv</li>
 </ul>
-
 <p>Java比较难搞定，各种复杂的东西都弄的头晕</p>
-
 <p>遍历的数据存放在HashMap</p>
-
 <p>然后把标题put到adapter,以ListView展示出来</p>
-
 <p>ListView设置监听，点击就导出~~</p>
-
 <p>导出，导出，导出，但是有一个问题，被切片了的 x.blv 咋整、、一波导出？？？</p>
-
 <p>研究了一下，觉得用ffmpeg合并一下比较好</p>
-
 <p>然后Google到了 FFmepg-Android</p>
-
 <p><strong>ffmpeg 怎么把多个flv合并起来???</strong></p>
-
 <p>反正各种Google也只看到一个比较麻烦的方法</p>
-
 <pre><code>ffmpeg -i 0.blv -c copy -bsf:v h264_mp4toannexb -f mpegts 0.ts
 ffmpeg -i 1.blv -c copy -bsf:v h264_mp4toannexb -f mpegts 1.ts
 ffmpeg -i n.blv -c copy -bsf:v h264_mp4toannexb -f mpegts n.ts
 
-ffmpeg -i &quot;concat:0.ts|1.ts|ts&quot; -c copy -bsf:a acc_adtstoasc -movflags +faststart output.mp4
+ffmpeg -i "concat:0.ts|1.ts|ts" -c copy -bsf:a acc_adtstoasc -movflags +faststart output.mp4
 </code></pre>
-
 <p>打算就这样子玩的时候，居然发现 FFmepg-Android 一次只能执行一个任务，这就需要掌握android的子线程串行任务了。。。</p>
-
 <p>然而我实在怼不动了。。。。。</p>
-
 <p>毕竟是业余开发、Java这种高大上的东西玩不动。。</p>
-
 <blockquote>
-<p>学Java救不了中国<br>
+<p>学Java救不了中国<br />
 PHP是世界上最好的语言</p>
 </blockquote>
-
 <h2>0x04 无奈</h2>
-
 <p>不玩了，玩不动了</p>
-
 <p><a href="https://github.com/virink/BilibiliHelper/tree/dev">BilibiliHelper</a></p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2017/12/24/bilibili_android_cache_videos_export.html" target="_blank">Bilibili安卓客户端缓存视频导出小记</a><br />

@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,145 +104,97 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>0x00 死坑死坑的脑洞</h2>
-
 <p>绝逼不能忍，出题人你出来，保证不打死你。。不知道AK的大神是什么样的大脑。</p>
-
 <h2>0x01 LOLI1 &amp; LOLI2</h2>
-
 <p>题目给了个网址 http://www.loli.club/</p>
-
 <p>撸上去啥都没有。。另外、hint的颜色居然和背景色一样、提示找blog</p>
-
 <p>看源码，有这样一段</p>
-
 <pre><code>&lt;!--
 powered by PockyNya
 诚招前端，请联系邮箱：pocky@loli.club
 --&gt;
 </code></pre>
-
 <p>各种误解，最后根据<strong>RicterZ</strong>的github<code>https://github.com/RicterZ</code>找到了<strong>PockyNya</strong>的Github<code>https://github.com/PockyNya</code></p>
-
 <p>在PockyNya的Github里面有两个项目 <strong>minecraft-bot</strong> 和 <strong>pyprint</strong>。</p>
-
 <p>进入<strong>pyprint</strong>就能看到PockyNya的Blog地址了。。我也是醉了</p>
-
 <p>下载源码审计</p>
-
 <pre><code>class AddPostHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
-        self.background_render(&#39;add_post.html&#39;, post=None)
+        self.background_render('add_post.html', post=None)
 
     def post(self):
-        title = self.get_argument(&#39;title&#39;, None)
-        content = self.get_argument(&#39;content&#39;, None)
-        tags = self.get_argument(&#39;tags&#39;, &#39;&#39;).strip().split(&#39;,&#39;)
+        title = self.get_argument('title', None)
+        content = self.get_argument('content', None)
+        tags = self.get_argument('tags', '').strip().split(',')
         if not title or not content:
-            return self.redirect(&#39;/kamisama/posts/add&#39;)
+            return self.redirect('/kamisama/posts/add')
 
         post = self.orm.query(Post.title).filter(Post.title == title).all()
         if post:
-            return self.write(&#39;&lt;script&gt;alert(&quot;Title has already existed&quot;);window.history.go(-1);&lt;/script&gt;&#39;)
+            return self.write('&lt;script&gt;alert("Title has already existed");window.history.go(-1);&lt;/script&gt;')
         self.orm.add(Post(title=title, content=content, created_time=date.today()))
         self.orm.commit()
-        return self.redirect(&#39;/kamisama/posts&#39;)
+        return self.redirect('/kamisama/posts')
 </code></pre>
-
 <p>发表文章居然不检查权限，立马来了一波XSS。。。分分钟拿到了在COOKIE的Flag。unhex就行了</p>
-
-<p>Flag：<strong>CCTF{CODE<em>AUDIT</em>BUSTERS}</strong></p>
-
+<p>Flag：<strong>CCTF{CODE_AUDIT_BUSTERS}</strong></p>
 <p>然而这个Flag是Loli2的、、、、</p>
-
 <p>继续看另一个项目<strong>minecraft-bot</strong></p>
-
 <p>各种lua看不懂、、看介绍是一个Telegram的机器人。</p>
-
 <p>根据项目名称，先看<strong>minecraft.lua</strong></p>
-
 <pre><code>do
 
 local function run(msg, matches)
-  if matches[1] ~= &#39;!minecraft&#39; then
+  if matches[1] ~= '!minecraft' then
     operation = matches[1]
   else
-    return &quot;!minecraft start|stop|restart&quot;
+    return "!minecraft start|stop|restart"
   end
-  if string.find(operation, &#39;&amp;&#39;) or string.find(operation, &#39;|&#39;) or string.find(operation, &#39;`&#39;) or string.find(operation, &#39;%) then
-    return &quot;Invalid operation &quot; .. operation
+  if string.find(operation, '&amp;') or string.find(operation, '|') or string.find(operation, '`') or string.find(operation, '%) then
+    return "Invalid operation " .. operation
   end
-  local t = io.popen(&#39;cd /home/telegram &amp;&amp; ./mc &#39; .. operation)
-  local a = t:read(&quot;*all&quot;)
+  local t = io.popen('cd /home/telegram &amp;&amp; ./mc ' .. operation)
+  local a = t:read("*all")
   return a
 end
 </code></pre>
-
 <p>虽然不是很懂，但勉强还是能看出来是命令注入漏洞。</p>
-
 <p>过滤了&amp;、|、`、%$，然而还是可以用哪个;截断的。</p>
-
 <p>Payload：<code>!minecraft x;cat /home/wwwroot/flag</code></p>
-
 <p>get it !</p>
-
-<p>Flag : <strong>CCTF{TELEGRAM<em>BOT</em>AND_Lf}</strong></p>
-
+<p>Flag : <strong>CCTF{TELEGRAM_BOT_AND_Lf}</strong></p>
 <h2>0x02 Loli3</h2>
-
 <p>这个由于种种原因没做完、、</p>
-
 <p>提示DNS。。。顺着线索扫到了ns.loli.club这个域名。。翻找大大的github发现<strong>fakeDNS</strong>的东西。</p>
-
 <p>dns解析服务器。。Orz</p>
-
 <p>各种不懂、后来看hint、python+mysql的。</p>
-
 <p>瞬间想到了注入。</p>
-
 <p>然而、由于某种不知名的原因、本地nslookup总是出错。</p>
-
 <p>最后在一台vps上面成功注入。。然而这时候没时间了、、、、Orz</p>
-
-<p>Payload：<code>nslookup -q=txt &quot;&#39; union select 1,user(),3,4 from mysql.user#&quot; ns.loli.club</code></p>
-
+<p>Payload：<code>nslookup -q=txt "' union select 1,user(),3,4 from mysql.user#" ns.loli.club</code></p>
 <p>Result:</p>
-
 <pre><code>Server:     ns.loli.club
 Address:    120.27.149.210#53
 
 Non-authoritative answer:
-&#39;\032union\032select\0321,user\(\),3,4\032from\032mysql.user#   text = &quot;root@localhost&quot;
+'\032union\032select\0321,user\(\),3,4\032from\032mysql.user#   text = "root@localhost"
 
 Authoritative answers can be found from:
 </code></pre>
-
 <p>然后就木有了。。。</p>
-
 <h2>0x03 IDS</h2>
-
 <p><code>http://ids.c-chicken.cc/?id=1</code></p>
-
 <p>随手检测、有注入、、sqlmap跑了下没效果。</p>
-
 <p>第一个提示出来了，看返回头，同源限制什么的、感觉存在XSS，但是还不知道什么用</p>
-
 <p>坐等hint、、重点在IDS。。</p>
-
 <p>才发现我还没有扫目录、、出现了个upload.php</p>
-
 <p>第二波hint出现、、还真是xss。检测记录会有管理员看。X管理员吧</p>
-
 <p>注入有各种过滤，上传也是。</p>
-
 <p>目测是上传js文件、script引用。或者是swf，xss。。。</p>
-
 <p>后面就没有了.....</p>
-
 <h2>0x04 没什么好说的。</h2>
-
 <p>反正就是各种脑洞！博客写简单了，其中各种过程、各种丧心病狂的脑洞、、本人已疯！</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/04/24/web_writeup_for_cctf_2016.html" target="_blank">CCTF2016 web小记</a><br />

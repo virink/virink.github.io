@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,62 +104,38 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>前言</h2>
-
 <p>两次比赛，两个题目，两种方式，两个程序。</p>
-
 <p>一切PHP的代码终究是要到<strong>Zend Engine</strong>上走一走的，因此一切PHP的源码加密都是可以被解密的。（不包括OpCode混淆-VMP）</p>
-
 <h2>代码混淆</h2>
-
 <p>比较恶心人的一种处理方式，也不太算是加密。</p>
-
 <p>单独拿出来是为了说明代码混淆和代码加密是两种方式。</p>
-
 <p>本质是是对变量进行乱七八糟的修改，多用动态函数处理。处理应该没什么难度，就是比较复杂，浪费时间精力。</p>
-
 <p>混淆方式是按照套路随机生成相关动态函数，替换明文函数，然后批量修改变量名。</p>
-
 <p>该法常与代码加密联合使用。</p>
-
 <h2>代码加密解密</h2>
-
 <p>用PHP代码进行PHP代码的加密，套了层壳。大多数代码加密都进行了一定的代码混淆，不同的加密工具也有不同的混淆。</p>
-
 <ul>
 <li>壳混淆</li>
 <li>代码混淆</li>
 <li>壳和代码都分别混淆</li>
 </ul>
-
 <p><strong>常见加密工具</strong></p>
-
 <ul>
 <li>phpjiami</li>
 </ul>
-
 <h3>加密</h3>
-
 <p>源码 -&gt; 加密处理（压缩，替换，BASE64，转义）-&gt; 安全处理（验证文件 MD5 值，限制 IP、限域名、限时间、防破解、防命令行调试）-&gt; 加密程序成品，再简单的说：密文源码 + 自解密外壳 == 密文代码</p>
-
-<p><img src="https://img.virzz.com/15296587363314.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15296587363314.jpg" /></p>
 <p><strong>加密方式</strong></p>
-
 <ol>
 <li>独立加密程序统一对明文代码进行加密处理</li>
 </ol>
-
 <h3>解密</h3>
-
 <p>加密也好，混淆也罢，终归是要变成<strong>Zend Engine</strong>能处理的源码，该“加密”方法的的根本是通过<strong>壳</strong>把代码解密并通过<code>eval</code>等函数执行代码。</p>
-
 <p>因此，只要用<strong>HOOK EVAL</strong>大法，将相关可执行代码的函数Hook住就能拿到其中需要执行的数据，也就是我们想要得到的源码。</p>
-
 <p>调用<code>eval</code>等代码执行的函数，最终会调用<strong>PHP内核</strong>的<code>zend_compile_string</code>函数。</p>
-
 <p>通过PHP本身提供的一个HOOK机制，写个插件轻松搞定。</p>
-
-<pre><code class="language-c">// 声明一个临时的 compile_string 函数
+<pre><code class="c">// 声明一个临时的 compile_string 函数
 static zend_op_array *(*orig_compile_string)(zval *source_string, char *filename TSRMLS_DC);
 // 在 PHP_MINIT_FUNCTION 中替换
 orig_compile_string = zend_compile_string;
@@ -166,7 +150,7 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
         len  = Z_STRLEN_P(source_string);
         buf = estrndup(Z_STRVAL_P(source_string), len);
         sprintf(fn, &quot;%s&quot;, filename);
-        fn[strlen(fn)-strlen(strstr(fn, &quot;.php&quot;))] = &#39;\0&#39;;
+        fn[strlen(fn)-strlen(strstr(fn, &quot;.php&quot;))] = '\0';
         strcat(fn,&quot;.eval.php&quot;);
         fp = fopen(fn,&quot;a+&quot;);
         if (fp!=NULL &amp;&amp; len &gt;= strlen(buf)){
@@ -182,58 +166,38 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
 </code></pre>
 
 <h3>案例</h3>
-
 <p><strong>Challenge:</strong> <a href="https://www.virzz.com/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html">PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</a></p>
-
-<p><img src="https://img.virzz.com/15296343877536.jpg" alt=""><br>
-<img src="https://img.virzz.com/15296344455289.jpg" alt=""><br>
-<img src="https://img.virzz.com/15296345384378.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15296343877536.jpg" /><br />
+<img alt="" src="https://img.virzz.com/15296344455289.jpg" /><br />
+<img alt="" src="https://img.virzz.com/15296345384378.jpg" /></p>
 <h2>扩展加密解密</h2>
-
 <p>将文本源码进行加密存储，在使用的时候通过扩展实现解密。</p>
-
 <p><strong>常见加密工具</strong></p>
-
 <ul>
 <li>pm9screw</li>
 <li>pm9screw_plus</li>
 </ul>
-
 <h3>加密</h3>
-
 <p>源码 -&gt; 加密处理（对称/非对称加密、自定义加密）-&gt; 加密成品：密文代码</p>
-
-<p><img src="https://img.virzz.com/15296588027345.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15296588027345.jpg" /></p>
 <p><strong>加密方式</strong></p>
-
 <ol>
 <li>独立加密程序统一对明文代码进行加密处理</li>
 <li>扩展存在加密解密功能，执行前判断源码是否经过加密处理，如果没有就进行加密</li>
 </ol>
-
 <h3>解密</h3>
-
 <p>还是那句话，一切的源码都要到<strong>Zend Engine</strong>上执行，密文也得解密了再执行。那么在最终的执行之前，提取出来就可以了。</p>
-
 <p>因此Hook住<code>zend_compile_file</code>函数就可以了。</p>
-
 <p>但是其中有一个坑点，PHP的扩展是“栈”加载的，也就是先加载的先Hook，后执行。我们需要获取到解密之后的内容，所以需要让“加密”插件先执行，也就是我们的解密插件要先加载。</p>
-
-<p><img src="https://img.virzz.com/15296588284787.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15296588284787.jpg" /></p>
 <p>要实现这个操作，只需要在INI配置文件中先写我们的插件。(不保证)</p>
-
-<pre><code class="language-ini">extension=&quot;decode.so&quot;
+<pre><code class="ini">extension=&quot;decode.so&quot;
 extension=&quot;encrypt.so&quot;
 </code></pre>
 
 <p>这个方式需要能够加载执行<strong>encrypt.so</strong>，我觉得这个还是可以实现的。通过一定手段获取到<strong>encrypt.so</strong>和密文源码以及服务器，中间件相关信息（版本等）。</p>
-
 <p>利用Docker运行一个基本相同的环境应该是可以做到的。</p>
-
-<pre><code class="language-c">// 声明一个临时的 compile_file 函数
+<pre><code class="c">// 声明一个临时的 compile_file 函数
 static zend_op_array *(*orig_compile_file)(zend_file_handle *file_handle, int type TSRMLS_DC);
 // 在 PHP_MINIT_FUNCTION 中替换
 orig_compile_file = zend_compile_file;
@@ -259,46 +223,29 @@ static zend_op_array *phpjiami_decode_compile_file(zend_file_handle *file_handle
 </code></pre>
 
 <h3>案例</h3>
-
 <p><strong>Challenge:</strong> <a href="https://www.cnblogs.com/iamstudy/articles/sctf2018_simple_php_web_writeup.html">SCTF2018 BabySyc - Simple PHP Web Writeup - L3m0n</a></p>
-
 <ul>
 <li>phpinfo.php</li>
 </ul>
-
-<p><img src="https://img.virzz.com/15296325194141.jpg" alt="密文代码"></p>
-
-<p><img src="https://img.virzz.com/15296328924555.jpg" alt=""></p>
-
+<p><img alt="密文代码" src="https://img.virzz.com/15296325194141.jpg" /></p>
+<p><img alt="" src="https://img.virzz.com/15296328924555.jpg" /></p>
 <ul>
 <li>login.php</li>
 </ul>
-
-<p><img src="https://img.virzz.com/15296326760974.jpg" alt=""><br>
-<img src="https://img.virzz.com/15296327843894.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15296326760974.jpg" /><br />
+<img alt="" src="https://img.virzz.com/15296327843894.jpg" /></p>
 <h2>OpCode混淆</h2>
-
 <p>一种是比如<strong>Swoole Compile</strong>的方式，部分脱离了zend虚拟机，对opcode做了混淆，这就比较像是vmp的一种方式。</p>
-
 <p>详情请看<strong>[参考-5]</strong></p>
-
 <h3>加密方式</h3>
-
 <ol>
 <li>独立加密程序统一对明文代码进行加密处理（猜测）</li>
 </ol>
-
 <h3>解密</h3>
-
 <p>我不会啊！emmmmmmm</p>
-
 <h2>Open Source</h2>
-
-<p><strong><a href="https://github.com/virink/phpext_phpjiami_decode">phpext<em>phpjiami</em>decode</a></strong></p>
-
+<p><strong><a href="https://github.com/virink/phpext_phpjiami_decode">phpext_phpjiami_decode</a></strong></p>
 <h2>参考</h2>
-
 <blockquote>
 <ol>
 <li><a href="https://www.leavesongs.com/PENETRATION/unobfuscated-phpjiami.html">phpjiami 数种解密方法 - PHITHON</a></li>
@@ -308,11 +255,8 @@ static zend_op_array *phpjiami_decode_compile_file(zend_file_handle *file_handle
 <li><a href="https://myslide.cn/slides/9100?vertical=1">PHP代码加密技术 郭新华 PHPCON2018 - swoole郭新华</a></li>
 </ol>
 </blockquote>
-
 <h2>转载声明</h2>
-
 <p>本文首发于先知社区：<a href="https://xz.aliyun.com/t/2403">看我如何玩转PHP代码加密与解密</a></p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/06/20/php_code_s_encrypt_and_decrypt.html" target="_blank">看我如何玩转PHP代码加密与解密</a><br />

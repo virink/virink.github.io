@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,24 +104,17 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Install openssh and ssh-copy-id</h2>
-
-<pre><code>brew install 
+<pre><code>brew install
 </code></pre>
-
 <h2>Create SSH Key</h2>
-
 <pre><code>cd ~/.ssh/
 ssh-keygen -t rsa
 </code></pre>
-
 <h2>Copy to your server</h2>
-
 <pre><code>ssh-copy-id [-p port] username@hostname
-then enter your server&#39; password
+then enter your server' password
 </code></pre>
-
 <h2>Configure</h2>
-
 <pre><code>vim ~/.ssh/config
 
 Host alias-name
@@ -122,22 +123,17 @@ Port post
 User username
 IdentitiesOnly yes
 </code></pre>
-
 <h2>Set alias command</h2>
-
 <pre><code>vim .zshrc
 
-alias sshl=&#39;cat ~/.ssh/config | grep &quot;Host &quot;&#39;
+alias sshl='cat ~/.ssh/config | grep "Host "'
 </code></pre>
-
 <h2>Finish</h2>
-
 <pre><code>You can list the ssh servers by `sshl`
 then connect your server by `ssh alias-name`
 
 Enjoy yourself!
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/11/28/make_ssh_client_for_mac_osx.html" target="_blank">Make ssh client For Mac OS X</a><br />

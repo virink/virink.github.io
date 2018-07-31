@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,16 +104,12 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Install Golang and revel</h2>
-
 <h3>下載安裝Golang</h3>
-
 <pre><code>cd /tmp
 //到官網下載
 tar -C /usr/local -xzf go*.tar.gz
 </code></pre>
-
 <h3>設置環境變量</h3>
-
 <pre><code>cat &gt;&gt; ~/.profile &lt;&lt;EOF
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/gocode
@@ -114,23 +118,17 @@ EOF
 
 source ~/.profile
 </code></pre>
-
 <h3>Install revel &amp; leanote</h3>
-
 <pre><code>go get github.com/revel/cmd/revel
 go get github.com/leanote/leanote/app
 </code></pre>
-
 <h2>安裝Mongdo</h2>
-
 <pre><code>sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
-echo &#39;deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen&#39; | sudo tee /etc/apt/sources.list.d/mongodb.list
+echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
 sudo apt-get update
 sudo apt-get install -y mongodb-org
 </code></pre>
-
 <h3>設置環境變量(可有可無)</h3>
-
 <pre><code>cat &gt;&gt; ~/.profile &lt;&lt;EOF
 export MONGOPATH=/usr/bin
 export PATH=$PATH:$MONGOPATH
@@ -138,81 +136,52 @@ EOF
 
 source ~/.profile
 </code></pre>
-
 <h3>新建一个目录data存放mongodb数据:</h3>
-
 <pre><code>mkdir /path/data
 </code></pre>
-
 <h3>用以下命令启动mongod:</h3>
-
 <pre><code>mongod --dbpath /path/data
 </code></pre>
-
 <p>这时mongod已经启动，重新打开一个终端, 键入mongo进入交互程序：</p>
-
 <pre><code>$&gt; mongo
 &gt; show dbs
 ...数据库列表
 </code></pre>
-
 <p>mongodb安装到此为止</p>
-
 <h2>安裝Leanote</h2>
-
 <p><strong>请务必修改app.secret一项, 在若干个随机位置处，将字符修改成一个其他的值, 否则会有安全隐患!</strong></p>
-
 <h3>修改配置</h3>
-
 <pre><code>$GOPATH/src/github.com/leanote/leanote/conf/app.conf
 </code></pre>
-
 <h3>導入初始數據</h3>
-
 <pre><code>mongorestore -h localhost -d leanote --directoryperdb ~/gocode/src/github.com/leanote/leanote/mongodb_backup/leanote_install_data
 </code></pre>
-
 <h3>运行leanote</h3>
-
 <p><strong>注意: 在此之前请确保mongodb已在运行!</strong></p>
-
 <p>新开一个窗口, 运行:</p>
-
 <pre><code>$&gt; revel run github.com/leanote/leanote
 </code></pre>
-
 <p>恭喜你, 打开浏览器输入: http://localhost:9000 体验leanote吧!</p>
-
 <h2>啟動管理</h2>
-
 <pre><code>apt-get install supervisor
 </code></pre>
-
 <h3>創建配置文件</h3>
-
 <p>/etc/supervisor/conf.d/<strong>{filename}</strong>.conf</p>
-
 <p><strong>mongodb.conf</strong></p>
-
 <pre><code>[program:mongodb]
 command=/usr/bin/mongod --dbpath /path/data
 autorestart=true
 user=root
 </code></pre>
-
 <p><strong>leanote.conf</strong></p>
-
 <pre><code>[program:leanote]
 command=revel run github.com/leanote/leanote
 user=root
 autorestart=true
 </code></pre>
-
 <h3>運行</h3>
-
 <pre><code>supervisord -c /etc/supervisor/supervisor.conf
 </code></pre>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/10/16/build_leanote_server.html" target="_blank">Leanote環境搭建小记</a><br />

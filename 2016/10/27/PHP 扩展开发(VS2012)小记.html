@@ -12,6 +12,14 @@
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -96,39 +104,33 @@
             <!-- <div class="clearfix"></div> -->
             <section class="article-content markdown-body">
                 <h2>生成扩展模板</h2>
-
 <p>人性化的PHP项目组给出了一个模板，也就是ext目录下的<strong>skeleton</strong></p>
-
 <p>其实我们可以直接COPY过来用的，网上很多方法都是去执行<strong>sh</strong>脚本<code>ext_skel</code>或者<strong>php</strong>脚本<code>ext_skel_win32.php</code></p>
-
 <p><code>ext_skel</code>的作用极速生成一个skeleton插件而已，而源码中一般的已经生成好了的。</p>
-
 <p>所以我们只需要改写几句<code>ext_skel_win32.php</code>的脚本就能直接生成而不用安装<strong>CygWin</strong></p>
-
-<p><strong>ext<em>skel</em>win32_virink.php</strong></p>
-
+<p><strong>ext_skel_win32_virink.php</strong></p>
 <pre><code>&lt;?php
-$extname = &quot;YourExtName&quot;;
-$skel = &quot;skeleton&quot;;
-$fp = fopen(&quot;$skel/skeleton.dsp&quot;, &quot;rb&quot;);
+$extname = "YourExtName";
+$skel = "skeleton";
+$fp = fopen("$skel/skeleton.dsp", "rb");
 if ($fp) {
-    $dsp_file = fread($fp, filesize(&quot;$skel/skeleton.dsp&quot;));
+    $dsp_file = fread($fp, filesize("$skel/skeleton.dsp"));
     fclose($fp);
-    $dsp_file = str_replace(&quot;extname&quot;, $extname, $dsp_file);
-    $dsp_file = str_replace(&quot;EXTNAME&quot;, strtoupper($extname), $dsp_file);
-    $fp = fopen(&quot;$extname/$extname.dsp&quot;, &quot;wb&quot;);
+    $dsp_file = str_replace("extname", $extname, $dsp_file);
+    $dsp_file = str_replace("EXTNAME", strtoupper($extname), $dsp_file);
+    $fp = fopen("$extname/$extname.dsp", "wb");
     if ($fp) {
         fwrite($fp, $dsp_file);
         fclose($fp);
     }
 }
-$fp = fopen(&quot;$extname/$extname.php&quot;, &quot;rb&quot;);
+$fp = fopen("$extname/$extname.php", "rb");
 if ($fp) {
-    $php_file = fread($fp, filesize(&quot;$extname/$extname.php&quot;));
+    $php_file = fread($fp, filesize("$extname/$extname.php"));
     fclose($fp);
 
-    $php_file = str_replace(&quot;dl(&#39;&quot;, &quot;dl(&#39;php_&quot;, $php_file);
-    $fp = fopen(&quot;$extname/$extname.php&quot;, &quot;wb&quot;);
+    $php_file = str_replace("dl('", "dl('php_", $php_file);
+    $fp = fopen("$extname/$extname.php", "wb");
     if ($fp) {
         fwrite($fp, $php_file);
         fclose($fp);
@@ -136,43 +138,31 @@ if ($fp) {
 }
 ?&gt;
 </code></pre>
-
 <h2>模板说明</h2>
-
 <p>最核心的内容就是<code>php_extname.h</code>和<code>extname.c</code>这两个文件，其他的都是辅助编译的。</p>
-
 <h3><strong>php_extname.h</strong></h3>
-
 <pre><code>#ifndef PHP_EXTNAME_H
 #define PHP_EXTNAME_H
 </code></pre>
-
 <p>上面两句没什么用</p>
-
 <pre><code>extern zend_module_entry extname_module_entry;
 #define phpext_extname_ptr &amp;extname_module_entry
 </code></pre>
-
 <p>这两句就是声明扩展模块的入口，给PHP调用的</p>
-
-<pre><code>#define PHP_EXTNAME_VERSION &quot;0.1.0&quot;
+<pre><code>#define PHP_EXTNAME_VERSION "0.1.0"
 </code></pre>
-
 <p>定义版本号</p>
-
 <pre><code>#ifdef PHP_WIN32
 #   define PHP_EXTNAME_API __declspec(dllexport)
 #elif defined(__GNUC__) &amp;&amp; __GNUC__ &gt;= 4
-#   define PHP_EXTNAME_API __attribute__ ((visibility(&quot;default&quot;)))
+#   define PHP_EXTNAME_API __attribute__ ((visibility("default")))
 #else
 #   define PHP_EXTNAME_API
 #endif
 </code></pre>
-
 <p>判断操作系统以及编译器类型</p>
-
 <pre><code>#ifdef ZTS
-#include &quot;TSRM.h&quot;
+#include "TSRM.h"
 #endif
 
 #ifdef ZTS
@@ -183,50 +173,38 @@ if ($fp) {
 
 #endif  /* PHP_EXTNAME_H */
 </code></pre>
-
 <p>ZTS是是否启用线程安全模式，不定义就是<strong>Non Thread Safe</strong></p>
-
 <h3><strong>extname.c</strong></h3>
-
 <pre><code>#ifdef HAVE_CONFIG_H
-#include &quot;config.h&quot;
+#include "config.h"
 #endif
 </code></pre>
-
 <p>没什么用，无视</p>
-
-<pre><code>#include &quot;php.h&quot;
-#include &quot;php_ini.h&quot;
-#include &quot;ext/standard/info.h&quot;
-#include &quot;php_extname.h&quot;
+<pre><code>#include "php.h"
+#include "php_ini.h"
+#include "ext/standard/info.h"
+#include "php_extname.h"
 </code></pre>
-
 <p>头文件，你懂的~~</p>
-
 <pre><code>static int le_extname;
 </code></pre>
-
 <p>定义全局资源（全局变量），在线程安全模式(<code>thread safety</code>)下就不需要了</p>
-
 <pre><code>PHP_FUNCTION(confirm_extname_compiled)
 {
     char *arg = NULL;
     int arg_len, len;
     char *strg;
 
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, &quot;s&quot;, &amp;arg, &amp;arg_len) == FAILURE) {
+    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s", &amp;arg, &amp;arg_len) == FAILURE) {
         return;
     }
 
-    len = spprintf(&amp;strg, 0, &quot;Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.&quot;, &quot;extname&quot;, arg);
+    len = spprintf(&amp;strg, 0, "Congratulations! You have successfully modified ext/%.78s/config.m4. Module %.78s is now compiled into PHP.", "extname", arg);
     RETURN_STRINGL(strg, len, 0);
 }
 </code></pre>
-
 <p>定义一个php函数，这个函数是在php脚本里调用的。</p>
-
 <p><strong>PHP_FUNCTION</strong>是定义php函数的宏</p>
-
 <pre><code>// php.h
 #define PHP_FUNCTION            ZEND_FUNCTION
 // zend_API.h
@@ -234,16 +212,11 @@ if ($fp) {
 #define ZEND_NAMED_FUNCTION(name)       void name(INTERNAL_FUNCTION_PARAMETERS)
 #define ZEND_FN(name) zif_##name
 </code></pre>
-
 <p>函数名：<code>confirm_extname_compiled</code>,调用：<code>&lt;?php confirm_extname_compiled(); ?&gt;</code></p>
-
-<p><strong>zend<em>parse</em>parameters</strong>，获取函数参数</p>
-
+<p><strong>zend_parse_parameters</strong>，获取函数参数</p>
 <pre><code>ZEND_API int zend_parse_parameters(int num_args TSRMLS_DC, const char *type_spec, ...);
 </code></pre>
-
 <p><strong>RETURN_STRINGL</strong>，返回处理的结果</p>
-
 <pre><code>// zend_API.h
 #define RETURN_STRINGL(s, l, duplicate) { RETVAL_STRINGL(s, l, duplicate); return; }
 #define RETVAL_STRINGL(s, l, duplicate)     ZVAL_STRINGL(return_value, s, l, duplicate)
@@ -255,9 +228,7 @@ if ($fp) {
     Z_TYPE_P(__z) = IS_STRING;              \
 } while (0)
 </code></pre>
-
 <p>各种宏很多的~~想要知道的更多，自己去读源码咯</p>
-
 <pre><code>PHP_MINIT_FUNCTION(extname)
 {
     /* If you have INI entries, uncomment these lines 
@@ -266,9 +237,7 @@ if ($fp) {
     return SUCCESS;
 }
 </code></pre>
-
 <p>Zend Engine加载了该模块时执行的函数，如果模块有ini配置，则需要使用<code>REGISTER_INI_ENTRIES();</code>注册</p>
-
 <pre><code>PHP_MSHUTDOWN_FUNCTION(extname)
 {
     /* uncomment this line if you have INI entries
@@ -277,29 +246,23 @@ if ($fp) {
     return SUCCESS;
 }
 </code></pre>
-
 <p>ZE结束的时候执行此函数，最后关闭自己的核心子系统</p>
-
 <pre><code>PHP_RINIT_FUNCTION(extname)
 {
     return SUCCESS;
 }
 </code></pre>
-
 <p>PHP收到请求的时候都执行该函数</p>
-
 <pre><code>PHP_RSHUTDOWN_FUNCTION(extname)
 {
     return SUCCESS;
 }
 </code></pre>
-
 <p>PHP脚本执行完毕后执行该函数</p>
-
 <pre><code>PHP_MINFO_FUNCTION(extname)
 {
     php_info_print_table_start();
-    php_info_print_table_header(2, &quot;extname support&quot;, &quot;enabled&quot;);
+    php_info_print_table_header(2, "extname support", "enabled");
     php_info_print_table_end();
 
     /* Remove comments if you have entries in php.ini
@@ -307,20 +270,16 @@ if ($fp) {
     */
 }
 </code></pre>
-
 <p>在<code>phpinfo()</code>中显示相关信息</p>
-
 <pre><code>const zend_function_entry extname_functions[] = {
     PHP_FE(confirm_extname_compiled,    NULL)
     PHP_FE_END
 };
 </code></pre>
-
 <p>声明自定义的php函数，供Zend Engine获取以便调用。</p>
-
 <pre><code>zend_module_entry extname_module_entry = {
     STANDARD_MODULE_HEADER,
-    &quot;extname&quot;,
+    "extname",
     extname_functions,
     PHP_MINIT(extname),
     PHP_MSHUTDOWN(extname),
@@ -331,81 +290,51 @@ if ($fp) {
     STANDARD_MODULE_PROPERTIES
 };
 </code></pre>
-
 <p>实现扩展模块的入口</p>
-
 <pre><code>#ifdef COMPILE_DL_EXTNAME
 ZEND_GET_MODULE(extname)
 #endif
 </code></pre>
-
 <p>编译为zend扩展</p>
-
 <h2>加载工程</h2>
-
-<h3>　0x01</h3>
-
-<p>打开VS2012,选择&quot;文件&quot;--&quot;新建&quot;--&quot;从现有代码创建目录&quot;</p>
-
+<h3>0x01</h3>
+<p>打开VS2012,选择&rdquo;文件&rdquo;&ndash;&ldquo;新建&rdquo;&ndash;&ldquo;从现有代码创建目录&rdquo;</p>
 <p>选择<strong>C++</strong>类型的项目，下一步</p>
-
 <p>然后，选择你的php扩展文件夹路径，并且给项目命名，下一步</p>
-
 <p>选择动态链接库项目。</p>
-
 <h3>0x02</h3>
-
 <p>直接用vs2012打开extname.dsp文件，升级工程</p>
-
 <h2>配置解决方案</h2>
-
 <p>右键项目属性，配置列表选择所有配置，然后选择C/C++，常规，附加包含目录，编辑</p>
-
 <p>加入以下几个php源码目录（实际目录以开发者自己的目录为准）：</p>
-
 <pre><code>E:\php-x.x.x-src
 E:\php-x.x.x-src\main
 E:\php-x.x.x-src\TSRM
 E:\php-x.x.x-src\Zend
 </code></pre>
-
 <p>然后选择预处理器，预处理器定义，编辑，加入以下变量：</p>
-
 <ul>
 <li>ZEND_DEBUG=0</li>
 <li>PHP_EXTENSION</li>
 <li>PHP_WIN32</li>
 <li>ZEND_WIN32</li>
 <li>HAVE_EXTNAME=1</li>
-<li>COMPILE<em>DL</em>EXTNAME</li>
+<li>COMPILE_DL_EXTNAME</li>
 <li>ZTS（这一个变量加上是开启线程安全，不加是关闭线程安全）</li>
 </ul>
-
 <p><strong>（这里EXTNAME，要改成你的扩展名称，不改成你的扩展名，php会不识别）</strong></p>
-
 <h3><strong>config.w32.h</strong></h3>
-
-<p>在<code>E:\php-x.x.x-src\win32\build\</code>文件夹里找到&quot;config.w32.h.in&quot;，</p>
-
-<p>将这个文件复制到<code>E:\php-x.x.x-src\main\</code>文件夹里，去掉后面的&quot;.in&quot;</p>
-
-<p>然后修改该文件里面的PHP<em>COMPILER</em>ID</p>
-
-<pre><code>#define PHP_COMPILER_ID &quot;VC11&quot; //编译器版本号
+<p>在<code>E:\php-x.x.x-src\win32\build\</code>文件夹里找到&rdquo;config.w32.h.in&rdquo;，</p>
+<p>将这个文件复制到<code>E:\php-x.x.x-src\main\</code>文件夹里，去掉后面的&rdquo;.in&rdquo;</p>
+<p>然后修改该文件里面的PHP_COMPILER_ID</p>
+<pre><code>#define PHP_COMPILER_ID "VC11" //编译器版本号
 </code></pre>
-
 <p>项目属性，链接器，输入，附加依赖项，编辑，将<strong>php5.lib</strong>的路径放进去</p>
-
 <h3><strong>php5.lib</strong></h3>
-
 <p>这个文件在编译好了的php程序目录dev里面有</p>
-
 <h2>结束语</h2>
-
 <p>导致了基本上好了，编译吧~~最简单的Demo扩展</p>
-
 <p>然后，你可以根据PHP的各种API去编写你心仪的扩展啦</p>
-
             </section>
             <div class="article-copyright">
               <span>本文标题&nbsp;:&nbsp;</span><a href="/2016/10/27/development_php_ext_with_vs2012.html" target="_blank">PHP 扩展开发(VS2012)小记</a><br />
