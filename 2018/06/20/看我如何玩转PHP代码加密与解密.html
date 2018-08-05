@@ -125,7 +125,7 @@
 </ul>
 <h3>加密</h3>
 <p>源码 -&gt; 加密处理（压缩，替换，BASE64，转义）-&gt; 安全处理（验证文件 MD5 值，限制 IP、限域名、限时间、防破解、防命令行调试）-&gt; 加密程序成品，再简单的说：密文源码 + 自解密外壳 == 密文代码</p>
-<p><img alt="" src="https://img.virzz.com/15296587363314.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296587363314.jpg" /></p>
 <p><strong>加密方式</strong></p>
 <ol>
 <li>独立加密程序统一对明文代码进行加密处理</li>
@@ -167,9 +167,9 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
 
 <h3>案例</h3>
 <p><strong>Challenge:</strong> <a href="https://www.virzz.com/2017/09/20/pwnhub_writeups_sha_fu_fu_workdays.html">PWNHUB 公开赛 / 傻 fufu 的工作日 Writeup</a></p>
-<p><img alt="" src="https://img.virzz.com/15296343877536.jpg" /><br />
-<img alt="" src="https://img.virzz.com/15296344455289.jpg" /><br />
-<img alt="" src="https://img.virzz.com/15296345384378.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296343877536.jpg" /><br />
+<img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296344455289.jpg" /><br />
+<img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296345384378.jpg" /></p>
 <h2>扩展加密解密</h2>
 <p>将文本源码进行加密存储，在使用的时候通过扩展实现解密。</p>
 <p><strong>常见加密工具</strong></p>
@@ -179,7 +179,7 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
 </ul>
 <h3>加密</h3>
 <p>源码 -&gt; 加密处理（对称/非对称加密、自定义加密）-&gt; 加密成品：密文代码</p>
-<p><img alt="" src="https://img.virzz.com/15296588027345.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296588027345.jpg" /></p>
 <p><strong>加密方式</strong></p>
 <ol>
 <li>独立加密程序统一对明文代码进行加密处理</li>
@@ -189,7 +189,7 @@ static zend_op_array *phpjiami_decode_compile_string(zval *source_string, char *
 <p>还是那句话，一切的源码都要到<strong>Zend Engine</strong>上执行，密文也得解密了再执行。那么在最终的执行之前，提取出来就可以了。</p>
 <p>因此Hook住<code>zend_compile_file</code>函数就可以了。</p>
 <p>但是其中有一个坑点，PHP的扩展是“栈”加载的，也就是先加载的先Hook，后执行。我们需要获取到解密之后的内容，所以需要让“加密”插件先执行，也就是我们的解密插件要先加载。</p>
-<p><img alt="" src="https://img.virzz.com/15296588284787.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296588284787.jpg" /></p>
 <p>要实现这个操作，只需要在INI配置文件中先写我们的插件。(不保证)</p>
 <pre><code class="ini">extension=&quot;decode.so&quot;
 extension=&quot;encrypt.so&quot;
@@ -227,13 +227,13 @@ static zend_op_array *phpjiami_decode_compile_file(zend_file_handle *file_handle
 <ul>
 <li>phpinfo.php</li>
 </ul>
-<p><img alt="密文代码" src="https://img.virzz.com/15296325194141.jpg" /></p>
-<p><img alt="" src="https://img.virzz.com/15296328924555.jpg" /></p>
+<p><img alt="密文代码" src="https://oiyrlilrd.bkt.clouddn.com/15296325194141.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296328924555.jpg" /></p>
 <ul>
 <li>login.php</li>
 </ul>
-<p><img alt="" src="https://img.virzz.com/15296326760974.jpg" /><br />
-<img alt="" src="https://img.virzz.com/15296327843894.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296326760974.jpg" /><br />
+<img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15296327843894.jpg" /></p>
 <h2>OpCode混淆</h2>
 <p>一种是比如<strong>Swoole Compile</strong>的方式，部分脱离了zend虚拟机，对opcode做了混淆，这就比较像是vmp的一种方式。</p>
 <p>详情请看<strong>[参考-5]</strong></p>

