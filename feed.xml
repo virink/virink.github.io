@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-08-28T17:18:10+08:00</updated>
+  <updated>2018-10-08T17:12:26+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,23 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>推荐一个PHP框架</title>
+    <link href="https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html"/>
+    <id>https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html</id>
+    <updated>2018-08-28 17:24:05</updated>
+    <content type="html"><![CDATA[## Slim 3
+## 重点是什么？
+## Biubiubiu~
+## Links]]></content>
+    <summary type="html">
+## Slim 3
+## 重点是什么？
+## Biubiubiu~
+## Links
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+  </entry>
   <entry>
     <title>BookHub Writeup - Real World CTF 2018</title>
     <link href="https://www.virzz.com/2018/07/30/bookhub_for_rwctf2018_writeups.html"/>
@@ -373,23 +390,6 @@
     </summary>
     <category term="php" scheme="https://www.virzz.com/tags/php/"/>
     <category term="audit" scheme="https://www.virzz.com/tags/audit/"/>
-  </entry>
-  <entry>
-    <title>推荐一个PHP框架</title>
-    <link href="https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html"/>
-    <id>https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html</id>
-    <updated>2017-12-27 03:19:05</updated>
-    <content type="html"><![CDATA[## Slim 3
-## 重点是什么？
-## Biubiubiu~
-## Links]]></content>
-    <summary type="html">
-## Slim 3
-## 重点是什么？
-## Biubiubiu~
-## Links
-    </summary>
-    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
   </entry>
   <entry>
     <title>Bilibili安卓客户端缓存视频导出小记</title>
