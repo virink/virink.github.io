@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-10-08T17:21:10+08:00</updated>
+  <updated>2018-10-17T15:10:37+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,29 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>Python中从服务端模板注入到沙盒逃逸的源码探索 (一)</title>
+    <link href="https://www.virzz.com/2018/10/15/python_from_ssti_to_sandbox_1.html"/>
+    <id>https://www.virzz.com/2018/10/15/python_from_ssti_to_sandbox_1.html</id>
+    <updated>2018-10-17 15:10:16</updated>
+    <content type="html"><![CDATA[## 原理
+## Python Web 模板引擎
+### SSTI in Tornado
+### SSTI in Flask
+## 结束语
+## 转载声明]]></content>
+    <summary type="html">
+## 原理
+## Python Web 模板引擎
+### SSTI in Tornado
+### SSTI in Flask
+## 结束语
+## 转载声明
+    </summary>
+    <category term="python" scheme="https://www.virzz.com/tags/python/"/>
+    <category term="ssti" scheme="https://www.virzz.com/tags/ssti/"/>
+    <category term="sandbox" scheme="https://www.virzz.com/tags/sandbox/"/>
+  </entry>
   <entry>
     <title>推荐一个PHP框架</title>
     <link href="https://www.virzz.com/2017/08/15/recommend_a_php_micro_framework_slim_3.html"/>
