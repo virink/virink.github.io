@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-11-06T03:47:02+08:00</updated>
+  <updated>2018-11-06T03:49:02+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -18,8 +18,8 @@
 
   <entry>
     <title>浅谈国产神器AntSword</title>
-    <link href="https://www.virzz.com/2018/11/06/浅谈国产神器AntSword.html"/>
-    <id>https://www.virzz.com/2018/11/06/浅谈国产神器AntSword.html</id>
+    <link href="https://www.virzz.com/2018/11/06/how_to_use_antsword.html"/>
+    <id>https://www.virzz.com/2018/11/06/how_to_use_antsword.html</id>
     <updated>2018-11-06 03:45:52</updated>
     <content type="html"><![CDATA[## 关于 Electron
 ## 加载器的由来
