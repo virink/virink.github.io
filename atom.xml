@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2019-01-30T20:19:13+08:00</updated>
+  <updated>2019-01-30T20:20:09+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -18,8 +18,8 @@
 
   <entry>
     <title>PWNHUB / Pink friend</title>
-    <link href="https://www.virzz.com/2019/01/29/PWNHUB / Pink friend.html"/>
-    <id>https://www.virzz.com/2019/01/29/PWNHUB / Pink friend.html</id>
+    <link href="https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html"/>
+    <id>https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html</id>
     <updated>2019-01-30 20:18:38</updated>
     <content type="html"><![CDATA[## Challenge
 ## Analysis
