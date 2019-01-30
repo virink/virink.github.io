@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2018-11-06T03:49:02+08:00</updated>
+  <updated>2019-01-30T20:17:39+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,43 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>PWNHUB / Pink friend</title>
+    <link href="https://www.virzz.com/2019/01/29/PWNHUB / Pink friend.html"/>
+    <id>https://www.virzz.com/2019/01/29/PWNHUB / Pink friend.html</id>
+    <updated>2019-01-29 04:14:08</updated>
+    <content type="html"><![CDATA[## Challenge
+## Analysis
+### Step 1 What&#x27;s the point?
+### Step 2 Read something
+### Step 3 Request 172.20.0.3:8080
+### Step 4 Analyze Request and Response message
+### Step 5 Analyze Frame
+### Step 6 Learn about HTTP2
+### Step 7 Request by Gopher
+### Step 8 Get Flag
+## Exp.py]]></content>
+    <summary type="html">
+## Challenge
+## Analysis
+### Step 1 What&#x27;s the point?
+### Step 2 Read something
+### Step 3 Request 172.20.0.3:8080
+### Step 4 Analyze Request and Response message
+### Step 5 Analyze Frame
+### Step 6 Learn about HTTP2
+### Step 7 Request by Gopher
+### Step 8 Get Flag
+## Exp.py
+    </summary>
+  </entry>
+  <entry>
+    <title></title>
+    <link href="https://www.virzz.com/2018/11/18/.html"/>
+    <id>https://www.virzz.com/2018/11/18/.html</id>
+    <updated>2018-11-18 23:52:31</updated>
+    <content type="html"><![CDATA[]]></content>
+  </entry>
   <entry>
     <title>浅谈国产神器AntSword</title>
     <link href="https://www.virzz.com/2018/11/06/how_to_use_antsword.html"/>

@@ -5,13 +5,21 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>Achives 2015 - Virink's Blog</title>
+  <title> - Virink's Blog</title>
   <meta name="author" content="Virink">
-  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT,achives">
+  <meta name="keywords" content="Virink,技术博客,CTF,Writeup,代码审计,AUDIT">
   <meta name="description" content="Virink的小站,记录杂文与分享一些技术文章">
   <!-- css files -->
   <link href="/static/css/default.min.css" rel="stylesheet">
   
+<link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/monokai-sublime.min.css" rel="stylesheet">
+<style>
+    /*.hljs-pre{color:#a6e22e}*/
+    .markdown-body code {
+        background-color: #23241f;
+    }
+</style>
+
   <!-- favicon icon files -->
   <link rel="icon" type="image/x-icon" href="/static/img/favicon.ico">
   <link rel="icon" href="/static/img/favicon.ico">
@@ -73,51 +81,35 @@
     <div class="content">
     
     <div class="content-wrap">
-        <div class="achives-year">Achives 2015</div>
-        <div class="achives-month">
-            <div class="achives-month-title">12</div>
-            <article class="article animated fadeIn">
-                <div class="article-title">
-                    <i class="fa fa-book"></i>&nbsp;<a href="/2015/12/12/php_trace.html">PHPTrace PHP执行流程跟踪工具</a>
-                </div>
-                <div class="article-tag">
-                    
-                    <div class="article-tag-item">
-                        <a href="/tags/web/"><i class="fa fa-tag"></i>web</a>
-                    </div>
-                    
-                    <div class="article-tag-item">
-                        <a href="/tags/tools/"><i class="fa fa-tag"></i>tools</a>
-                    </div>
-                    
-                    <div class="article-tag-item">
-                        <a href="/tags/php/"><i class="fa fa-tag"></i>php</a>
-                    </div>
-                    
-                </div>
-                <div class="article-meta">
-                    <div class="article-date">
-                        <i class="fa fa-calendar"></i>&nbsp;<time datetime="2015-12-12 09:09:00">2015-12-12 09:09:00</time>
-                    </div>
-                    <div class="article-more">
-                        <i class="fa fa-link"></i>&nbsp;&nbsp;<a href="/2015/12/12/php_trace.html#more">More &gt;&gt;</a>
-                    </div>
-                </div>
-            </article>
+        <article class="article animated fadeIn">
+            <div class="article-title">
+                <i class="fa fa-book"></i>&nbsp;<a href="/2018/11/18/.html"></a>
             </div>
-        
-        <div class="divider__70"></div>
-        <div class="pagination">
-            
-            
+            <div class="article-tag">
                 
-                    <li><a href="/archives/index.html">2019</a></li>
+            </div>
+            <div class="article-meta">
+                <div class="article-date">
+                    <i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-11-18 23:09:11">2018-11-18 23:09:11</time>
+                </div>
+            </div>
+            <!-- <div class="clearfix"></div> -->
+            <section class="article-content markdown-body">
                 
-            
-            
-            
-        </div>  
-        </div>
+            </section>
+            <div class="article-copyright">
+              <span>本文标题&nbsp;:&nbsp;</span><a href="/2018/11/18/.html" target="_blank"></a><br />
+              <span>文章作者&nbsp;:&nbsp;</span><a href="https://www.virzz.com" target="_blank">Virink</a><br />
+              <span>发布时间&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-11-18 23:09:11">2018-11-18 23:09:11</time><br />
+              <span>最后更新&nbsp;:&nbsp;</span><i class="fa fa-calendar"></i>&nbsp;<time datetime="2018-11-18 23:52:31">2018-11-18 23:52:31</time><br />
+              <span>本文链接&nbsp;:&nbsp;</span><a href="https://www.virzz.com/2018/11/18/.html" title="" target="_blank">https://www.virzz.com/2018/11/18/.html</a><br />
+              <span>转载声明&nbsp;:&nbsp;</span><i class="fa fa-creative-commons"></i>转载请保留原文链接及作者。<br />
+              <span>转载说明&nbsp;:&nbsp;</span><i class="fa fa-exclamation-circle"></i>本卡片有模板生成，本人转载来的文章请忽略~~
+            </div>
+        </article>
+        <!-- <div class="toc" data-toc="h2,h3,h4,h5,h6"></div> -->
+        <div class="toc" data-toc="h2" data-tocContainer="section"></div>
+    </div>
 
     </div>
 
@@ -143,6 +135,24 @@
     
   </script>
   
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/github-repo-widget/e23d85ab8f/jquery.githubRepoWidget.min.js"></script>
+<script src="/static/js/toc.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // highlight
+        $('code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
+        // MathJax
+        MathJax.Hub.Config({ 
+            tex2jax: {inlineMath: [['[latex]','[/latex]'], ['\\(','\\)']]} 
+        });
+    });
+</script>
+
   <!-- Analytics Google -->
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-83885261-1"></script>
