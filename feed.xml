@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2019-03-12T17:03:53+08:00</updated>
+  <updated>2019-04-08T02:03:23+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,26 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>论 OSX 环境下如何调戏 PHP 7.3.4</title>
+    <link href="https://www.virzz.com/2019/04/08/how_to_debug_php_by_lldb_of_vscode_on_osx.html"/>
+    <id>https://www.virzz.com/2019/04/08/how_to_debug_php_by_lldb_of_vscode_on_osx.html</id>
+    <updated>2019-04-08 02:02:56</updated>
+    <content type="html"><![CDATA[## 环境
+### 编译 PHP 7.3.4 (DEBUG)
+### 配置 VSCODE + LLDB
+## 愉快的玩耍]]></content>
+    <summary type="html">
+## 环境
+### 编译 PHP 7.3.4 (DEBUG)
+### 配置 VSCODE + LLDB
+## 愉快的玩耍
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+    <category term="lldb" scheme="https://www.virzz.com/tags/lldb/"/>
+    <category term="vscode" scheme="https://www.virzz.com/tags/vscode/"/>
+  </entry>
   <entry>
     <title>PWNHUB / Pink friend</title>
     <link href="https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html"/>
