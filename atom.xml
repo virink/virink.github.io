@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2019-04-11T11:37:50+08:00</updated>
+  <updated>2019-04-11T11:44:11+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,61 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>PHP是如何解析JSON的</title>
+    <link href="https://www.virzz.com/2019/04/06/how_does_php_parse_json.html"/>
+    <id>https://www.virzz.com/2019/04/06/how_does_php_parse_json.html</id>
+    <updated>2019-04-11 11:33:47</updated>
+    <content type="html"><![CDATA[## Info 
+## 变化
+## PHP 版本说明
+## PHP 5 : Call Stack of json_decode (zif_json_decode)
+## PHP 7 : Call Stack of json_decode (zif_json_decode)
+### zif_json_decode
+### php_json_decode_ex
+### php_json_yyparse (yyparse)
+### yylex (php_json_yylex)
+### php_json_scan
+### Flowchart
+## Example Parser Unicode(\u003e)
+### Source Code json.php
+### Call Stack
+#### 进入解析
+#### JSON字符 匹配 value &quot;\\u003e&quot;
+#### Unicode匹配并解析（\u003e）
+#### 转换 Unicode 为 Char
+## 从静态到动态
+### 静态分析
+### 动态分析
+## 转载声明]]></content>
+    <summary type="html">
+## Info 
+## 变化
+## PHP 版本说明
+## PHP 5 : Call Stack of json_decode (zif_json_decode)
+## PHP 7 : Call Stack of json_decode (zif_json_decode)
+### zif_json_decode
+### php_json_decode_ex
+### php_json_yyparse (yyparse)
+### yylex (php_json_yylex)
+### php_json_scan
+### Flowchart
+## Example Parser Unicode(\u003e)
+### Source Code json.php
+### Call Stack
+#### 进入解析
+#### JSON字符 匹配 value &quot;\\u003e&quot;
+#### Unicode匹配并解析（\u003e）
+#### 转换 Unicode 为 Char
+## 从静态到动态
+### 静态分析
+### 动态分析
+## 转载声明
+    </summary>
+    <category term="php" scheme="https://www.virzz.com/tags/php/"/>
+    <category term="json" scheme="https://www.virzz.com/tags/json/"/>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+  </entry>
   <entry>
     <title>论 OSX 环境下如何调戏 PHP 7.3.4</title>
     <link href="https://www.virzz.com/2019/04/08/how_to_debug_php_by_lldb_of_vscode_on_osx.html"/>
@@ -1347,32 +1402,6 @@
     <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
     <category term="osx" scheme="https://www.virzz.com/tags/osx/"/>
     <category term="app" scheme="https://www.virzz.com/tags/app/"/>
-  </entry>
-  <entry>
-    <title>0ctf 2016 部分 web writeup</title>
-    <link href="https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html"/>
-    <id>https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html</id>
-    <updated>2017-06-01 23:24:53</updated>
-    <content type="html"><![CDATA[## monkey
-### js.php or js.html ###
-### &quot;.date(&quot;Y-m-d H:m:s&quot;).&quot; ###\r\n&quot;.$data.&quot;\r\n&quot;, FILE_APPEND);
-### monkey_poc.py ###
-## rand_2
-### rand_2_poc.py ###
-## piapiapia
-### piapiapia_poc.py ###]]></content>
-    <summary type="html">
-## monkey
-### js.php or js.html ###
-### &quot;.date(&quot;Y-m-d H:m:s&quot;).&quot; ###\r\n&quot;.$data.&quot;\r\n&quot;, FILE_APPEND);
-### monkey_poc.py ###
-## rand_2
-### rand_2_poc.py ###
-## piapiapia
-### piapiapia_poc.py ###
-    </summary>
-    <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
-    <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
   </entry>
   </feed>
   

@@ -5,6 +5,10 @@
     <lastmod>2019-04-08T02:02:56+08:00</lastmod>
   </url>
   <url>
+    <loc>https://www.virzz.com/2019/04/06/how_does_php_parse_json.html</loc>
+    <lastmod>2019-04-11T11:33:47+08:00</lastmod>
+  </url>
+  <url>
     <loc>https://www.virzz.com/2019/01/29/pwnhub_2019_pink_friend_http2.html</loc>
     <lastmod>2019-01-30T20:18:38+08:00</lastmod>
   </url>
@@ -195,9 +199,5 @@
   <url>
     <loc>https://www.virzz.com/2016/01/24/writeups_for_zctf_2016.html</loc>
     <lastmod>2017-06-01T23:43:36+08:00</lastmod>
-  </url>
-  <url>
-    <loc>https://www.virzz.com/2015/12/12/php_trace.html</loc>
-    <lastmod>2017-06-01T23:36:36+08:00</lastmod>
   </url>
 </urlset>
