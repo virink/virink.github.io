@@ -5,7 +5,7 @@
   <description>Virink的小站,记录杂文与分享一些技术文章</description>  
   <link href="/feed.xml" rel="self"/>
   <link href="https://www.virzz.com/" />
-  <updated>2019-04-11T11:47:40+08:00</updated>
+  <updated>2019-05-21T10:17:08+08:00</updated>
   <language>zh-CN</language> 
   <id>https://www.virzz.com/</id>
 
@@ -16,6 +16,31 @@
   
   <generator uri="http://mweblog.tools.virzz.com/">MWEBLOG</generator>
 
+  <entry>
+    <title>Configure GDB on OSX 10.14 (Mojave) </title>
+    <link href="https://www.virzz.com/2019/05/20/configure_gdb_on_osx_mojave.html"/>
+    <id>https://www.virzz.com/2019/05/20/configure_gdb_on_osx_mojave.html</id>
+    <updated>2019-05-21 10:16:45</updated>
+    <content type="html"><![CDATA[## GBD
+## Install
+## Create a Certificate
+## Sign and entitle the gdb binary
+## Refresh the system&#x27;s certificates and code-signing data
+## Troubleshooting / further diagnosis
+## Finish]]></content>
+    <summary type="html">
+## GBD
+## Install
+## Create a Certificate
+## Sign and entitle the gdb binary
+## Refresh the system&#x27;s certificates and code-signing data
+## Troubleshooting / further diagnosis
+## Finish
+    </summary>
+    <category term="debug" scheme="https://www.virzz.com/tags/debug/"/>
+    <category term="osx" scheme="https://www.virzz.com/tags/osx/"/>
+    <category term="gdb" scheme="https://www.virzz.com/tags/gdb/"/>
+  </entry>
   <entry>
     <title>PHP是如何解析JSON的</title>
     <link href="https://www.virzz.com/2019/04/06/how_does_php_parse_json.html"/>
@@ -1375,33 +1400,6 @@
     </summary>
     <category term="writeups" scheme="https://www.virzz.com/tags/writeups/"/>
     <category term="ctf" scheme="https://www.virzz.com/tags/ctf/"/>
-  </entry>
-  <entry>
-    <title>App for my OSX</title>
-    <link href="https://www.virzz.com/2017/02/19/app_for_my_mac_osx.html"/>
-    <id>https://www.virzz.com/2017/02/19/app_for_my_mac_osx.html</id>
-    <updated>2017-06-01 23:26:07</updated>
-    <content type="html"><![CDATA[## Base
-## Reader
-## Dev
-### Editor &amp; NoteBook
-### IDE
-### Virtual
-## Other
-## TrueWorld]]></content>
-    <summary type="html">
-## Base
-## Reader
-## Dev
-### Editor &amp; NoteBook
-### IDE
-### Virtual
-## Other
-## TrueWorld
-    </summary>
-    <category term="mac" scheme="https://www.virzz.com/tags/mac/"/>
-    <category term="osx" scheme="https://www.virzz.com/tags/osx/"/>
-    <category term="app" scheme="https://www.virzz.com/tags/app/"/>
   </entry>
   </feed>
   

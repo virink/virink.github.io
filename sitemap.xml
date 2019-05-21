@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://www.virzz.com/2019/05/20/configure_gdb_on_osx_mojave.html</loc>
+    <lastmod>2019-05-21T10:16:45+08:00</lastmod>
+  </url>
+  <url>
     <loc>https://www.virzz.com/2019/04/08/how_to_debug_php_by_lldb_of_vscode_on_osx.html</loc>
     <lastmod>2019-04-08T02:02:56+08:00</lastmod>
   </url>
@@ -195,9 +199,5 @@
   <url>
     <loc>https://www.virzz.com/2016/03/14/some_web_writeup_for_0ctf_2016.html</loc>
     <lastmod>2017-06-01T23:24:53+08:00</lastmod>
-  </url>
-  <url>
-    <loc>https://www.virzz.com/2016/01/24/writeups_for_zctf_2016.html</loc>
-    <lastmod>2017-06-01T23:43:36+08:00</lastmod>
   </url>
 </urlset>
